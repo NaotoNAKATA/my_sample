@@ -45,39 +45,87 @@ int My_statics::set_X(std::vector<float> y)
 	return num;
 }
 
-const float My_statics::get_aveY(void)
+int My_statics::process(void)
+{
+	if(_x.size()==0 || _y.size()==0 || _x.size()!=_y.size() ) {
+		return 1;
+	}
+	_aveY = calc_ave(_y);
+	_aveX = calc_ave(_x);
+
+	_varY = calc_var(_y);
+	_varX = calc_var(_x);
+
+	_uvarY = calc_uvar(_y);
+	_uvarX = calc_uvar(_x);
+
+	_cov = calc_cov(_x, _y);
+
+	_stdY = 0;
+	_stdX = 0;
+
+	return 0;
+}
+
+const float My_statics::calc_ave(std::vector<float> x)
 {
 	float sum = 0;
-	for(std::vector<float>::const_iterator iter=_y.begin();
-			iter!=_y.end();
+
+	for(std::vector<float>::const_iterator iter=x.begin();
+			iter!=x.end();
 			iter++)
 	{
 		sum += *iter;
 	}
 
-	return sum / _y.size();
+	return sum / x.size();
 }
 
-const float My_statics::get_aveX(void)
+const float My_statics::calc_var(std::vector<float> x)
 {
 	float sum = 0;
-	for(std::vector<float>::const_iterator iter=_x.begin();
-			iter!=_x.end();
+	float ave = calc_ave(x);
+
+	for(std::vector<float>::const_iterator iter=x.begin();
+			iter!=x.end();
 			iter++)
 	{
-		sum += *iter;
+		sum += (*iter - ave);
 	}
 
-	return sum / _x.size();
+	return sum / x.size();
 }
 
-const int My_statics::get_sizeY(void)
+const float My_statics::calc_uvar(std::vector<float> x)
 {
-	return _y.size();
+	float sum = 0;
+	float ave = calc_ave(x);
+
+	for(std::vector<float>::const_iterator iter=x.begin();
+			iter!=x.end();
+			iter++)
+	{
+		sum += (*iter - ave);
+	}
+
+	return sum / (x.size() - 1);
 }
 
-const int My_statics::get_sizeX(void)
+const float My_statics::calc_cov(std::vector<float> x, std::vector<float> y)
 {
-	return _x.size();
+	float sum = 0;
+	float ave_x = calc_ave(x);
+	float ave_y = calc_ave(y);
+
+	std::vector<float>::const_iterator iter_y=y.begin();
+	std::vector<float>::const_iterator iter_x=x.begin();
+	for(;
+			iter_x!=x.end() && iter_y!=y.end();
+			iter_x++, iter_y++)
+	{
+		sum += (*iter_x - ave_x) * (*iter_y - ave_y);
+	}
+
+	return sum / x.size();
 }
 
