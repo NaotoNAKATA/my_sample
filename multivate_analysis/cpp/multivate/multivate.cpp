@@ -47,3 +47,36 @@ float calc_variance(std::vector<float> x)
 	return (sum / x.size()) - (mean * mean);
 #endif
 }
+
+float calc_covariance(std::vector<float> x, std::vector<float> y)
+{
+	// 平均の計算
+	float mean_x = calc_mean(x);
+	float mean_y = calc_mean(y);
+
+	float sum = 0;
+
+#if 1
+	// 定義式
+	std::vector<float>::const_iterator iter_y = y.begin();
+	for(std::vector<float>::const_iterator iter_x=x.begin();
+			iter_x!=x.end() && iter_y!=y.end();
+			iter_x++, iter_y++)
+	{
+		sum += (*iter_x - mean_x) * (*iter_y - mean_y);
+	}
+
+	return sum / x.size();
+#else
+	// 計算式
+	std::vector<float>::const_iterator iter_y = y.begin();
+	for(std::vector<float>::const_iterator iter_x=x.begin();
+			iter_x!=x.end() && iter_y!=y.end();
+			iter_x++, iter_y++)
+	{
+		sum += *iter_x * *iter_y;
+	}
+
+	return (sum / x.size()) - (mean_x * mean_y);
+#endif
+}

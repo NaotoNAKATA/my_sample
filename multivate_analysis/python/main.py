@@ -29,7 +29,10 @@ if __name__ == "__main__":
 			plot_y[row-1] = float(sheet.cell(row,2).value)
 			
 	print "mean(x) = " + str(mymodule.mean(plot_x))
+	print "mean(y) = " + str(mymodule.mean(plot_y))
 	print "variance(x) = " + str(mymodule.variance(plot_x))
+	print "variance(y) = " + str(mymodule.variance(plot_y))
+	print "co-variance(x,y) = " + str(mymodule.covariance(plot_x,plot_y))
 	
 	plt.xlim([0,100])
 	plt.ylim([0,50])
