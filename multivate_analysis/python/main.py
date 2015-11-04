@@ -29,13 +29,14 @@ if __name__ == "__main__":
 			plot_y[row-1] = float(sheet.cell(row,2).value)
 			
 	print "mean(x) = " + str(mymodule.mean(plot_x))
+	print "variance(x) = " + str(mymodule.variance(plot_x))
 	
-#	plt.xlim([0,100])
-#	plt.ylim([0,50])
-#	plt.plot(plot_x, plot_y,'o',color='r', label='test1')
-#	plt.title(u'title')
-#	plt.legend(loc='lower right') # 凡例表示
-#	plt.show()
-#
+	plt.xlim([0,100])
+	plt.ylim([0,50])
+	plt.plot(plot_x, plot_y,'o',color='r', label='test1')
+	plt.title(u'title')
+	plt.legend(loc='lower right') # 凡例表示
+	plt.show()
+
 
 
