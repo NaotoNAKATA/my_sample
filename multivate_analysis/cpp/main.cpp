@@ -92,6 +92,40 @@ float u_variance(np::ndarray a) {
 }
 
 /************************************************/
+/* 回帰系数                                     */
+/************************************************/
+float simple_liner_regression(np::ndarray a, np::ndarray b, np::ndarray c) {
+	int nd1 = a.get_nd();
+	int nd2 = b.get_nd();
+	if (nd1 != 1 || nd2 != 1)
+		throw std::runtime_error("a and b must be 1-dimensional");
+
+	if ( (a.get_dtype() != np::dtype::get_builtin<double>()) ||
+			(b.get_dtype() != np::dtype::get_builtin<double>()) )
+		throw std::runtime_error("a and b must be float64 array");
+
+	size_t N = a.shape(0);
+	if ( N != b.shape(0) )
+		throw std::runtime_error(" a and b must be same size");
+
+	double *p = reinterpret_cast<double *>(a.get_data());
+	std::vector<float> x;
+	for(int i=0;i<N;i++) x.push_back(*p++);
+
+	double *q = reinterpret_cast<double *>(b.get_data());
+	std::vector<float> y;
+	for(int i=0;i<N;i++) y.push_back(*q++);
+
+	// 回帰系数の計算
+	float a1 = calc_covariance(x,y) / calc_variance(x);
+	float a0 = calc_mean(y) - a1 * calc_mean(x);
+
+	double *r = reinterpret_cast<double *>(c.get_data());
+	*r = a0; r++;
+	*r = a1;
+}
+
+/************************************************/
 /* Pythonとの連携                               */
 /************************************************/
 // BOOST_PYTHON_MODULE(Pythonのモジュール名)
@@ -104,4 +138,5 @@ BOOST_PYTHON_MODULE(mymodule) {
 	p::def("variance", variance);
 	p::def("covariance", covariance);
 	p::def("u_variance", u_variance);
+	p::def("simple_liner_regression", simple_liner_regression);
 }

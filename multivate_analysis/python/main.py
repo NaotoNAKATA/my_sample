@@ -38,7 +38,9 @@ if __name__ == "__main__":
 	print "unbased-variance(y) = " + str(mymodule.u_variance(plot_y))
 
 	# 回帰直線の計算
-
+	liner_a = np.zeros(2, dtype=np.float64);
+	mymodule.simple_liner_regression(plot_x, plot_y, liner_a)
+	print "(a0,a1) = (" + str(liner_a[0]) + ", " + str(liner_a[1]) + ")"
 	
 	# データのプロット
 	plt.xlim([0,100])
