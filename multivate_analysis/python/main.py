@@ -36,6 +36,7 @@ if __name__ == "__main__":
 	print "co-variance(x,y) = " + str(mymodule.covariance(plot_x,plot_y))
 	print "unbased-variance(x) = " + str(mymodule.u_variance(plot_x))
 	print "unbased-variance(y) = " + str(mymodule.u_variance(plot_y))
+	print "coefficient(x,y) = " + str(mymodule.coefficient(plot_x,plot_y))
 
 	# 回帰直線の計算
 	liner_a = np.zeros(2, dtype=np.float64);
