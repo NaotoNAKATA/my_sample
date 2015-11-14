@@ -80,3 +80,21 @@ float calc_covariance(std::vector<float> x, std::vector<float> y)
 	return (sum / x.size()) - (mean_x * mean_y);
 #endif
 }
+
+float calc_u_variance(std::vector<float> x)
+{
+	// 平均の計算
+	float mean = calc_mean(x);
+
+	float sum = 0;
+
+	for(std::vector<float>::const_iterator iter=x.begin();
+			iter!=x.end();
+			iter++)
+	{
+		float sub = (*iter - mean);
+		sum += sub * sub;
+	}
+
+	return sum / (x.size() - 1);
+}
