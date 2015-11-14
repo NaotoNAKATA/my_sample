@@ -40,8 +40,13 @@ if __name__ == "__main__":
 	# 回帰直線の計算
 	liner_a = np.zeros(2, dtype=np.float64);
 	mymodule.simple_liner_regression(plot_x, plot_y, liner_a)
-	print "(a0,a1) = (" + str(liner_a[0]) + ", " + str(liner_a[1]) + ")"
+	a0 = liner_a[0]
+	a1 = liner_a[1]
+	print "(a0,a1) = (" + str(a0) + ", " + str(a1) + ")"
 	
+	# 回帰直線のプロット
+	plt.plot(plot_x, a0+a1*plot_x,'g--')
+
 	# データのプロット
 	plt.xlim([0,100])
 	plt.ylim([0,50])
@@ -49,6 +54,4 @@ if __name__ == "__main__":
 	plt.title(u'title')
 	plt.legend(loc='lower right') # 凡例表示
 	plt.show()
-
-
 
