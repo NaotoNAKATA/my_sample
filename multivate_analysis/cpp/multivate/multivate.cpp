@@ -3,6 +3,9 @@
 
 #include "multivate.hpp"
 
+/************************************************/
+/* 平均値                                       */
+/************************************************/
 float calc_mean(std::vector<float> x)
 {
 	float sum = 0;
@@ -17,6 +20,9 @@ float calc_mean(std::vector<float> x)
 	return sum / x.size();
 }
 
+/************************************************/
+/* 分散                                         */
+/************************************************/
 float calc_variance(std::vector<float> x)
 {
 	// 平均の計算
@@ -48,6 +54,9 @@ float calc_variance(std::vector<float> x)
 #endif
 }
 
+/************************************************/
+/* 共分散                                       */
+/************************************************/
 float calc_covariance(std::vector<float> x, std::vector<float> y)
 {
 	// 平均の計算
@@ -81,6 +90,9 @@ float calc_covariance(std::vector<float> x, std::vector<float> y)
 #endif
 }
 
+/************************************************/
+/* 不偏分散                                     */
+/************************************************/
 float calc_u_variance(std::vector<float> x)
 {
 	// 平均の計算

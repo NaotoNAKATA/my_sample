@@ -6,6 +6,9 @@
 namespace p = boost::python;
 namespace np = boost::numpy;
 
+/************************************************/
+/* 平均値                                       */
+/************************************************/
 float mean(np::ndarray a) {
 	int nd = a.get_nd();
 	if (nd != 1)
@@ -22,6 +25,9 @@ float mean(np::ndarray a) {
 	return calc_mean(x);
 }
 
+/************************************************/
+/* 分散                                         */
+/************************************************/
 float variance(np::ndarray a) {
 	int nd = a.get_nd();
 	if (nd != 1)
@@ -38,6 +44,9 @@ float variance(np::ndarray a) {
 	return calc_variance(x);
 }
 
+/************************************************/
+/* 共分散                                       */
+/************************************************/
 float covariance(np::ndarray a, np::ndarray b) {
 	int nd1 = a.get_nd();
 	int nd2 = b.get_nd();
@@ -63,6 +72,9 @@ float covariance(np::ndarray a, np::ndarray b) {
 	return calc_covariance(x,y);
 }
 
+/************************************************/
+/* 不偏分散                                     */
+/************************************************/
 float u_variance(np::ndarray a) {
 	int nd = a.get_nd();
 	if (nd != 1)
@@ -79,6 +91,9 @@ float u_variance(np::ndarray a) {
 	return calc_u_variance(x);
 }
 
+/************************************************/
+/* Pythonとの連携                               */
+/************************************************/
 // BOOST_PYTHON_MODULE(Pythonのモジュール名)
 BOOST_PYTHON_MODULE(mymodule) {
 	Py_Initialize();
