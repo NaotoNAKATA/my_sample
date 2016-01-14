@@ -1,0 +1,4 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+ADD_EXECUTABLE(main main.cpp)
+INCLUDE_DIRECTORIES(/usr/local/include/eigen3/)
+
