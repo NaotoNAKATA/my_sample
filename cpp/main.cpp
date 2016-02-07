@@ -13,9 +13,12 @@ int main(int argc, const char *argv[])
 	ifs.open(argv[1]);
 	std::string cin;
 
-	while(!ifs.eof())
+	while(1)
 	{
 		ifs >> cin;
+		if(ifs.eof())
+			break;
+
 		std::cout << cin << std::endl;
 	}
 	ifs.close();
