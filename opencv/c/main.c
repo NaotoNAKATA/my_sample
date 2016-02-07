@@ -9,7 +9,7 @@ int main(int argc, const char *argv[])
 	cvShowImage("main", img);
 	cvWaitKey(0);
 	cvDestroyWindow("lena");
-	cvSaveImage("test.jpg",img);
+	cvSaveImage("test.jpg",img,0);
 	cvReleaseImage(&img);
 
 	return 0;

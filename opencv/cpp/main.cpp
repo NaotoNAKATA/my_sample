@@ -8,6 +8,8 @@ int main(int argc, const char *argv[])
 	cv::Mat img = cv::imread(argv[1],1);
 	cv::namedWindow("main", CV_WINDOW_AUTOSIZE);
 	cv::imshow("main", img);
+	std::string str="test.jpg";
+	cv::imwrite(str, img);
 	cv::waitKey(0);
 
 	return 0;
