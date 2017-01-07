@@ -14,8 +14,6 @@ if not exist build (
 	cd ..
 )
 
-pause
-
 echo.
 set /P STR="(1/Build : 2/Rebuild : 3/Clean) : "
 
