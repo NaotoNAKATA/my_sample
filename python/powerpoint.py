@@ -54,6 +54,17 @@ if __name__ == "__main__":
 	# 画像の挿入
 	pic = slide.shapes.add_picture('サンプル.bmp', Cm(1.0), Cm(5.0))
 	pic = slide.shapes.add_picture('サンプル.bmp', Cm(1.0), Cm(10.0), height=Cm(5.0))
+	
+	# 
+	import numpy as np
+	import io
+	from PIL import Image
+	img = np.zeros([256, 256, 3], dtype=np.uint8)
+	img[128:140,:,1] = 255
+	
+	img_io = io.BytesIO()
+	Image.fromarray(img).save(img_io, 'PNG')
+#	pic = slide.shapes.add_picture(img_io, Cm(14.0), Cm(5.0))
 
 	# 図形の挿入
 	slide = prs.slides.add_slide( prs.slide_layouts[6] )
