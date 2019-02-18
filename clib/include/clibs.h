@@ -8,8 +8,10 @@ int aLib(const char* c);
 int bLib(const char* c);
 
 // 静的リンク(別々のプロジェクト)
-// 動的リンク(別々のプロジェクト)
+int cLib(const char* c);
 
+// 動的リンク(別々のプロジェクト)
+int dLib(const char* c);
 
 #endif /* _CLIBS_H_ */
 
