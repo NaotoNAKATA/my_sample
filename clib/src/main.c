@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "clibs.h"
+#include "aLib_ext.h"
 
 int main(int argc, const char *argv[])
 {
@@ -8,6 +9,10 @@ int main(int argc, const char *argv[])
 	bLib("動的リンク(同一のプロジェクト)");
 	cLib("静的リンク(別々のプロジェクト)");
 	dLib("動的リンク(別々のプロジェクト)");
+
+	// aLib API
+	tALIB * a = aLibInitialize();
+	aLibTerminate(a);
 
 	return 0;
 }
