@@ -5,18 +5,17 @@ set PATH=%PATH%;C:\Program Files\CMake\bin
 set PATH=%PATH%;C:\Program Files (x86)\MSBuild\14.0\Bin
 
 set VisualStudio="Visual Studio 14 Win64"
-rem	set OpenCV="C:\opencv\opencv-3.2.0\build"
 
 set BUILD=build
-set PRJ=ProjectMain.sln
-set OBJ=main.exe
+set PRJ=cLib.sln
+set OBJ=cLib.lib
 set CONFIG=Release
 set PLAT=x64
 
 if not exist %BUILD% (
 	mkdir %BUILD%
 	cd %BUILD%
-	cmake .. -G %VisualStudio% -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DBUILD_SHARED_LIBS=TRUE
+	cmake .. -G %VisualStudio% -DBUILD_SHARED_LIBS=TRUE
 	cd ..
 )
 

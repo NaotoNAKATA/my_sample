@@ -16,8 +16,7 @@ set PLAT=x64
 if not exist %BUILD% (
 	mkdir %BUILD%
 	cd %BUILD%
-	cmake .. -G %VisualStudio%
-rem	cmake .. -G %VisualStudio% -DCMAKE_PREFIX_PATH=%OpenCV%
+	cmake .. -G %VisualStudio% -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DBUILD_SHARED_LIBS=TRUE
 	cd ..
 )
 
