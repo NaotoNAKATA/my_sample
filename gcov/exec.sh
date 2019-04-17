@@ -10,4 +10,4 @@ cd ${BUILD}
 
 # Coverage
 cd CMakeFiles/${OBJ}.dir/
-gcov -l -p ${OBJ}.gcda | grep ${OBJ_SRC} -B1
+gcov -l -p ${OBJ_SRC}.gcda | grep ${OBJ_SRC} -B1
