@@ -18,6 +18,6 @@ TEST_GROUP(Fnc)
 
 TEST(Fnc, Create)
 {
-  FAIL("Start here");
+//  FAIL("Start here");
 }
 
