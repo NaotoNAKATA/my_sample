@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# CppUTestのインストール。cpputest-3.8はutestと同じ階層に置いておく
-cd ../cpputest-3.8
+# CppUTestのインストール。cpputest-3.8は同じ階層に置いておく
+#wget https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz
+#tar zxvf cpputest-3.8.tar.gz
+cd cpputest-3.8
 
 mkdir build_Debug
 cd build_Debug
