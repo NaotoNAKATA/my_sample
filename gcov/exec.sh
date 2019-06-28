@@ -10,4 +10,8 @@ cd ${BUILD}
 
 # Coverage
 cd CMakeFiles/${OBJ}.dir/
-gcov -l -p ${OBJ_SRC}.gcda | grep ${OBJ_SRC} -B1
+gcov -b -l -p ${OBJ_SRC}.gcda
+
+# Lcov
+lcov -c -d ./ -o ${OBJ}.info
+genhtml ${OBJ}.info -o html --legend
