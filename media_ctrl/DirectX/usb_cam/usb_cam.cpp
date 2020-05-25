@@ -43,14 +43,15 @@ int32_t main(int32_t argc, const char * const argv[])
 		CLSCTX_INPROC_SERVER,
 		IID_ICreateDevEnum,
 		(LPVOID *)&pSysDevEnum);
-	if( FAILD(hr) ) {
+	if( FAILED(hr) ) {
 		return hr;
 	}
 	
-	// ビデオコンプレッサカテゴリのクラス列挙子の取得
+	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
 	IEnumMoniker * pEnumCat = NULL;
-	hr = pSysDevEnum->CreateClassEnumerater(
-		CLSID_VideoCompressorCategory,
+	hr = pSysDevEnum->CreateClassEnumerator(
+		//CLSID_VideoCompressorCategory,
+		CLSID_VideoInputDeviceCategory,
 		&pEnumCat,
 		0);
 	if( hr == S_OK ) {
@@ -64,10 +65,10 @@ int32_t main(int32_t argc, const char * const argv[])
 		{
 			// IPropertyBagにBind
 			IPropertyBag * pPropertyBag;
-			hr = pMoniker->BindToStogare(
+			hr = pMoniker->BindToStorage(
 				0,
 				0,
-				IID_PropertyBag,
+				IID_IPropertyBag,
 				(LPVOID *)&pPropertyBag);
 			if( SUCCEEDED(hr) )
 			{
@@ -82,7 +83,7 @@ int32_t main(int32_t argc, const char * const argv[])
 				if( SUCCEEDED(hr) )
 				{
 					// フレンドリー名の表示
-					TCAR devname[256];
+					TCHAR devname[256];
 					WideCharToMultiByte(
 						CP_ACP, 0, var.bstrVal, -1,
 						(LPSTR)devname, sizeof(devname),
@@ -98,7 +99,7 @@ int32_t main(int32_t argc, const char * const argv[])
 		}
 		pEnumCat->Release();
 	}
-	pDevEnum->Release();
+	pSysDevEnum->Release();
 	
 	//
 	// FiltetGraphを解放
