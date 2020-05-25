@@ -1,6 +1,6 @@
 #include <dshow.h>
 
-#prama include_alias("dxtrans.h", "qedit.h")
+#pragma include_alias("dxtrans.h", "qedit.h")
 #define __IDxtCompositor_INTERFACE_DEFINED__
 #define __IDxtAlphaSetter_INTERFACE_DEFINED__
 #define __IDxtJpeg_INTERFACE_DEFINED__
@@ -12,25 +12,25 @@
 
 int32_t main(int32_t argc, const char * const argv[])
 {
-	std::cout << "USB„Ç´„É°„É© „ÉÜ„Çπ„Éà„Éó„É≠„Ç∞„É©„É†" << std::endl;
+	std::cout << "USBÉJÉÅÉâ ÉeÉXÉgÉvÉçÉOÉâÉÄ" << std::endl;
 	
 	HRESULT hr;
 	
-	// COM„ÇíÂàùÊúüÂåñ
+	// COMÇèâä˙âª
 	CoInitialize(NULL);
 	
-	// FilterGraph„ÇíÁîüÊàê
+	// FilterGraphÇê∂ê¨
 	IGraphBuilder * pGraphBuilder;
-	hr = CoCreateInterface(CLSID_FilterGraph,
+	hr = CoCreateInstance(CLSID_FilterGraph,
 		NULL,
 		CLSCTX_INPROC,
 		IID_IGraphBuilder,
-		(LVOID *)&pGraphBuilder);
+		(LPVOID *)&pGraphBuilder);
 	
-	// FiltetGraph„ÅÆËß£Êîæ
+	// FiltetGraphÇâï˙
 	pGraphBuilder->Release();
 	
-	// COM„ÇíÁµÇ‰∫Ü
+	// COMÇèIóπ
 	CoUninitialize();
 
 	return 0;
