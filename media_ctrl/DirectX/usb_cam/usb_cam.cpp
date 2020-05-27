@@ -61,7 +61,6 @@ int32_t main(int32_t argc, const char * const argv[])
 	std::cout << "Video Input Device" << std::endl;
 	
 	hr = pSysDevEnum->CreateClassEnumerator(
-		//CLSID_VideoCompressorCategory,
 		CLSID_VideoInputDeviceCategory,
 		&pEnumCat,
 		0);
@@ -106,29 +105,27 @@ int32_t main(int32_t argc, const char * const argv[])
 					else {
 						printf("   ");
 					}
-					printf("   %s\n", (LPSTR)devname);
-					//printf("   %ls\n", var.bstrVal);
+					printf("%s\n", (LPSTR)devname);
+					//printf("%ls\n", var.bstrVal);
 				}
 				VariantClear(&var);
 				pPropertyBag->Release();
 			}
 			
 			if(i!=videoInputNo) {
-				pMoniker->Release();
-				continue;
+				// モニカをフィルタにbind
+				pMoniker->BindToObject(
+					0, 0,
+					IID_IBaseFilter,
+					(LPVOID *)&pVideoInput);
+					
+				// フィルタをグラフに追加
+				pGraphBuilder->AddFilter(
+					pVideoInput,
+					L"Video Device");
 			}
-			
-			// モニカをフィルタにbind
-			pMoniker->BindToObject(
-				0, 0,
-				IID_IBaseFilter,
-				(LPVOID *)&pVideoInput);
 			pMoniker->Release();
-			
-			// フィルタをグラフに追加
-			pGraphBuilder->AddFilter(
-				pVideoInput,
-				L"Video Device");
+			i++;
 		}
 		pEnumCat->Release();
 	}
@@ -174,35 +171,33 @@ int32_t main(int32_t argc, const char * const argv[])
 						CP_ACP, 0, var.bstrVal, -1,
 						(LPSTR)devname, sizeof(devname),
 						0, 0);
-					if(i==audeoInputNo) {
+					if(i==audioInputNo) {
 						printf(" * ");
 					}
 					else {
 						printf("   ");
 					}
-					printf("   %s\n", (LPSTR)devname);
-					//printf("   %ls\n", var.bstrVal);
+					printf("%s\n", (LPSTR)devname);
+					//printf("%ls\n", var.bstrVal);
 				}
 				VariantClear(&var);
 				pPropertyBag->Release();
 			}
 			
-			if(i!=audeoInputNo) {
-				pMoniker->Release();
-				continue;
+			if(i==audioInputNo) {
+				// モニカをフィルタにbind
+				pMoniker->BindToObject(
+					0, 0,
+					IID_IBaseFilter,
+					(LPVOID *)&pVideoInput);
+					
+				// フィルタをグラフに追加
+				pGraphBuilder->AddFilter(
+					pVideoInput,
+					L"Audio Device");
 			}
-			
-			// モニカをフィルタにbind
-			pMoniker->BindToObject(
-				0, 0,
-				IID_IBaseFilter,
-				(LPVOID *)&pVideoInput);
 			pMoniker->Release();
-			
-			// フィルタをグラフに追加
-			pGraphBuilder->AddFilter(
-				pVideoInput,
-				L"Audio Device");
+			i++;
 		}
 		pEnumCat->Release();
 	}
@@ -254,29 +249,27 @@ int32_t main(int32_t argc, const char * const argv[])
 					else {
 						printf("   ");
 					}
-					printf("   %s\n", (LPSTR)devname);
-					//printf("   %ls\n", var.bstrVal);
+					printf("%s\n", (LPSTR)devname);
+					//printf("%ls\n", var.bstrVal);
 				}
 				VariantClear(&var);
 				pPropertyBag->Release();
 			}
 			
-			if(i!=videoCompNo) {
-				pMoniker->Release();
-				continue;
+			if(i==videoCompNo) {
+				// モニカをフィルタにbind
+				pMoniker->BindToObject(
+					0, 0,
+					IID_IBaseFilter,
+					(LPVOID *)&pVideoInput);
+					
+				// フィルタをグラフに追加
+				pGraphBuilder->AddFilter(
+					pVideoInput,
+					L"Video Compressor");
 			}
-			
-			// モニカをフィルタにbind
-			pMoniker->BindToObject(
-				0, 0,
-				IID_IBaseFilter,
-				(LPVOID *)&pVideoInput);
 			pMoniker->Release();
-			
-			// フィルタをグラフに追加
-			pGraphBuilder->AddFilter(
-				pVideoInput,
-				L"Device Filter");
+			i++;
 		}
 		pEnumCat->Release();
 	}
