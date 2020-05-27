@@ -53,7 +53,7 @@ int32_t main(int32_t argc, const char * const argv[])
 	IBaseFilter * pVideoComp = NULL;
 	const int videoInputNo = 0;
 	const int audioInputNo = 0;
-	const int videoCompNo = 0;
+	const int videoCompNo = 1;
 	
 	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
 	IEnumMoniker * pEnumCat = NULL;
@@ -112,7 +112,7 @@ int32_t main(int32_t argc, const char * const argv[])
 				pPropertyBag->Release();
 			}
 			
-			if(i!=videoInputNo) {
+			if(i==videoInputNo) {
 				// モニカをフィルタにbind
 				pMoniker->BindToObject(
 					0, 0,
@@ -189,11 +189,11 @@ int32_t main(int32_t argc, const char * const argv[])
 				pMoniker->BindToObject(
 					0, 0,
 					IID_IBaseFilter,
-					(LPVOID *)&pVideoInput);
+					(LPVOID *)&pAudioInput);
 					
 				// フィルタをグラフに追加
 				pGraphBuilder->AddFilter(
-					pVideoInput,
+					pAudioInput,
 					L"Audio Device");
 			}
 			pMoniker->Release();
@@ -261,11 +261,11 @@ int32_t main(int32_t argc, const char * const argv[])
 				pMoniker->BindToObject(
 					0, 0,
 					IID_IBaseFilter,
-					(LPVOID *)&pVideoInput);
+					(LPVOID *)&pVideoComp);
 					
 				// フィルタをグラフに追加
 				pGraphBuilder->AddFilter(
-					pVideoInput,
+					pVideoComp,
 					L"Video Compressor");
 			}
 			pMoniker->Release();
@@ -293,7 +293,7 @@ int32_t main(int32_t argc, const char * const argv[])
 	// グラフを生成(プレビューの登録？)
 	pCaptureGraphBuilder2->RenderStream(
 		&PIN_CATEGORY_PREVIEW,
-		NULL,
+		&MEDIATYPE_Video,
 		pVideoInput,
 		NULL, NULL);
 				
@@ -318,6 +318,8 @@ int32_t main(int32_t argc, const char * const argv[])
 	// FilterGraphを解放
 	//
 	pVideoInput->Release();
+	pAudioInput->Release();
+	pVideoComp->Release();
 	pMediaControl->Release();
 	pCaptureGraphBuilder2->Release();
 	pGraphBuilder->Release();
