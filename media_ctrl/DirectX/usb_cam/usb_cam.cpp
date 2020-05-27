@@ -132,6 +132,13 @@ int32_t main(int32_t argc, const char * const argv[])
 				
 			pMoniker->Release();
 			
+			// グラフを生成
+			pCaptureGraphBuilder2->RenderStream(
+				&PIN_CATEGORY_PREVIEW,
+				NULL,
+				pDeviceFilter,
+				NULL, NULL);
+
 			// (仮)最初に見つけたデバイスを使用する
 			break;
 		}
@@ -139,20 +146,13 @@ int32_t main(int32_t argc, const char * const argv[])
 	}
 	pSysDevEnum->Release();
 	
-	// グラフを生成
-	pCaptureGraphBuilder2->RenderStream(
-		&PIN_GATEGORY_PREVIEW,
-		NULL,
-		pDeviceFilter,
-		NULL, NULL);
-	
 	// 再生開始
 	pMediaControl->Run();
 	
 	// OKで終了
 	MessageBox(NULL,
-		"Message1",
-		"Message2",
+		L"OKで終了",
+		L"再生中",
 		MB_OK);
 	
 	//
