@@ -53,7 +53,7 @@ int32_t main(int32_t argc, const char * const argv[])
 	IBaseFilter * pVideoComp = NULL;
 	const int videoInputNo = 0;
 	const int audioInputNo = 0;
-	const int videoCompNo = 1;
+	const int videoCompNo = 4;
 	
 	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
 	IEnumMoniker * pEnumCat = NULL;
@@ -297,6 +297,14 @@ int32_t main(int32_t argc, const char * const argv[])
 		pVideoInput,
 		NULL, NULL);
 				
+	//
+	// AVI出力
+	//
+	IBaseFilter * pMux = NULL;
+	pCaptureGraphBuilder2->SetOutputFileName(&MEDIASUBTYPE_Avi, L".\test.avi", &pMux, NULL);
+    pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Video, pVideoInput, pVideoComp, pMux);
+    pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Audio, pAudioInput, NULL, pMux);
+ 
 	//
 	// メディアコントロールの取得
 	//
