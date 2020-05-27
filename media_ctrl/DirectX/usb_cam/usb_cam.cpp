@@ -33,28 +33,6 @@ int32_t main(int32_t argc, const char * const argv[])
 		(LPVOID *)&pGraphBuilder);
 	
 	//
-	// CaptureGraphBuilder2でフィルタグラフを構築する
-	//
-	ICaptureGraphBuilder2 * pCaptureGraphBuilder2;
-	hr = CoCreateInstance(
-		CLSID_CaptureGraphBuilder2,
-		NULL,
-		CLSCTX_INPROC,
-		IID_ICaptureGraphBuilder2,
-		(LPVOID *)&pCaptureGraphBuilder2);
-	
-	// フィルタグラフをセット
-	pCaptureGraphBuilder2->SetFiltergraph(pGraphBuilder);
-	
-	//
-	// メディアコントロールの取得
-	//
-	IMediaControl * pMediaControl;
-	pGraphBuilder->QueryInterface(
-		IID_IMediaControl,
-		(LPVOID *)&pMediaControl);
-	
-	//
 	// キャプチャデバイスの取得
 	//
 	// デバイスを列挙するためのSystemDeviceEnumを生成
@@ -70,7 +48,7 @@ int32_t main(int32_t argc, const char * const argv[])
 	}
 	
 	// デバイスフィルタ
-	IBaseFilter * pDeviceFilter;
+	IBaseFilter * pDeviceFilter = NULL;
 	
 	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
 	IEnumMoniker * pEnumCat = NULL;
@@ -114,30 +92,23 @@ int32_t main(int32_t argc, const char * const argv[])
 						(LPSTR)devname, sizeof(devname),
 						0, 0);
 					printf("Device Name : %s\n", (LPSTR)devname);
+					//printf("Device Name : %ls\n", var.bstrVal);
 				}
 				VariantClear(&var);
 				pPropertyBag->Release();
-				}
+			}
 			
 			// モニカをフィルタにbind
 			pMoniker->BindToObject(
 				0, 0,
 				IID_IBaseFilter,
 				(LPVOID *)&pDeviceFilter);
-				
+			pMoniker->Release();
+			
 			// フィルタをグラフに追加
 			pGraphBuilder->AddFilter(
 				pDeviceFilter,
 				L"Device Filter");
-				
-			pMoniker->Release();
-			
-			// グラフを生成
-			pCaptureGraphBuilder2->RenderStream(
-				&PIN_CATEGORY_PREVIEW,
-				NULL,
-				pDeviceFilter,
-				NULL, NULL);
 
 			// (仮)最初に見つけたデバイスを使用する
 			break;
@@ -146,6 +117,35 @@ int32_t main(int32_t argc, const char * const argv[])
 	}
 	pSysDevEnum->Release();
 	
+	//
+	// CaptureGraphBuilder2でフィルタグラフを構築する
+	//
+	ICaptureGraphBuilder2 * pCaptureGraphBuilder2;
+	hr = CoCreateInstance(
+		CLSID_CaptureGraphBuilder2,
+		NULL,
+		CLSCTX_INPROC,
+		IID_ICaptureGraphBuilder2,
+		(LPVOID *)&pCaptureGraphBuilder2);
+	
+	// フィルタグラフをセット
+	pCaptureGraphBuilder2->SetFiltergraph(pGraphBuilder);
+	
+	// グラフを生成(プレビューの登録？)
+	pCaptureGraphBuilder2->RenderStream(
+		&PIN_CATEGORY_PREVIEW,
+		NULL,
+		pDeviceFilter,
+		NULL, NULL);
+				
+	//
+	// メディアコントロールの取得
+	//
+	IMediaControl * pMediaControl;
+	pGraphBuilder->QueryInterface(
+		IID_IMediaControl,
+		(LPVOID *)&pMediaControl);
+		
 	// 再生開始
 	pMediaControl->Run();
 	
@@ -156,8 +156,9 @@ int32_t main(int32_t argc, const char * const argv[])
 		MB_OK);
 	
 	//
-	// FiltetGraphを解放
+	// FilterGraphを解放
 	//
+	pDeviceFilter->Release();
 	pMediaControl->Release();
 	pCaptureGraphBuilder2->Release();
 	pGraphBuilder->Release();
