@@ -301,9 +301,9 @@ int32_t main(int32_t argc, const char * const argv[])
 	// AVI出力
 	//
 	IBaseFilter * pMux = NULL;
-	pCaptureGraphBuilder2->SetOutputFileName(&MEDIASUBTYPE_Avi, L".\test.avi", &pMux, NULL);
-    pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Video, pVideoInput, pVideoComp, pMux);
-    pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Audio, pAudioInput, NULL, pMux);
+	pCaptureGraphBuilder2->SetOutputFileName(&MEDIASUBTYPE_Avi, L".\\test.avi", &pMux, NULL);
+	pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Video, pVideoInput, pVideoComp, pMux);
+	pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Audio, pAudioInput, NULL, pMux);
  
 	//
 	// メディアコントロールの取得
