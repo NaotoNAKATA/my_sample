@@ -325,6 +325,7 @@ int32_t main(int32_t argc, const char * const argv[])
 	//
 	// FilterGraph‚ð‰ð•ú
 	//
+	pMux->Release();
 	pVideoInput->Release();
 	pAudioInput->Release();
 	pVideoComp->Release();
