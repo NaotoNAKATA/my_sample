@@ -31,7 +31,29 @@ int32_t main(int32_t argc, const char * const argv[])
 		CLSCTX_INPROC,
 		IID_IGraphBuilder,
 		(LPVOID *)&pGraphBuilder);
-		
+	
+	//
+	// CaptureGraphBuilder2でフィルタグラフを構築する
+	//
+	ICaptureGraphBuilder2 * pCaptureGraphBuilder2;
+	hr = CoCreateInstance(
+		CLSID_CaptureGraphBuilder2,
+		NULL,
+		CLSCTX_INPROC,
+		IID_ICaptureGraphBuilder2,
+		(LPVOID *)&pCaptureGraphBuilder2);
+	
+	// フィルタグラフをセット
+	pCaptureGraphBuilder2->SetFiltergraph(pGraphBuilder);
+	
+	//
+	// メディアコントロールの取得
+	//
+	IMediaControl * pMediaControl;
+	pGraphBuilder->QueryInterface(
+		IID_IMediaControl,
+		(LPVOID *)&pMediaControl);
+	
 	//
 	// キャプチャデバイスの取得
 	//
@@ -46,6 +68,9 @@ int32_t main(int32_t argc, const char * const argv[])
 	if( FAILED(hr) ) {
 		return hr;
 	}
+	
+	// デバイスフィルタ
+	IBaseFilter * pDeviceFilter;
 	
 	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
 	IEnumMoniker * pEnumCat = NULL;
@@ -91,19 +116,50 @@ int32_t main(int32_t argc, const char * const argv[])
 					printf("Device Name : %s\n", (LPSTR)devname);
 				}
 				VariantClear(&var);
-				
-				
 				pPropertyBag->Release();
-			}
+				}
+			
+			// モニカをフィルタにbind
+			pMoniker->BindToObject(
+				0, 0,
+				IID_IBaseFilter,
+				(LPVOID *)&pDeviceFilter);
+				
+			// フィルタをグラフに追加
+			pGraphBuilder->AddFilter(
+				pDeviceFilter,
+				L"Device Filter");
+				
 			pMoniker->Release();
+			
+			// (仮)最初に見つけたデバイスを使用する
+			break;
 		}
 		pEnumCat->Release();
 	}
 	pSysDevEnum->Release();
 	
+	// グラフを生成
+	pCaptureGraphBuilder2->RenderStream(
+		&PIN_GATEGORY_PREVIEW,
+		NULL,
+		pDeviceFilter,
+		NULL, NULL);
+	
+	// 再生開始
+	pMediaControl->Run();
+	
+	// OKで終了
+	MessageBox(NULL,
+		"Message1",
+		"Message2",
+		MB_OK);
+	
 	//
 	// FiltetGraphを解放
 	//
+	pMediaControl->Release();
+	pCaptureGraphBuilder2->Release();
 	pGraphBuilder->Release();
 	
 	//
