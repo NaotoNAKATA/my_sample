@@ -1,7 +1,7 @@
 @echo off
 
 rem é¿çs
-..\x64\Release\usb_cam.exe
+..\Release\usb_cam.exe
 
 pause
 
