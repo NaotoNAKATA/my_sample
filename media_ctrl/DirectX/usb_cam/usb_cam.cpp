@@ -51,10 +51,12 @@ int32_t main(int32_t argc, const char * const argv[])
 	IBaseFilter * pVideoInput = NULL;
 	IBaseFilter * pAudioInput = NULL;
 	IBaseFilter * pVideoComp = NULL;
+	IBaseFilter * pAudioComp = NULL;
 	const int videoInputNo = 0;
 	const int audioInputNo = 0;
 	const int videoCompNo = 4;
-	
+	const int audioCompNo = 0;
+
 	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
 	IEnumMoniker * pEnumCat = NULL;
 	
@@ -274,6 +276,78 @@ int32_t main(int32_t argc, const char * const argv[])
 		pEnumCat->Release();
 	}
 	
+	std::cout << "Audio Compressor" << std::endl;
+
+	hr = pSysDevEnum->CreateClassEnumerator(
+		CLSID_AudioCompressorCategory,
+		&pEnumCat,
+		0);
+	if (hr == S_OK) {
+		// 一応、リセットして先頭から数えなおす
+		pEnumCat->Reset();
+
+		// モニカを列挙する
+		IMoniker * pMoniker = NULL;
+		ULONG cFetched;
+		int i = 0;
+		while (pEnumCat->Next(1, &pMoniker, &cFetched) == S_OK)
+		{
+			// IPropertyBagにBind
+			IPropertyBag * pPropertyBag;
+			hr = pMoniker->BindToStorage(
+				0,
+				0,
+				IID_IPropertyBag,
+				(LPVOID *)&pPropertyBag);
+			if (SUCCEEDED(hr))
+			{
+				// フィルタのフレンドリー名を取得
+				VARIANT var;
+				VariantInit(&var);
+				var.vt = VT_BSTR;
+				hr = pPropertyBag->Read(
+					L"FriendlyName",
+					&var,
+					0);
+				if (SUCCEEDED(hr))
+				{
+					// フレンドリー名の表示
+					TCHAR devname[256];
+					WideCharToMultiByte(
+						CP_ACP, 0, var.bstrVal, -1,
+						(LPSTR)devname, sizeof(devname),
+						0, 0);
+					if (i == audioCompNo) {
+						printf(" * ");
+					}
+					else {
+						printf("   ");
+					}
+					printf("%s\n", (LPSTR)devname);
+					//printf("%ls\n", var.bstrVal);
+				}
+				VariantClear(&var);
+				pPropertyBag->Release();
+			}
+
+			if (i == audioCompNo) {
+				// モニカをフィルタにbind
+				pMoniker->BindToObject(
+					0, 0,
+					IID_IBaseFilter,
+					(LPVOID *)&pAudioComp);
+
+				// フィルタをグラフに追加
+				pGraphBuilder->AddFilter(
+					pAudioComp,
+					L"Audio Compressor");
+			}
+			pMoniker->Release();
+			i++;
+		}
+		pEnumCat->Release();
+	}
+
 	pSysDevEnum->Release();
 	
 	//
@@ -291,19 +365,19 @@ int32_t main(int32_t argc, const char * const argv[])
 	pCaptureGraphBuilder2->SetFiltergraph(pGraphBuilder);
 	
 	// グラフを生成(プレビューの登録？)
-	pCaptureGraphBuilder2->RenderStream(
-		&PIN_CATEGORY_PREVIEW,
-		&MEDIATYPE_Video,
-		pVideoInput,
-		NULL, NULL);
+//	pCaptureGraphBuilder2->RenderStream(
+//		&PIN_CATEGORY_PREVIEW,
+//		&MEDIATYPE_Video,
+//		pVideoInput,
+//		NULL, NULL);
 				
 	//
 	// AVI出力
 	//
-	IBaseFilter * pMux = NULL;
-	pCaptureGraphBuilder2->SetOutputFileName(&MEDIASUBTYPE_Avi, L".\\test.avi", &pMux, NULL);
-	pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Video, pVideoInput, pVideoComp, pMux);
-	pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Audio, pAudioInput, NULL, pMux);
+//	IBaseFilter * pMux = NULL;
+//	pCaptureGraphBuilder2->SetOutputFileName(&MEDIASUBTYPE_Avi, L".\\test.avi", &pMux, NULL);
+//	pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Video, pVideoInput, pVideoComp, pMux);
+//	pCaptureGraphBuilder2->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Audio, pAudioInput, NULL, pMux);
  
 	//
 	// メディアコントロールの取得
@@ -325,7 +399,7 @@ int32_t main(int32_t argc, const char * const argv[])
 	//
 	// FilterGraphを解放
 	//
-	pMux->Release();
+//	pMux->Release();
 	pVideoInput->Release();
 	pAudioInput->Release();
 	pVideoComp->Release();
