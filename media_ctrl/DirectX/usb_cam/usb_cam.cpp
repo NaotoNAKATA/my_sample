@@ -351,6 +351,46 @@ int32_t main(int32_t argc, const char * const argv[])
 	pSysDevEnum->Release();
 	
 	//
+	// 画角の取得
+	//
+	IEnumPins * pEnumPins = NULL;
+	hr = pVideoInput->EnumPins(&pEnumPins);
+
+	IPin *pCameraOutPin = NULL;
+	hr = pEnumPins->Next(1, &pCameraOutPin, NULL);
+
+	IAMStreamConfig *pAMSConfig = NULL;
+	hr = pCameraOutPin->QueryInterface(IID_IAMStreamConfig, (LPVOID *)&pAMSConfig);
+
+	int iCount = 0;
+	int iSize = 0;
+	pAMSConfig->GetNumberOfCapabilities(&iCount, &iSize);
+
+	std::cout << "Size , fps" << std::endl;
+	for (int i = 0; i < iCount; i++) {
+		AM_MEDIA_TYPE * pmt = NULL;
+		VIDEO_STREAM_CONFIG_CAPS vscc;
+		hr = pAMSConfig->GetStreamCaps(i, &pmt, reinterpret_cast<BYTE*>(&vscc));
+
+		if (pmt->majortype == MEDIATYPE_Video && pmt->formattype == FORMAT_VideoInfo &&
+			pmt->cbFormat >= sizeof(VIDEOINFOHEADER) && pmt->pbFormat != NULL) {
+			VIDEOINFOHEADER *pVih = (VIDEOINFOHEADER*)pmt->pbFormat;
+			double fps = 1.0 / (double(pVih->AvgTimePerFrame) * 100.0*1.0e-9);
+
+			printf("%4d x %4d : %5.1ffps\n", pVih->bmiHeader.biWidth, pVih->bmiHeader.biHeight, fps);
+
+//			if (pVih->bmiHeader.biWidth == 1920) {
+//				pAMSConfig->SetFormat(pmt);
+//				break;
+//			}
+		}
+	}
+
+	pAMSConfig->Release();
+	pCameraOutPin->Release();
+	pEnumPins->Release();
+
+	//
 	// CaptureGraphBuilder2でフィルタグラフを構築する
 	//
 	ICaptureGraphBuilder2 * pCaptureGraphBuilder2;
