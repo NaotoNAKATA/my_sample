@@ -10,10 +10,45 @@
 #include <iostream>
 #include <cstdint>
 
+#include "device_enum.h"
 
-HRESULT system_device_enum(ICreateDevEnum * pSysDevEnum,
-	const IID & CLSID)
-{
+SysDevEnum::SysDevEnum() {
+	// デバイスを列挙するためのSystemDeviceEnumを生成
+	HRESULT hr = CoCreateInstance(
+		CLSID_SystemDeviceEnum,
+		NULL,
+		CLSCTX_INPROC_SERVER,
+		IID_ICreateDevEnum,
+		(LPVOID *)&pSysDevEnum);
+
+	if (FAILED(hr)) {
+		pSysDevEnum = NULL;
+	}
+}
+
+SysDevEnum::~SysDevEnum() {
+	pSysDevEnum->Release();
+}
+
+void SysDevEnum::preview_video_device_name(void) {
+	std::cout << "Video Input Device" << std::endl;
+	this->system_device_enum(CLSID_VideoInputDeviceCategory);
+}
+void SysDevEnum::preview_audio_device_name(void) {
+	std::cout << "Audio Input Device" << std::endl;
+	this->system_device_enum(CLSID_AudioInputDeviceCategory);
+}
+void SysDevEnum::preview_video_compressor_name(void) {
+	std::cout << "Video Compressor" << std::endl;
+	this->system_device_enum(CLSID_VideoCompressorCategory);
+}
+void SysDevEnum::preview_audio_compressor_name(void) {
+	std::cout << "Audio Compressor" << std::endl;
+	this->system_device_enum(CLSID_AudioCompressorCategory);
+}
+
+
+void SysDevEnum::system_device_enum(const IID & CLSID) {
 	HRESULT hr;
 
 	// ビデオ入力デバイスカテゴリのクラス列挙子の取得
@@ -26,92 +61,49 @@ HRESULT system_device_enum(ICreateDevEnum * pSysDevEnum,
 		// モニカを列挙する
 		IMoniker * pMoniker = NULL;
 		ULONG cFetched;
-		int32_t i = 0;
 		while (pEnumCat->Next(1, &pMoniker, &cFetched) == S_OK)
 		{
-			// IPropertyBagにBind
-			IPropertyBag * pPropertyBag;
-			hr = pMoniker->BindToStorage(0, 0, IID_IPropertyBag, (LPVOID *)&pPropertyBag);
-			if (SUCCEEDED(hr))
-			{
-				// フィルタのフレンドリー名を取得
-				VARIANT var;
-				VariantInit(&var);
-				var.vt = VT_BSTR;
-				hr = pPropertyBag->Read(L"FriendlyName", &var, 0);
-				if (SUCCEEDED(hr))
-				{
-					// フレンドリー名の表示
-					TCHAR devname[256];
-					WideCharToMultiByte(
-						CP_ACP, 0, var.bstrVal, -1,
-						(LPSTR)devname, sizeof(devname),
-						0, 0);
+			// Propetyの制御
+			this->property_bag_control(pMoniker);
 
-					printf("   %s\n", (LPSTR)devname);
-					//printf("%   ls\n", var.bstrVal);
-				}
-				VariantClear(&var);
-				pPropertyBag->Release();
-			}
+			// 解放
 			pMoniker->Release();
-			i++;
 		}
 		pEnumCat->Release();
 	}
-
-	return hr;
 }
 
-int32_t main(int32_t argc, const char * const argv[])
-{
-	std::cout << "デバイスを列挙する" << std::endl;
+void SysDevEnum::preview_friendly_name(IPropertyBag * pPropertyBag) {
+	VARIANT var;
+	VariantInit(&var);
+	var.vt = VT_BSTR;
+	HRESULT hr = pPropertyBag->Read(L"FriendlyName", &var, 0);
+	if (SUCCEEDED(hr))
+	{
+		// フレンドリー名の表示
+		TCHAR devname[256];
+		WideCharToMultiByte(
+			CP_ACP, 0, var.bstrVal, -1,
+			(LPSTR)devname, sizeof(devname),
+			0, 0);
 
-	HRESULT hr;
+		printf("   %s\n", (LPSTR)devname);
+		//printf("%   ls\n", var.bstrVal);
+	}
+	VariantClear(&var);
+}
 
-	//
-	// COMを初期化
-	//
-	CoInitialize(NULL);
+void SysDevEnum::property_bag_control(IMoniker * pMoniker) {
+	// IPropertyBagにBind
+	IPropertyBag * pPropertyBag;
+	HRESULT hr = pMoniker->BindToStorage(0, 0, IID_IPropertyBag, (LPVOID *)&pPropertyBag);
+	if (SUCCEEDED(hr))
+	{
+		// フィルタのフレンドリー名を取得
+		this->preview_friendly_name(pPropertyBag);
 
-	//
-	// キャプチャデバイスの取得
-	//
-	// デバイスを列挙するためのSystemDeviceEnumを生成
-	ICreateDevEnum * pSysDevEnum;
-	hr = CoCreateInstance(
-		CLSID_SystemDeviceEnum,
-		NULL,
-		CLSCTX_INPROC_SERVER,
-		IID_ICreateDevEnum,
-		(LPVOID *)&pSysDevEnum);
-	if (FAILED(hr)) {
-		return hr;
+		// 解放
+		pPropertyBag->Release();
 	}
 
-	// ビデオデバイスの取得
-	std::cout << "Video Input Device" << std::endl;
-	system_device_enum(pSysDevEnum, CLSID_VideoInputDeviceCategory);
-
-	// オーディオデバイスの取得
-	std::cout << "Audio Input Device" << std::endl;
-	system_device_enum(pSysDevEnum, CLSID_AudioInputDeviceCategory);
-
-	// ビデオコンプレッサーの取得
-	std::cout << "Video Compressor" << std::endl;
-	system_device_enum(pSysDevEnum, CLSID_VideoCompressorCategory);
-
-	// オーディオコンプレッサーの取得
-	std::cout << "Audio Compressor" << std::endl;
-	system_device_enum(pSysDevEnum, CLSID_AudioCompressorCategory);
-
-	// 解放
-	pSysDevEnum->Release();
-
-	//
-	// COMを終了
-	//
-	CoUninitialize();
-
-	return 0;
 }
