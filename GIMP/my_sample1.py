@@ -24,7 +24,7 @@ def my_sample1_func(input_filename, output_dirname):
     pdb.gimp_file_save(img, layer, output_filename, output_filename)
 
     # レイヤーを追加(よくわからないが、レイヤーとして再読み込みしてやってから追加する)
-    layer_reload = pdb.gimp_file_load_layer(img, output_dirname)
+    layer_reload = pdb.gimp_file_load_layer(img, output_filename)
     img.add_layer(layer_reload, 0) # 0で一番上のレイヤー
 
     # レイヤーを一部塗りつぶし
@@ -51,7 +51,7 @@ def my_sample1_func(input_filename, output_dirname):
 
     # レイヤーを統合して保存
     visibles = img.flatten() # 32bit->24bit
-    output_filename_crop = output_dirname + u'/crop' + os.path.basename(input_filename)
+    output_filename_crop = output_dirname + u'/crop_' + os.path.basename(input_filename)
     pdb.gimp_file_save(img, visibles, output_filename_crop, output_filename_crop)
 
     gimp.delete(img)
