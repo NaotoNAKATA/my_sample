@@ -25,9 +25,13 @@ int main(int argc, char *argv[])
 	}
 
 	/* File read */
-	while( (c=fgetc(fp)) !=EOF )
-	{
-		printf("%c",c);
+	//while( (c=fgetc(fp)) !=EOF )
+	//{
+	//	printf("%c",c);
+	//}
+	char readline[256];
+	while(fgets(readline, 256, fp)!=NULL) {
+		printf("%s\n",readline);
 	}
 
 	fclose(fp);
