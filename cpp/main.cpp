@@ -4,6 +4,14 @@
 
 int main(int argc, const char *argv[])
 {
+#ifdef DEFINE_1
+	std::cout << "DEFINE_1 is defined" << std::endl;
+#endif
+
+#ifdef DEFINE_2
+	std::cout << "DEFINE_2 is defined" << std::endl;
+#endif
+
 	if(argc!=3)
 	{
 		std::cout << "Usage : [1] input , [2] output" << std::endl;
