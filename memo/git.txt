@@ -1,0 +1,51 @@
+コミットやり直し
+git commit --amend
+
+リベース
+git rebase -i HEAD^10
+
+リベース
+git rebase origin/foo
+
+ファストフォワードでマージ
+git fetch
+git merge --ff origin/foo
+
+
+リモートブランチをチェックアウト
+git checkout -b other_branch origin/other_branch
+
+ローカルブランチをリモートブランチにpush
+git push origin local_branck:remote_branch
+
+タグの確認
+git ls-remote --tags
+
+タグの作成
+git tag [name]
+
+タグをpush
+git push origin [name]
+
+ローカルのタグを全部push
+git push --tags
+
+エクスポート
+git archive --format=zip HEAD > test.zip
+
+
+リモートブランチの削除
+git push --delete origin foo
+
+リモートブランチは削除されているがローカルに参照が残っている
+git remote prune --dry-run origin
+
+既に削除されているremoteブランチのローカル参照を削除
+git remote prune origin
+
+
+Windowsでのファイル名が長すぎるとき(管理者権限)
+git config --system core.longpaths true
+
+Authorの変更
+git commit --amend --author="UserName <user@domein>"
