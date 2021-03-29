@@ -3,21 +3,27 @@
 
 class num_box:
 	""" 数字クラス """
-	def __init__(self, _len=9):
+	def __init__(self, _len=9, _num=-1):
 		""" 初期化 数字未確定のときは-1 """
-		self.num = -1
-		self.cand = [i for i in range(1, _len+1) ]
+		self.num = _num
+		if(_num==-1):
+			self.cand = [i for i in range(1, _len+1) ]
+			self.init = False
+		else:
+			# 初期化時に確定ならTrue(表示のため)
+			self.cand = []
+			self.init = True
 	
 	def is_ok(self):
 		""" 確定していれば True """
-		return (self.num > 0)
+		return (self.num > 0 and len(self.cand)==0)
 
 	def set(self, _num):
 		""" 数字を確定させる """
 		self.num = _num
 		self.cand = []
 
-	def del_cand(self. _cand):
+	def del_cand(self, _cand):
 		""" 候補を消す """
 		for c in filter(lambda x:x in self.cand, _cand):
 			self.cand.remove(c)
@@ -51,15 +57,18 @@ class num_set:
 	def update_det(self):
 		""" 確定リスト、未確定リスト更新 """
 		self.det_num = list( map(lambda x:x.num, filter(lambda x:x.is_ok(), self.num_box) ) )
-		self.not_det_num = list( map(lambda x:x.num, filter(lambda x:not x.is_ok(), self.num_box) ) )
+		self.not_det_num = [i for i in range(1, self.len+1) if i not in self.det_num]
 	
 	def solve1(self):
 		""" 確定したリストにある数字を各数字クラスから削除 """
-		map(lambda x:x.del_cand( self.det_num ), self.num_box)
+		self.update_det()
+		for nb in self.num_box:
+			nb.del_cand( self.det_num )
 	
 	def solve2(self):
 		""" 数字クラスのソルバーを起動 """
-		map(lambda x:x.solve(), self.num_box)
+		for nb in self.num_box:
+			nb.solve()
 			
 	def solve3(self):
 		""" 未確定リストの数字で、num_boxの候補の中で、一つしかなかったら確定 """
@@ -69,68 +78,41 @@ class num_set:
 		# 未確定リストを倍
 		not_det_num = self.not_det_num + self.not_det_num
 
-		# 未確定リストで残った数字があればそれば確定できるはず
+		# 未確定リストから、候補数字を削除
+		for nb in self.num_box:
+			for c in nb.cand:
+				if c in not_det_num:
+					not_det_num.remove(c)
+		
+		# 残った数字は、候補が一つだけなので確定する
+		for n in not_det_num:
+			for nb in self.num_box:
+				if n in nb.cand:
+					nb.set(n)
+					break
+			else:
+				# ここにきたらおかしい
+				pass
+	
+	def solve4(self):
+		""" ２つ組は、候補を絞る """
+		cand_pair = list(filter( lambda x:x.cand_len()==2, self.num_box))
+		
+		# とりあえず、候補を比較して2個以外を削除
+		if len(cand_pair)==2:
+			if cand_pair[0].cand == cand_pair[1].cand:
+				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
+					nb.del_cand( cand_pair[0].cand )
+						
+	def solve(self):
+		self.solve1()
+		self.solve2()
+		self.solve3()
+		self.solve4()
 
-
-
-
-
-
-#class num_box:
-#	def __init__(self, _num_len=9):
-#		num = [i for i in range(1, _num_len+1) ]
-#	
-#	def is_ok(self):
-#		return len(self.num)==1
-#	
-#	def has_num(self. _num):
-#		return _num in self.num
-#		
-#	def del_num(self. _num):
-#		if not self.is_ok() and self.has_num(_num):
-#			self.num.remove(_num)
-#	
-#	def set_num(self, _num):
-#		self.num = [_num]
-#	
-#class comb_box:
-#	def __init__(self, _num_len=9):
-#		comb = [ num_box(_num_len) for i in range(_num_len) ]
-#		num_len = _num_len
-#
-#	def is_ok(self):
-#		return False not in map(lambda x:x.is_ok(), self.comb)
-#	
-#	def solve(self):
-#		self.check1()
-#		self.check2()
-#		self.check3()
-#	
-#	def check1(self):
-#		""" ボックス内で確定した数字があるときは、他のボックスから候補を削除しておく """
-#		num_ok = map(lambda x:x.num[0], filter(lambda x:x.is_ok() , self.comb) )
-#		for n in num_ok:
-#			map(lambda x:x.del_num(n), self.comb)
-#
-#	def check2(self):
-#		""" 他のボックスの候補が無いときは、数字を確定する """
-#		num_ok = list( map(lambda x:x.num[0], filter(lambda x:x.is_ok() , self.comb) ) )
-#		num_cand = [ i for i in range(1, self.num_len+1) if i not in num_ok]
-#
-#		for n in num_cand:
-#			c = filter(lambda x:x.has_num(n), self.comb)
-#			if len(c)==1:
-#				c[0].set_num(n)
-#
-#	def check3(self):
-#		""" ２つ組は、候補を絞る """
-#		pair = filter(lambda x:len(x.num)==2, self.comb)
-#		if len(pair)>=2:
-#			for i in range(len(pair)-1):
-#				for j in range(i+1,len(pair)):
-#					if pair[i].num==pair[j].num:
-#						for c in self.comb:
-#							if c.num!=pair[i].num:
-#								c.del_num(pair[i].num[0])
-#								c.del_num(pair[i].num[1])
-#
+class numbers_solver:
+	""" ナンバーズクラス """
+	def __init__(self):
+		pass
+		
+		
