@@ -98,44 +98,13 @@ class num_set:
 		""" ２つ組は、候補を絞る """
 		cand_pair = list(filter( lambda x:x.cand_len()==2, self.num_box))
 		
-		# とりあえず、候補を比較して2個以外を削除
-		if len(cand_pair)==2:
-			if cand_pair[0].cand == cand_pair[1].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[0].cand )
-		elif len(cand_pair)==3:
-			if cand_pair[0].cand == cand_pair[1].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[0].cand )
-			elif cand_pair[0].cand == cand_pair[2].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[0].cand )
-			elif cand_pair[1].cand == cand_pair[2].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[1].cand )
-		elif len(cand_pair)==4:
-			if cand_pair[0].cand == cand_pair[1].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[0].cand )
-			elif cand_pair[0].cand == cand_pair[2].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[0].cand )
-			elif cand_pair[0].cand == cand_pair[3].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[0].cand )
-			elif cand_pair[1].cand == cand_pair[2].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[1].cand )
-			elif cand_pair[1].cand == cand_pair[3].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[1].cand )
-			elif cand_pair[2].cand == cand_pair[3].cand:
-				for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
-					nb.del_cand( cand_pair[2].cand )
-					
-					
-					
-					
+		if len(cand_pair)>=2:
+			for i in range( len(cand_pair)-1 ):
+				for j in range(i+1, len(cand_pair) ):
+					if cand_pair[i].cand == cand_pair[j].cand:
+						for nb in filter( lambda x:x.cand_len()!=2, self.num_box):
+							nb.del_cand( cand_pair[0].cand )
+						break
 	
 	def solve5(self):
 		""" 3つ組は、候補を絞る """
@@ -245,7 +214,7 @@ class numbers_solver:
 	
 	def solve(self):
 		for sheet_name, val in self.q['name'].items():
-			for i in range(1000):
+			for i in range(100):
 				for ns in val['num_set']:
 					if not ns.is_ok():
 						ns.solve()
