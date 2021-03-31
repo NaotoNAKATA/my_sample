@@ -141,9 +141,11 @@ class numbers_solver:
 			self.template[ name ] = {
 				'num_box' : {},
 				'num_set' : [],
+				'num_len' : -1,
 			}
 			
 			sheet = book_temp.sheet_by_name(name)
+			self.template[ name ]['num_len'] = int( sheet.cell(0,1).value )
 			
 			for i in range(1, sheet.nrows):
 				val = sheet.cell(i,0).value
@@ -176,12 +178,14 @@ class numbers_solver:
 			template_name = sheet.cell(0,0).value
 			self.q['name'][name]['template'] = template_name
 			
+			num_len = self.template[ template_name ]['num_len']
+			
 			for (key, (i,j)) in self.template[ template_name ]['num_box'].items():
 				dat = sheet.cell(i,j).value
 				if dat=='':
-					self.q['name'][name]['num_box'][key] = num_box()
+					self.q['name'][name]['num_box'][key] = num_box(_len=num_len)
 				else:
-					self.q['name'][name]['num_box'][key] = num_box( _num=int(dat) )
+					self.q['name'][name]['num_box'][key] = num_box( _len=num_len, _num=int(dat) )
 				
 			for g in self.template[ template_name ]['num_set']:
 				self.q['name'][name]['num_set'].append(
