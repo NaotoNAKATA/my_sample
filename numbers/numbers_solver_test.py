@@ -178,6 +178,24 @@ class Test_num_set1(unittest.TestCase):
 			self.assertEqual( self.num_set.num_box[i-1].cand, exp)
 			self.assertFalse( self.num_set.num_box[i-1].is_ok())
 
+	def test_solve5(self):
+		# ペアをつくる
+		self.num_box_list[0].cand = [3, 4]
+		self.num_box_list[1].cand = [4, 6]
+		self.num_box_list[2].cand = [3, 6]
+		
+		# 実行
+		self.num_set.solve5()
+		
+		self.assertEqual( self.num_set.num_box[0].cand, [3, 4])
+		self.assertEqual( self.num_set.num_box[1].cand, [4, 6])
+		self.assertEqual( self.num_set.num_box[2].cand, [3, 6])
+		exp = [1,2,5,7,8,9]
+		for i in range(4,10):
+			self.assertEqual( self.num_set.num_box[i-1].cand, exp)
+			self.assertFalse( self.num_set.num_box[i-1].is_ok())
+
+		
 		
 if __name__ == '__main__':
 	unittest.main()
