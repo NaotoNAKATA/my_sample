@@ -134,63 +134,67 @@ class numbers_solver:
 	""" ナンバーズクラス """
 	def __init__(self, _q, _template='template.xlsx'):
 		""" 初期化 """
-		# テンプレートを開く
-		book_temp = xlrd.open_workbook(_template)
+		self.open_template(_template)
+		self.open_question(_q)
+		
+	def open_template(self, _file_name):
+		""" テンプレートを開く """
+		book = xlrd.open_workbook(_file_name)
 		self.template = {}
-		for name in book_temp.sheet_names():
-			self.template[ name ] = {
+		for sheet_name in book.sheet_names():
+			self.template[ sheet_name ] = {
 				'num_box' : {},
 				'num_set' : [],
 				'num_len' : -1,
 			}
 			
-			sheet = book_temp.sheet_by_name(name)
-			self.template[ name ]['num_len'] = int( sheet.cell(0,1).value )
+			sheet = book.sheet_by_name(sheet_name)
+			self.template[ sheet_name ]['num_len'] = int( sheet.cell(0,1).value )
 			
 			for i in range(1, sheet.nrows):
 				val = sheet.cell(i,0).value
 				if val=='T':
 					for j in range(1, sheet.ncols):
-						dat = sheet.cell(i,j).value
-						self.template[ name ]['num_box'][dat] = (i, j)
+						nb = sheet.cell(i,j).value
+						self.template[ sheet_name ]['num_box'][nb] = (i, j)
 				elif val=='G':
 					buf = []
 					for j in range(1, sheet.ncols):
-						dat = sheet.cell(i,j).value
-						buf.append(dat)
-					self.template[ name ]['num_set'].append(buf)
+						nb = sheet.cell(i,j).value
+						buf.append(nb)
+					self.template[ sheet_name ]['num_set'].append(buf)
 		
-				
-		# 問題を開く
-		book_q = xlrd.open_workbook(_q)
+	def open_question(self, _file_name):
+		""" 問題を開く """
+		book = xlrd.open_workbook(_file_name)
 		self.q = {
-			'file_name' : _q,
-			'name':{},
+			'file_name' : _file_name,
+			'q_name':{},
 		}
-		for name in book_q.sheet_names():
-			sheet = book_q.sheet_by_name(name)
-			self.q['name'][name] = {
+		for sheet_name in book.sheet_names():
+			sheet = book.sheet_by_name(sheet_name)
+			self.q['q_name'][sheet_name] = {
 				'num_box':{},
 				'num_set' : [],
 				'template' : '',
 			}
 	
 			template_name = sheet.cell(0,0).value
-			self.q['name'][name]['template'] = template_name
+			self.q['q_name'][sheet_name]['template'] = template_name
 			
 			num_len = self.template[ template_name ]['num_len']
 			
-			for (key, (i,j)) in self.template[ template_name ]['num_box'].items():
-				dat = sheet.cell(i,j).value
-				if dat=='':
-					self.q['name'][name]['num_box'][key] = num_box(_len=num_len)
+			for (nb, (i,j)) in self.template[ template_name ]['num_box'].items():
+				num = sheet.cell(i,j).value
+				if num=='':
+					self.q['q_name'][sheet_name]['num_box'][nb] = num_box(_len=num_len)
 				else:
-					self.q['name'][name]['num_box'][key] = num_box( _len=num_len, _num=int(dat) )
+					self.q['q_name'][sheet_name]['num_box'][nb] = num_box( _len=num_len, _num=int(num) )
 				
 			for g in self.template[ template_name ]['num_set']:
-				self.q['name'][name]['num_set'].append(
+				self.q['q_name'][sheet_name]['num_set'].append(
 					num_set(
-						[ self.q['name'][name]['num_box'][k] for k in g ]
+						[ self.q['q_name'][sheet_name]['num_box'][nb] for nb in g ]
 					)
 				)
 	def write(self):
@@ -199,7 +203,7 @@ class numbers_solver:
 		book = xlsxwriter.Workbook(out_file_name)
 		format1 = book.add_format({'bold': True, 'bg_color':'#FF0000'})
 		
-		for sheet_name, val in self.q['name'].items():
+		for sheet_name, val in self.q['q_name'].items():
 			sheet = book.add_worksheet(sheet_name)
 			template_name = val['template']
 		
@@ -217,7 +221,7 @@ class numbers_solver:
 		book.close()
 	
 	def solve(self):
-		for sheet_name, val in self.q['name'].items():
+		for sheet_name, val in self.q['q_name'].items():
 			for i in range(100):
 				for ns in val['num_set']:
 					if not ns.is_ok():
