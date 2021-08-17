@@ -22,7 +22,8 @@ def main(excelFileName):
 	node, edge, node_all, edge_all = sorcery_read.read_xlsx(excelFileName)
 	
 	# 全体図描画
-	if True:
+	#if True:
+	if False:
 		map_all = '全体図'
 		node_all_list = node_all[map_all]['node']
 		node_all_oder = node_all[map_all]['oder']
@@ -50,7 +51,8 @@ def main(excelFileName):
 		
 		# デバッグ用 特定のマップのみ処理
 		if True:
-			if node_oder!=1:
+		#if False:
+			if node_oder!=3:
 				continue
 		
 		# グラフの作成
