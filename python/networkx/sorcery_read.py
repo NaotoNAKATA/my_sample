@@ -146,13 +146,30 @@ def read_using_spel(node_sheet):
 	for i in range(2, len(tuple(node_sheet.rows))+1):
 		# 使用した術を読み込み
 		spel = node_sheet.cell(i,10).value
+		spel_effect = node_sheet.cell(i,11).value
 		if spel!=None:
 			if spel in  using_spel.keys():
 				using_spel[spel] ['cnt'] += 1
 			else:
-				using_spel[spel] = {'cnt' : 1}
+				using_spel[spel] = {'cnt' : 1,
+					'success' : 0,
+					'fault' : 0,
+					'no_item' : 0,
+					'no_use' : 0,
+					'no_spel' : 0,
+					}
 			
-			spel_effect = node_sheet.cell(i,11).value
+			if spel_effect!=None:
+				if spel_effect==10:
+					using_spel[spel]['success'] += 1
+				elif spel_effect==11:
+					using_spel[spel]['fault'] += 1
+				elif spel_effect==12:
+					using_spel[spel]['no_item'] += 1
+				elif spel_effect==14:
+					using_spel[spel]['no_use'] += 1
+				elif spel_effect==13:
+					using_spel[spel]['no_spel'] += 1
 	
 	return using_spel
 
@@ -201,7 +218,15 @@ def write_spel_sheet(spel, using_spel, out_file):
 		if sp[0] in using_spel.keys():
 			sheet.write(s+1, 3,
 				int( using_spel[ sp[0] ]['cnt']) )
-		
+			sheet.write(s+1, 4,
+				int( using_spel[ sp[0] ]['success']) )
+			sheet.write(s+1, 5,
+				int( using_spel[ sp[0] ]['fault']) )
+			sheet.write(s+1, 6,
+				int( using_spel[ sp[0] ]['no_item']) )
+			sheet.write(s+1, 7,
+				int( using_spel[ sp[0] ]['no_use']) )
+			
 	# 無い術を出力
 	spel_list = list(zip(*spel))[0]
 	cnt = len(spel)+1
@@ -225,6 +250,34 @@ def write_spel_sheet(spel, using_spel, out_file):
 	chart.set_y_axis({'major_gridlines':{'visible':True},})
 	chart.set_size({'width': 720, 'height': 576})
 	sheet.insert_chart(xl_rowcol_to_cell(1, 9), chart, {  })
+
+	chart2 = book.add_chart({'type':'column', 'subtype':'stacked'})
+	chart2.add_series({
+		'name':'成功',
+		'categories':[sheet.name, 1, 0, len(spel)-1, 0 ],
+		'values':[sheet.name, 1, 4, len(spel)-1, 4 ],
+		})
+	chart2.add_series({
+		'name':'失敗',
+		'categories':[sheet.name, 1, 0, len(spel)-1, 0 ],
+		'values':[sheet.name, 1, 5, len(spel)-1, 5 ],
+		})
+	chart2.add_series({
+		'name':'道具なし',
+		'categories':[sheet.name, 1, 0, len(spel)-1, 0 ],
+		'values':[sheet.name, 1, 6, len(spel)-1, 6 ],
+		})
+	chart2.add_series({
+		'name':'無効',
+		'categories':[sheet.name, 1, 0, len(spel)-1, 0 ],
+		'values':[sheet.name, 1, 7, len(spel)-1, 7 ],
+		})
+
+	chart2.set_title({'name':'術分布'})
+	chart2.set_x_axis({'num_font':{'size':7}})
+	chart2.set_y_axis({'major_gridlines':{'visible':True},})
+	chart2.set_size({'width': 720, 'height': 576})
+	sheet.insert_chart(xl_rowcol_to_cell(35, 9), chart2, {  })
 
 	# ファイルの保存
 	book.close()
