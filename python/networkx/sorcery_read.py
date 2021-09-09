@@ -195,10 +195,7 @@ def read_spel_sheet(spel_sheet):
 #
 # 術の統計結果を出力
 #
-def write_spel_sheet(spel, using_spel, out_file):
-	# 出力ファイルの作成
-	book = xlsxwriter.Workbook(out_file)
-	sheet = book.add_worksheet('術使用')
+def write_spel_sheet(spel, using_spel, book, sheet):
 	
 	# ヘッダ
 	sheet.write(0, 0, '術')
@@ -312,9 +309,6 @@ def write_spel_sheet(spel, using_spel, out_file):
 	chart_pie.set_size({'width': 720, 'height': 576})
 	sheet.insert_chart(xl_rowcol_to_cell(74, 9), chart_pie, {  })
 
-	# ファイルの保存
-	book.close()
-
 #
 # 術の統計情報
 #
@@ -333,24 +327,42 @@ def spel_stat(excelFileName):
 	# ファイルを閉じる
 	book.close()
 	
-	# 出力
-	out_file = os.path.basename(excelFileName)
-	out_file = os.path.splitext( out_file )[0] + '_術.xlsx'
+	return spel, using_spel
 	
-	write_spel_sheet(spel, using_spel, out_file)
-
+	
 #
 # メイン処理
 #
 def main(excelFileName):
 	# エクセルファイルの読み込み
-	#node, edge, _, _ = read_xlsx(excelFileName)
+	node, edge, _, _ = read_xlsx(excelFileName)
 
-	# 術の統計情報
-	spel_stat(excelFileName)
+def main2():
+	# 出力ファイルの作成
+	book = xlsxwriter.Workbook('Sorcery_術分析.xlsx')
 	
-
+	# 術の統計情報
+	exec_list = [
+		['Sorcery01.xlsx', 'vol1'],
+		#['Sorcery02.xlsx', 'vol2'],
+		#['Sorcery03.xlsx', 'vol3'],
+		#['Sorcery04.xlsx', 'vol4'],
+	]
+	
+	for f, t in exec_list:
+		# 術の結果を読み込む
+		spel, using_spel = spel_stat(f)
+		
+		# 統計情報を書き込む
+		sheet = book.add_worksheet( t )
+		write_spel_sheet(spel, using_spel, book, sheet)
+	
+	# ファイルの保存
+	book.close()
+	
 if __name__ == '__main__':
 	
-	main('Sorcery01.xlsx')
+	#main('Sorcery01.xlsx')
+	main2()
+	
 	
