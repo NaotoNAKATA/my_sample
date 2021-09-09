@@ -236,6 +236,18 @@ def write_spel_sheet(spel, using_spel, out_file):
 			#sheet.write(cnt, 1, '' )
 			sheet.write(cnt, 3, int( v['cnt']) )
 			cnt += 1
+			
+	# 使用回数を合計
+	spel_cnt = { 
+		'success' : 0,
+		'fault' : 0,
+		'no_item' : 0,
+		'no_use' : 0,
+		'no_spel' : 0,
+	}
+	for sk in spel_cnt.keys():
+		for v in using_spel.values():
+			spel_cnt[sk] += v[sk]
 
 	# グラフで出力
 	chart = book.add_chart({'type':'column'})
@@ -278,6 +290,27 @@ def write_spel_sheet(spel, using_spel, out_file):
 	chart2.set_y_axis({'major_gridlines':{'visible':True},})
 	chart2.set_size({'width': 720, 'height': 576})
 	sheet.insert_chart(xl_rowcol_to_cell(35, 9), chart2, {  })
+	
+	# 円グラフ作成
+	sheet.write(68, 9, '成功' )
+	sheet.write(69, 9, '失敗' )
+	sheet.write(70, 9, '道具なし' )
+	sheet.write(71, 9, '無効' )
+	sheet.write(72, 9, '術無し' )
+	sheet.write(68, 10,  spel_cnt['success'])
+	sheet.write(69, 10,  spel_cnt['fault'])
+	sheet.write(70, 10,  spel_cnt['no_item'])
+	sheet.write(71, 10,  spel_cnt['no_use'])
+	sheet.write(72, 10,  spel_cnt['no_spel'])
+	
+	chart_pie = book.add_chart({'type':'pie'})
+	chart_pie.add_series({
+		'name':'術割合',
+		'categories':[sheet.name, 68, 9, 72, 9 ],
+		'values':[sheet.name, 68, 10, 72, 10 ],
+		})
+	chart_pie.set_size({'width': 720, 'height': 576})
+	sheet.insert_chart(xl_rowcol_to_cell(74, 9), chart_pie, {  })
 
 	# ファイルの保存
 	book.close()
