@@ -9,9 +9,6 @@ def make_network(node_list, edge, **kwargs):
 	# グラフの作成
 	G = nx.DiGraph(format='png')
 	
-	# ノードの追加
-	G.add_nodes_from( node_list )
-	
 	# ノードリストをフラグで分割
 	s_node = [ n for n, n_dic in node_list 
 			if n_dic['s_e']=='s' ]
@@ -22,16 +19,35 @@ def make_network(node_list, edge, **kwargs):
 	__node = [ n for n, n_dic in node_list 
 			if n_dic['s_e']==None ]
 	
-	# エッジの追加
+	# 色付きエッジを最後尾にする
 	edge_list = []
+	edge_c_list = []
 	for (s, e , e_dic) in edge:
-		if s in s_node or e in e_node:
-			edge_list.append( (s, e , e_dic) )
-		elif s in __node or e in __node:
-			edge_list.append( (s, e , e_dic) )
+		if s in s_node or e in e_node or  s in __node or e in __node:
+			if 'color' in e_dic.keys():
+				edge_c_list.append( (s, e , e_dic) )
+			else:
+				edge_list.append( (s, e , e_dic) )
+				
+	edge_list= edge_list + edge_c_list
+	
+	# 色付きエッジのノードを最後尾にする
+	node_list_i = list( list( zip(*node_list) )[0] )
+	for (s, e , e_dic) in edge_c_list:
+		i = node_list_i.index(s)
 		
+		node = node_list.pop(i)
+		node_list = node_list + [node]
+		
+		node_i = node_list_i.pop(i)
+		node_list_i = node_list_i + [node_i]
+	
+	# ノードの追加
+	G.add_nodes_from( node_list )
+	
+	# エッジの追加
 	G.add_edges_from( edge_list )
-		
+	
 	return G
 
 #

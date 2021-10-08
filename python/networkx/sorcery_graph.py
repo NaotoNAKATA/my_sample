@@ -52,7 +52,7 @@ def main(excelFileName):
 		# デバッグ用 特定のマップのみ処理
 		if True:
 		#if False:
-			if node_oder!=28:
+			if node_oder!=11:
 				continue
 		
 		# グラフの作成
@@ -61,6 +61,8 @@ def main(excelFileName):
 		# 出力ファイル名
 		out_file = '{0}/{1:0>2}_{2}.png'.format(
 					out_dir, node_oder, map)
+					
+		print(os.path.basename(out_file))
 	
 		# グラフの出力
 		sorcery_save.save_network(G,
@@ -71,8 +73,8 @@ def main(excelFileName):
 		
 if __name__ == '__main__':
 	
-	main('Sorcery01.xlsx')
-#	main('Sorcery02.xlsx')
+#	main('Sorcery01.xlsx')
+	main('Sorcery02.xlsx')
 #	main('Sorcery03.xlsx')
 #	main('Sorcery04.xlsx')
 	

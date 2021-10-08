@@ -116,6 +116,9 @@ def save_network(G, **kwargs, ):
 	# 出力
 	fig.savefig(out_file)
 	
+	fig.clf()
+	plt.close()
+	
 #
 # メイン処理
 #
