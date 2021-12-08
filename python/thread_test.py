@@ -12,6 +12,21 @@ class MyThread(Thread):
 			print('Theading test1')
 			time.sleep(1)
 
+from twisted.internet import reactor
+from twisted.internet.task import LoopingCall
+
+class MyLoop(LoopingCall):
+	def __init__(self):
+		super().__init__(f=self.main, a=('MyLoop',) )
+	
+	def start(self):
+		interval = 1
+		super().start(interval, now=False)
+		reactor.run()
+		
+	def main(self, a):
+		print(a[0])
+
 if __name__ == '__main__':
 	my_th = MyThread()
 	my_th.start()
@@ -23,4 +38,7 @@ if __name__ == '__main__':
 	
 	th = Thread(target=f)
 	th.start()
-	th.join()
+	#th.join()
+	
+	my_lp = MyLoop()
+	my_lp.start()
