@@ -60,7 +60,7 @@ def save_network(G, **kwargs, ):
 			edge_color.append( G.edges[e]['color'] )
 		else:
 			edge_color.append('k')
-			
+	
 	# ノードのラベルを追加する
 	node_label = {}
 	for n in G.nodes():
@@ -68,7 +68,7 @@ def save_network(G, **kwargs, ):
 			node_label[n] = '{0}\n{1}'.format(n, G.nodes[n]['label'])
 		else:
 			node_label[n] = n
-			
+	
 	# エッジのラベルを追加する
 	edge_label = {}
 	for e in G.edges():
@@ -78,12 +78,16 @@ def save_network(G, **kwargs, ):
 	# ノードの位置を指定する
 	pos = {}
 	for n in G.nodes():
-		pos[n] = G.nodes[n]['pos']
+		if 'pos' in G.nodes[n].keys():
+			pos[n] = G.nodes[n]['pos']
+		else:
+			pos[n] = (10,10-len(pos))
 	
 	# グラフを描画(ノード、エッジ)
 	nx.draw_networkx(G,
 		pos=pos,
-		node_color=node_color,
+		#node_color=node_color,
+		node_color=np.asanyarray(node_color, dtype=object),
 		edge_color=edge_color,
 		with_labels=False,
 		node_size=600,
@@ -97,6 +101,7 @@ def save_network(G, **kwargs, ):
 		ax=ax,
 		font_size=8,
 	)
+	
 	# ノードラベルを日本語化
 	for t in nx_node.values():
 	    t.set_fontproperties(fp)

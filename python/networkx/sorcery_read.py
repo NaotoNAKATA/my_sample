@@ -91,7 +91,7 @@ def read_node_sheet(node_sheet):
 		y = node_sheet.cell(i,9).value
 		if x!=None and y!=None:
 			node_stat['figsize'] = (x, y)
-			
+		
 		# 出力に追加
 		if map in node.keys():
 			node[map]['node'].append( (n, node_stat) )
@@ -343,9 +343,9 @@ def main2():
 	
 	# 術の統計情報
 	exec_list = [
-		['Sorcery01.xlsx', 'vol1'],
+		#['Sorcery01.xlsx', 'vol1'],
 		#['Sorcery02.xlsx', 'vol2'],
-		#['Sorcery03.xlsx', 'vol3'],
+		['Sorcery03.xlsx', 'vol3'],
 		#['Sorcery04.xlsx', 'vol4'],
 	]
 	
