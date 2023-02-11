@@ -95,7 +95,7 @@ class trim_img(my_pil):
 		pil = Image.open(path).crop(roi)
 		super().__init__(pil)
 
-class nrom_img(my_pil):
+class norm_img(my_pil):
 	"""通常イメージ(トリミング済みイメージ)"""
 	def __init__(self, path):
 		"""初期化"""
@@ -222,10 +222,11 @@ class proc_img(object):
 			
 	def get_sample(self):
 		"""サンプルイメージを保存する"""
-		for i, (name, block) in self.sample_imgs.items():
-			path = self.sample_path + '/' + name + '.png'
-			self.img[i].get(block).save(path)
-
+		for i, s in self.sample_imgs.items():
+			for name, block in s:
+				path = self.sample_path + '/' + name + '.png'
+				self.img[i].get(block).save(path)
+	
 	def replace(self):
 		"""画像の置換"""
 		# １ブロックずつ画像を置換
