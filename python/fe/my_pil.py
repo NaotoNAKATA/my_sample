@@ -161,6 +161,9 @@ class proc_img(object):
 		self.sample = {} # 読み込んだ画像
 		self.sample_imgs = {} # 保存するリスト
 		
+		# アルファチャンネル追加
+		self.alpha = {}
+		
 		# 一時保存用ディレクトリ
 		self.tmp = './tmp'
 		
@@ -178,6 +181,7 @@ class proc_img(object):
 		self.get_sample()
 		self.gen_sample()
 		self.replace()
+		self.add_alpha()
 		self.merge()
 		
 	def rename(self):
@@ -238,6 +242,11 @@ class proc_img(object):
 			# 確認用にライン画像を上書き
 			self.img[i].save_draw_line(self.tmp + '/' + '{0:0>3}.png'.format(i))
 	
+	def add_alpha(self):
+		"""アルファチャンネルを追加する"""
+		for i, blocks in self.alpha.items():
+			self.img[i].add_alpha(blocks)
+		
 	def merge(self):
 		"""リストの先頭からマージする"""
 		for name , mlist in self.merge_list.items():
