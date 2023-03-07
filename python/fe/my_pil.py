@@ -83,7 +83,13 @@ class my_pil(object):
 				draw.text((x+3,y+1), '{0}\n{1}'.format(int(x/32),int(y/32)), 'yellow')
 		
 		pil.save(path)
-
+		
+	def add_line(self, block):
+		""" 直線を描画 """
+		draw = ImageDraw.Draw(self.pil)
+		x0, y0, x1, y1 = tuple( map(lambda x:x*32+16, block) )
+		draw.line(((x0,y0), (x1,y1)),fill=(255,0,0), width=3)
+		
 class trim_img(my_pil):
 	"""トリミングしたイメージ"""
 	def __init__(self, path):
@@ -155,6 +161,9 @@ class proc_img(object):
 		
 		# 画像をマージ { name :[(i, (bx0,by0), ..., ]}
 		self.merge_list = {}
+		
+		# 画像にラインを描画(マージ後) {name:(bx0,by0,bx1,by1), ...,}
+		self.lines = {}
 		
 		# 置換用サンプルリスト
 		self.sample_path = './sample'
@@ -275,6 +284,10 @@ class proc_img(object):
 			
 				# 確認用に連番で保存
 				buf.save_draw_line(self.tmp + '/merge{0:0>3}.png'.format(i))
+			
+			# 完成画像にラインを描画する
+			if name in self.lines.keys():
+				buf.add_line( self.lines[name] )
 			
 			# 完成画像を保存する
 			buf.save(self.tmp + '/' + name + '.png')
