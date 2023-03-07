@@ -80,7 +80,7 @@ class my_pil(object):
 		
 		for x in range(0, w, 32):
 			for y in range(0, h, 32):
-				draw.text((x+3,y+1), '{0},{1}'.format(int(x/32),int(y/32)), 'yellow')
+				draw.text((x+3,y+1), '{0}\n{1}'.format(int(x/32),int(y/32)), 'yellow')
 		
 		pil.save(path)
 
