@@ -88,7 +88,7 @@ class my_pil(object):
 		""" 直線を描画 """
 		draw = ImageDraw.Draw(self.pil)
 		x0, y0, x1, y1 = tuple( map(lambda x:x*32+16, block) )
-		draw.line(((x0,y0), (x1,y1)),fill=(255,0,0), width=3)
+		draw.line(((x0,y0), (x1,y1)),fill=(255,128,0), width=5)
 		
 class trim_img(my_pil):
 	"""トリミングしたイメージ"""
@@ -287,7 +287,8 @@ class proc_img(object):
 			
 			# 完成画像にラインを描画する
 			if name in self.lines.keys():
-				buf.add_line( self.lines[name] )
+				for block in self.lines[name]:
+					buf.add_line(block)
 			
 			# 完成画像を保存する
 			buf.save(self.tmp + '/' + name + '.png')
