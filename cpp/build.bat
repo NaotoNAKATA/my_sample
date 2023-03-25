@@ -2,9 +2,8 @@ echo off
 SETLOCAL enabledelayedexpansion
 
 set PATH=%PATH%;C:\Program Files\CMake\bin
-set PATH=%PATH%;C:\Program Files (x86)\MSBuild\14.0\Bin
-
-set VisualStudio="Visual Studio 14 Win64"
+set PATH=%PATH%;C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin
+set VisualStudio="Visual Studio 17"
 
 set BUILD=build
 set PRJ=ProjectMain.sln
