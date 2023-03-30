@@ -47,25 +47,35 @@ class lifegame(object):
 		# 初期値の読み込み
 		self.life = []
 		if filepath!=None:
-			with open(filepath, 'r') as f:
-				for i,row in enumerate(f):
-					if i==0:
-						self.h, self.v = ( int(j) for j in row.split(',') )
-					else:
-						a = [ box(True) if int(j)==1 else box(False) for j in row.split(',') ]
-						self.life.append(a)
+			self.load(filepath)
 			self.savepath = os.path.splitext(filepath)[0] + '.gif'
 		else:
-			# 初期値の指定が無いときは乱数で(TBD)
+			# 初期値の指定が無いときは乱数で
 			self.h, self.v = (64, 64)
 			self.savepath = './rand.gif'
 			for y in range(self.v):
 				a = [ box(True) if random.randint(0,1)==1 else box(False) for x in range(self.h) ]
 				self.life.append(a)
-			
+		
 		# 近傍の設定
+		self.set_neighborhood()
+		
+	def load(self, filepath):
+		"""初期値ファイルの読み込み"""
+		with open(filepath, 'r') as f:
+			for i,row in enumerate(f):
+				if i==0:
+					self.h, self.v = ( int(j) for j in row.split(',') )
+				else:
+					self.life.append(
+						[ box(True) if int(j)==1 else box(False) for j in row.split(',') ]
+					)
+	
+	def set_neighborhood(self):
+		"""近傍の設定"""
 		for y in range(self.v):
 			for x in range(self.h):
+				# 近傍のインデックスの設定
 				if y==0:
 					if x==0:
 						nb_idx = [
@@ -123,12 +133,13 @@ class lifegame(object):
 							[x-1, y],                  [x+1, y],
 							[x-1, y+1],[x, y+1],[x+1, y+1],
 						]
-
+				
+				# 近傍のセルの参照を渡す
 				nb = []
 				for [xi, yi] in nb_idx:
 					nb.append(self.life[yi][xi])
 				self.life[y][x].set_neighborhood(nb)
-	
+		
 	def run(self, num):
 		"""実行"""
 		# 初期画面の作成
@@ -137,10 +148,12 @@ class lifegame(object):
 		# 実行する
 		for n in range(num):
 			print(n)
+			# 各セルの判定
 			for y in range(self.v):
 				for x in range(self.h):
 					self.life[y][x].judge()
-					
+			
+			# 各セルの更新
 			for y in range(self.v):
 				for x in range(self.h):
 					self.life[y][x].update()
@@ -162,8 +175,7 @@ class lifegame(object):
 		# 生の箇所は黒く塗る
 		for y in range(self.v):
 			for x in range(self.h):
-				val = self.life[y][x].da
-				if val:
+				if self.life[y][x].da:
 					block = (x*self.pix, y*self.pix, (x+1)*self.pix, (y+1)*self.pix)
 					draw.rectangle(block, fill=0, outline=None)
 		
@@ -172,9 +184,12 @@ class lifegame(object):
 		
 	def save(self):
 		"""ファイルを保存する"""
+		
+		# アニメーションgifのフレームレート
 		f = 5 # fps
 		d = 1000 / f
 		
+		# 保存する
 		self.life_img[0].save(
 			self.savepath,
 			save_all=True,
