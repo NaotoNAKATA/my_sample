@@ -52,6 +52,18 @@ class ss_doc(object):
 		p.line_spacing = Pt(10)
 		r.add_picture( self.ss.get_y1(), width=Cm(6.3) )
 	
+	def add_ocr(self):
+		""" OCRする """
+		if False:
+			# Androidではやり方わからず
+			import pyocr
+			tools = pyocr.get_available_tools()
+			tool = tools[0]
+			builder = pyocr.builders.TextBuilder(tesseract_layout=6)
+			text = tool.image_to_string(self.ss.img_y1, lang="Japanese", builder=builder)
+			
+			self.add_text( text )
+	
 	def add_brakets(self):
 		""" 段落の挿入(括弧のみ) """
 		self.add_text('【】')
@@ -101,6 +113,9 @@ class ss_doc(object):
 				
 				# セリフ用のカッコを挿入しておく
 				self.add_brakets()
+				
+				# OCRする
+				self.add_ocr()
 				
 				# 1つ前の画像を保持
 				self.ss_pre = self.ss
