@@ -54,13 +54,14 @@ class ss_doc(object):
 	
 	def add_ocr(self):
 		""" OCRする """
-		if False:
+		if True:
 			# Androidではやり方わからず
 			import pyocr
 			tools = pyocr.get_available_tools()
 			tool = tools[0]
 			builder = pyocr.builders.TextBuilder(tesseract_layout=6)
-			text = tool.image_to_string(self.ss.img_y1, lang="Japanese", builder=builder)
+			#text = tool.image_to_string(self.ss.img_y1, lang="Japanese", builder=builder)
+			text = tool.image_to_string(self.ss.img_y1, lang="tessdata/jpn", builder=builder)
 			
 			self.add_text( text )
 	
@@ -112,7 +113,7 @@ class ss_doc(object):
 				self.add_img_text()
 				
 				# セリフ用のカッコを挿入しておく
-				self.add_brakets()
+				#self.add_brakets()
 				
 				# OCRする
 				self.add_ocr()

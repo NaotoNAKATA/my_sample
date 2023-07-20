@@ -27,7 +27,8 @@ class ss_crop(object):
 		""" 画面分割 """
 		x1, y1 = self.img_main.size
 		self.img_y0 = self.img_main.crop( [0, 0, x1, self.split_y] )
-		self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1, y1] )
+                # 画像の右端は削除
+		self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1-71, y1] )
 	
 	def get(self, img):
 		""" バイトストリームを返す """
