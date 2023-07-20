@@ -87,6 +87,7 @@ class ss_doc(object):
 			text = text.replace('【[','【')
 			text = text.replace(']','】')
 			text = text.replace('[','【')
+			text = text.replace('きん','さん')
 			
 			self.add_text( text )
 	
