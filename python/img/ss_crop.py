@@ -28,8 +28,17 @@ class ss_crop(object):
 		x1, y1 = self.img_main.size
 		self.img_y0 = self.img_main.crop( [0, 0, x1, self.split_y] )
                 # 画像の右端は削除
-		self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1-71, y1] )
-	
+		#self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1-71, y1] )
+
+                # 画像の右下のアイコンを塗りつぶし
+		self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1, y1] )
+		#pix_val = (0, 0, 0)
+		#size = (35, 35)
+		#pil = Image.new('RGB', size, pix_val)
+		pil = Image.open('./ss_sample.bmp')
+		pix= (641, 88)
+		self.img_y1.paste(pil, pix)
+
 	def get(self, img):
 		""" バイトストリームを返す """
 		import io
