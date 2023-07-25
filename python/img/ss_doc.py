@@ -79,6 +79,7 @@ class ss_doc(object):
 			text = text.replace('9','９')
 			text = text.replace('0','０')
 			text = text.replace('…','・・')
+			text = text.replace('-','・')
 			text = text.replace('(','（')
 			text = text.replace(')','）')
 			text = text.replace(']】','】')
@@ -88,6 +89,10 @@ class ss_doc(object):
 			text = text.replace(']','】')
 			text = text.replace('[','【')
 			text = text.replace('きん','さん')
+			text = text.replace('大立夫','大丈夫')
+			text = text.replace('真紀','真弥子')
+			text = text.replace('真断','真弥子')
+			text = text.replace('法築','法条')
 			
 			self.add_text( text )
 	
