@@ -35,7 +35,8 @@ class ss_crop(object):
 		#pix_val = (0, 0, 0)
 		#size = (35, 35)
 		#pil = Image.new('RGB', size, pix_val)
-		pil = Image.open('./ss_sample.bmp')
+		#pil = Image.open('./ss_sample.bmp')
+		pil = Image.open('./ss_sample2.bmp')
 		pix= (641, 88)
 		self.img_y1.paste(pil, pix)
 
