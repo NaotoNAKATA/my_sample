@@ -62,38 +62,36 @@ class ss_doc(object):
 			builder = pyocr.builders.TextBuilder(tesseract_layout=6)
 			#text = tool.image_to_string(self.ss.img_y1, lang="Japanese", builder=builder)
 			text = tool.image_to_string(self.ss.img_y1, lang="tessdata/jpn", builder=builder)
-                        # ある程度置換しておく
-			text = text.replace(' ','')
-			text = text.replace('\r','')
-			text = text.replace('\n','')
-			text = text.replace('?','？')
-			text = text.replace('!','！')
-			text = text.replace('1','１')
-			text = text.replace('2','２')
-			text = text.replace('3','３')
-			text = text.replace('4','４')
-			text = text.replace('5','５')
-			text = text.replace('6','６')
-			text = text.replace('7','７')
-			text = text.replace('8','８')
-			text = text.replace('9','９')
-			text = text.replace('0','０')
-			text = text.replace('…','・・')
-			text = text.replace('-','・')
-			text = text.replace('(','（')
-			text = text.replace(')','）')
-			text = text.replace(']】','】')
-			text = text.replace('】]','】')
-			text = text.replace('[【','【')
-			text = text.replace('【[','【')
-			text = text.replace(']','】')
-			text = text.replace('[','【')
-			text = text.replace('きん','さん')
-			text = text.replace('大立夫','大丈夫')
-			text = text.replace('真紀','真弥子')
-			text = text.replace('真断','真弥子')
-			text = text.replace('法築','法条')
 			
+			# ある程度置換しておく
+			replace_list = (
+				(' ',''),
+				('\r',''),
+				('\n',''),
+				('?','？'),
+				('!','！'),
+				('1','１'),('2','２'),('3','３'),('4','４'),('5','５'),
+				('6','６'),('7','７'),('8','８'),('9','９'),('0','０'),
+				('…','・・'),
+				('-','・'),
+				('(','（'),
+				(')','）'),
+				(']】','】'),
+				('】]','】'),
+				('[【','【'),
+				('【[','【'),
+				(']','】'),
+				('[','【'),
+				('|',''),
+				('きん','さん'),
+				('大立夫','大丈夫'),
+				('真紀','真弥子'),
+				('真断','真弥子'),
+				('法築','法条'),
+				('折堂','御堂'),
+			)
+			for (s, t) in replace_list:
+				text = text.replace (s, t)
 			self.add_text( text )
 	
 	def add_brakets(self):
