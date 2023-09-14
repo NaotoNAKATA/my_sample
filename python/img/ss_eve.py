@@ -2,6 +2,7 @@
 
 from ss_doc import ss_doc
 
+import sys
 import os
 import glob
 if __name__ == '__main__':
@@ -19,9 +20,10 @@ if __name__ == '__main__':
         #        '12-ディレクタールーム',
 	#)
 	
+	mask_sel = int(sys.argv[1])
 	root_dir = './??-*'
 	p_list = sorted(glob.glob(root_dir))
 	for p in p_list:
 		p0 = p.replace('.\\','')
-		ss_doc(p0).run()
+		ss_doc(p0, _mask_sel=mask_sel).run()
 

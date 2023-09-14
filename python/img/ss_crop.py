@@ -6,7 +6,7 @@ class ss_crop(object):
 	"""PIL動作クラス"""
 	def __init__(self, path,
 		#crop= [6, 106, 1074, 826], split_y=500):
-		crop= [4, 59, 716, 556], split_y=356):
+		crop= [4, 59, 716, 556], split_y=356, _mask_sel=0):
 		"""初期化"""
 		self.img_main = Image.open(path)
 		
@@ -15,6 +15,9 @@ class ss_crop(object):
 		
 		# y0
 		self.split_y = split_y
+		
+		# 画像のマスク
+		self.mask_sel = _mask_sel
 		
 		self.clop_main()
 		self.split_img()
@@ -35,8 +38,10 @@ class ss_crop(object):
 		#pix_val = (0, 0, 0)
 		#size = (35, 35)
 		#pil = Image.new('RGB', size, pix_val)
-		#pil = Image.open('./ss_sample.bmp')
-		pil = Image.open('./ss_sample2.bmp')
+		if self.mask_sel==0:
+			pil = Image.open('./ss_sample.bmp')
+		else:
+			pil = Image.open('./ss_sample2.bmp')
 		pix= (641, 88)
 		self.img_y1.paste(pil, pix)
 
