@@ -199,7 +199,7 @@ class lifegame(object):
 if __name__ == '__main__':
 	#l = lifegame('./test.csv')
 	
-	l = lifegame('./glider_gun.csv')
-	#l = lifegame()
+	#l = lifegame('./glider_gun.csv')
+	l = lifegame()
 	l.run(90)
 	

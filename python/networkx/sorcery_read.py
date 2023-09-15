@@ -343,8 +343,8 @@ def main2():
 	
 	# 術の統計情報
 	exec_list = [
-		#['Sorcery01.xlsx', 'vol1'],
-		#['Sorcery02.xlsx', 'vol2'],
+		['Sorcery01.xlsx', 'vol1'],
+		['Sorcery02.xlsx', 'vol2'],
 		['Sorcery03.xlsx', 'vol3'],
 		#['Sorcery04.xlsx', 'vol4'],
 	]

@@ -54,7 +54,7 @@ def main(excelFileName):
 		# デバッグ用 特定のマップのみ処理
 		if True:
 		#if False:
-			if node_oder!=8:
+			if node_oder!=31:
 				continue
 		
 		# グラフの作成
