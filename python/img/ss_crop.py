@@ -30,10 +30,10 @@ class ss_crop(object):
 		""" 画面分割 """
 		x1, y1 = self.img_main.size
 		self.img_y0 = self.img_main.crop( [0, 0, x1, self.split_y] )
-                # 画像の右端は削除
+		# 画像の右端は削除
 		#self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1-71, y1] )
 
-                # 画像の右下のアイコンを塗りつぶし
+		# 画像の右下のアイコンを塗りつぶし
 		self.img_y1 = self.img_main.crop( [0, self.split_y+1, x1, y1] )
 		#pix_val = (0, 0, 0)
 		#size = (35, 35)
@@ -44,7 +44,17 @@ class ss_crop(object):
 			pil = Image.open('./ss_sample2.bmp')
 		pix= (641, 88)
 		self.img_y1.paste(pil, pix)
-
+	def crop_letter(self):
+		""" 一文字ずつ切り出す """
+		self.img_let = []
+		for j in range(3):
+			for i in range(18):
+				y0, x0 = j * 35 + 14, int(i * 35.5) + 35
+				y1, x1 = y0 + 37, x0 + 37
+				img_let = self.img_y1.crop([x0, y0, x1, y1])
+				#img_let.save('./test{0:0>2}_{1:0>2}.png'.format(j,i))
+				self.img_let.append( img_let )
+		
 	def get(self, img):
 		""" バイトストリームを返す """
 		import io
@@ -79,4 +89,6 @@ if __name__ == '__main__':
 	s.save_main('./test1_main.png')
 	s.save_y0('./test1_y0.png')
 	s.save_y1('./test1_y1.png')
+	
+	#s.crop_letter()
 	
