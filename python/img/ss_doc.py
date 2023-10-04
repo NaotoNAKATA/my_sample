@@ -55,6 +55,35 @@ class ss_doc(object):
 		p.line_spacing = Pt(10)
 		r.add_picture( self.ss.get_y1(), width=Cm(6.3) )
 	
+	def add_ocr_letter(self):
+		""" OCRする(一文字 """
+		if True:
+			# 一文字切り出し
+			self.ss.crop_letter()
+			
+			# OCR実行
+			import pyocr
+			tools = pyocr.get_available_tools()
+			tool = tools[0]
+			builder = pyocr.builders.TextBuilder(tesseract_layout=10)
+			
+			text = ''
+			for l in selfss..img_let:
+				c = tool.image_to_string(l, lang="tessdata/jpn", builder=builder)
+				text += c
+				
+				# 画像挿入し文字の貼り付け( デバッグ)
+				if True:
+					p = self.doc.add_paragraph()
+					r = p.add_run()
+					p.line_spacing = Pt(10)
+					r.add_picture( self.ss.get( l ) )
+
+					self.add_text( c )
+			
+			# テキストの挿入
+			self.add_text( text )
+	
 	def add_ocr(self):
 		""" OCRする """
 		if True:
@@ -1269,6 +1298,7 @@ class ss_doc(object):
 				
 				# OCRする
 				self.add_ocr()
+				#self.add_ocr_letter()
 				
 				# 1つ前の画像を保持
 				self.ss_pre = self.ss

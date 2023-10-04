@@ -44,6 +44,7 @@ class ss_crop(object):
 			pil = Image.open('./ss_sample2.bmp')
 		pix= (641, 88)
 		self.img_y1.paste(pil, pix)
+		
 	def crop_letter(self):
 		""" 一文字ずつ切り出す """
 		self.img_let = []
@@ -52,6 +53,11 @@ class ss_crop(object):
 				y0, x0 = j * 35 + 14, int(i * 35.5) + 35
 				y1, x1 = y0 + 37, x0 + 37
 				img_let = self.img_y1.crop([x0, y0, x1, y1])
+				
+				# 明らかに文字がないときは無視する
+				if False:
+					continue
+					
 				#img_let.save('./test{0:0>2}_{1:0>2}.png'.format(j,i))
 				self.img_let.append( img_let )
 		
