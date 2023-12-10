@@ -63,6 +63,9 @@ class num_read_q:
 		book.save(path2[0] + '_solve' + path2[1])
 			
 if __name__ == "__main__":
-	num_read_q('./sample.xlsx')
-	num_read_q('./ナンプレ_20240306.xlsx')
-	
+	q_book = [
+		'./sample.xlsx',
+		'./ナンプレ_20240306.xlsx',
+	]
+	for qb in q_book:
+		num_read_q(qb)
