@@ -9,7 +9,7 @@ from num_box import num_box
 from num_group import num_group
 from num_template import num_template
 
-class num_question:
+class num_solver:
 	""" 数独問題クラス """
 	def __init__(self, _len=9):
 		""" 初期化 """
@@ -53,7 +53,7 @@ class num_question:
 		else:
 			print('not solve')
 		
-class num_solver:
+class num_read_q:
 	""" 数独計算クラス """
 	def __init__(self, _path):
 		""" 初期化 """
@@ -73,7 +73,7 @@ class num_solver:
 			te_grp = self.te.get_grp( sheet['A1'].value )
 			
 			# 問題クラスの初期化
-			nq = num_question(_len=self.te.len)
+			nq = num_solver(_len=self.te.len)
 			
 			# テンプレートに従って問題の読み込み
 			for idx in te_tml:
@@ -108,6 +108,6 @@ class num_solver:
 		book.save(path2[0] + '_solve' + path2[1])
 			
 if __name__ == "__main__":
-	num_solver('./sample.xlsx')
-	num_solver('./ナンプレ_20240306.xlsx')
+	num_read_q('./sample.xlsx')
+	num_read_q('./ナンプレ_20240306.xlsx')
 	

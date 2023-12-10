@@ -6,6 +6,9 @@ class num_template:
 		""" 初期化 """
 		self.tml = {}
 		self.grp = {}
+		self.jnt = {}
+		self.fto = {}
+		self.odd = {}
 		self.len = 9
 		
 		# テンプレートファイルの読み込み
@@ -22,6 +25,9 @@ class num_template:
 			name = sheet.title
 			tml = []
 			grp = []
+			jnt = []
+			fto = []
+			odd = []
 			
 			# データの読み込み
 			for iter_row in sheet.rows:
@@ -36,6 +42,18 @@ class num_template:
 					# グループの読み込み
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
 					grp.append(row)
+				elif head=='J':
+					# (特殊)ジョイント
+					row = [ c.value for c in iter_row[1:] if c.value!=None]
+					jnt.append(row)
+				elif head=='F':
+					# (特殊)不等号
+					row = [ c.value for c in iter_row[1:] if c.value!=None]
+					fto.append(row)
+				elif head=='O':
+					# (特殊)奇数偶数
+					row = [ c.value for c in iter_row[1:] if c.value!=None]
+					odd.append(row)
 				elif head=='E':
 					self.len = iter_row[1].value
 				else:
@@ -44,6 +62,9 @@ class num_template:
 			# テンプレートに追加
 			self.tml[name] = tml
 			self.grp[name] = grp
+			self.jnt[name] = jnt
+			self.fto[name] = fto
+			self.odd[name] = odd
 			
 	def get_grp(self, name):
 		""" テンプレートの呼び出し """
