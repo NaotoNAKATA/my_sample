@@ -92,6 +92,9 @@ class num_group:
 					nb.del_cand( tri )
 			
 	def solve(self):
+		if self.is_ok():
+			return
+			
 		self.solve1()
 		self.solve2()
 		self.solve3()

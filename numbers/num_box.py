@@ -33,6 +33,9 @@ class num_box:
 	
 	def solve(self):
 		""" 候補が一つなら確定する """
+		if self.is_ok():
+			return
+		
 		if 1==self.cand_len():
 			self.num = self.cand[0]
 			self.cand = []

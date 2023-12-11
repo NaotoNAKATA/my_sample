@@ -68,7 +68,7 @@ class num_read_q:
 if __name__ == "__main__":
 	q_book = [
 		'./sample.xlsx',
-		#'./ナンプレ_20240306.xlsx',
+		'./ナンプレ_20240306.xlsx',
 	]
 	for qb in q_book:
 		num_read_q(qb)
