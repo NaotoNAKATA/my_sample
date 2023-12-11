@@ -77,7 +77,7 @@ class num_group:
 				for j in range(i+1, len(cand_pair) ):
 					if cand_pair[i].cand == cand_pair[j].cand:
 						for nb in filter( lambda x:x.cand_len()!=2, self.nb_list):
-							nb.del_cand( cand_pair[0].cand )
+							nb.del_cand( cand_pair[i].cand )
 						break
 	
 	def solve5(self):

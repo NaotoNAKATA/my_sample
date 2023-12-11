@@ -9,7 +9,7 @@ class num_template:
 		self.jnt = {}
 		self.fto = {}
 		self.odd = {}
-		self.len = 9
+		self.len = {}
 		
 		# テンプレートファイルの読み込み
 		self.read_xlsx(_path)
@@ -28,6 +28,7 @@ class num_template:
 			jnt = []
 			fto = []
 			odd = []
+			len = 9
 			
 			# データの読み込み
 			for iter_row in sheet.rows:
@@ -55,7 +56,7 @@ class num_template:
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
 					odd.append(row)
 				elif head=='E':
-					self.len = iter_row[1].value
+					len = iter_row[1].value
 				else:
 					continue
 			
@@ -65,6 +66,7 @@ class num_template:
 			self.jnt[name] = jnt
 			self.fto[name] = fto
 			self.odd[name] = odd
+			self.len[name] = len
 			
 	def get_grp(self, name):
 		""" テンプレートの呼び出し """
@@ -72,7 +74,11 @@ class num_template:
 					
 	def get_tml(self, name):
 		""" テンプレートの呼び出し """
-		return self.tml[name]		
+		return self.tml[name]
+		
+	def get_len(self, name):
+		""" テンプレートの呼び出し """
+		return self.len[name]		
 
 if __name__ == "__main__":
 	te = num_template('./template.xlsx')

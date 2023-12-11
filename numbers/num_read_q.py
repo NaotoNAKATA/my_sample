@@ -28,7 +28,7 @@ class num_read_q:
 			te_grp = self.te.get_grp( sheet['A1'].value )
 			
 			# 問題クラスの初期化
-			nq = num_solver(_len=self.te.len)
+			nq = num_solver(_len=self.te.get_len( sheet['A1'].value ))
 			
 			# テンプレートに従って問題の読み込み
 			for idx in te_tml:
@@ -52,8 +52,11 @@ class num_read_q:
 					if n.init==False:
 						sheet[idx].font = Font(bold=True, color='FF0000' )
 				else:
-					#sheet[idx].value= n.cand
-					#sheet[idx].font = Font(bold=True)
+					val ='('
+					for c in  n.cand:
+						val+='{},'.format(c)
+					val +=')'
+					sheet[idx].value= val
 					sheet[idx].fill = PatternFill(patternType='solid', fgColor='FFFF00')
 			
 			
@@ -65,7 +68,7 @@ class num_read_q:
 if __name__ == "__main__":
 	q_book = [
 		'./sample.xlsx',
-		'./ナンプレ_20240306.xlsx',
+		#'./ナンプレ_20240306.xlsx',
 	]
 	for qb in q_book:
 		num_read_q(qb)
