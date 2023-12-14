@@ -67,7 +67,17 @@ class TestNumBox(unittest.TestCase):
 		self.assertEqual(self.nb.cand, [])
 		self.assertTrue(self.nb.is_ok())
 		self.assertEqual(self.nb.cand_len(), 0)
-
+		
+	def test_del_cand_odd(self):
+		# 奇数を削除
+		self.nb.del_cand_odd()
+		self.assertEqual(self.nb.cand, [2,4,6,8])
+	
+	def test_del_cand_even(self):
+		# 偶数を削除
+		self.nb.del_cand_even()
+		self.assertEqual(self.nb.cand, [1,3,5,7,9])
+	
 class TestNumBoxDet(unittest.TestCase):
 	""" 確定初期化時のテスト """
 	def setUp(self):

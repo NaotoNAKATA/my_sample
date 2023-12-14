@@ -8,7 +8,7 @@ class num_template:
 		self.grp = {}
 		self.jnt = {}
 		self.fto = {}
-		self.odd = {}
+		self.evn = {}
 		self.len = {}
 		
 		# テンプレートファイルの読み込み
@@ -27,7 +27,7 @@ class num_template:
 			grp = []
 			jnt = []
 			fto = []
-			odd = []
+			evn = []
 			len = 9
 			
 			# データの読み込み
@@ -51,10 +51,10 @@ class num_template:
 					# (特殊)不等号
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
 					fto.append(row)
-				elif head=='O':
-					# (特殊)奇数偶数
+				elif head=='V':
+					# (特殊)偶数
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
-					odd.append(row)
+					evn.append(row)
 				elif head=='E':
 					len = iter_row[1].value
 				else:
@@ -65,7 +65,7 @@ class num_template:
 			self.grp[name] = grp
 			self.jnt[name] = jnt
 			self.fto[name] = fto
-			self.odd[name] = odd
+			self.evn[name] = evn
 			self.len[name] = len
 			
 	def get_grp(self, name):
@@ -78,7 +78,11 @@ class num_template:
 		
 	def get_len(self, name):
 		""" テンプレートの呼び出し """
-		return self.len[name]		
+		return self.len[name]
+	
+	def get_evn(self, name):
+		""" テンプレートの呼び出し """
+		return self.evn[name]		
 
 if __name__ == "__main__":
 	te = num_template('./template.xlsx')

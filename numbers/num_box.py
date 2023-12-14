@@ -39,3 +39,15 @@ class num_box:
 		if 1==self.cand_len():
 			self.num = self.cand[0]
 			self.cand = []
+			
+	def del_cand_odd(self):
+		""" 奇数の候補を削除する """
+		l = max(self.cand)
+		del_cand = [ i for i in range(1, l+1) if i%2==1 ]
+		self.del_cand( del_cand )
+		
+	def del_cand_even(self):
+		""" 偶数の候補を削除する """
+		l = max(self.cand)
+		del_cand = [ i for i in range(1, l+1) if i%2==0 ]
+		self.del_cand( del_cand )

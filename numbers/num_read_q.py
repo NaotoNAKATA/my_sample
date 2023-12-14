@@ -27,6 +27,8 @@ class num_read_q:
 			te_tml = self.te.get_tml( sheet['A1'].value )
 			te_grp = self.te.get_grp( sheet['A1'].value )
 			
+			te_evn = self.te.get_evn( sheet['A1'].value )
+			
 			# 問題クラスの初期化
 			nq = num_solver(_len=self.te.get_len( sheet['A1'].value ))
 			
@@ -41,7 +43,11 @@ class num_read_q:
 			# グループを作成
 			for group_list in te_grp:
 				nq.make_group(group_list)
-				
+			
+			# 偶数をセット
+			for evn_list in te_evn:
+				nq.del_odd( evn_list )
+			
 			# 問題を解く
 			nq.solve()
 			
