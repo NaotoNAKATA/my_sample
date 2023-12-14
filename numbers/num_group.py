@@ -73,12 +73,22 @@ class num_group:
 			)
 		
 		if len(cand_pair)>=2:
+			# 2つ組を抽出
+			cand_pair2 = list(
+				map(lambda x:x.cand, cand_pair)
+			)
+			
+			del_cand = []
 			for i in range( len(cand_pair)-1 ):
 				for j in range(i+1, len(cand_pair) ):
 					if cand_pair[i].cand == cand_pair[j].cand:
-						for nb in filter( lambda x:x.cand_len()!=2, self.nb_list):
-							nb.del_cand( cand_pair[i].cand )
-						break
+						del_cand.append( cand_pair[i].cand )
+			
+			# 候補を削除
+			for c in del_cand:
+				for nb in self.nb_list:
+					if nb.cand!=c:
+						nb.del_cand(c)
 	
 	def solve5(self):
 		""" 3つ組は、候補を絞る """
