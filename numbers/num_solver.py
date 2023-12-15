@@ -21,12 +21,6 @@ class num_solver:
 		# 全グループ(num_group)
 		self.grp = []
 		
-		# (特殊)ジョイントクロス (num_joint)
-		self.jnt = []
-		
-		# (特殊)不等号 (num_ineq)
-		self.fto = []
-		
 		# 最大数字
 		self.len = _len
 		
@@ -49,7 +43,7 @@ class num_solver:
 		for idx in joint_list:
 			num_box_list.append( self.nb[idx])
 			
-		self.jnt.append( num_joint(num_box_list, _len) )
+		self.grp.append( num_joint(num_box_list, _len) )
 	
 	def make_ineq(self, ineq_list, _len):
 		""" (特殊)不等号 """
@@ -57,7 +51,7 @@ class num_solver:
 		for idx in ineq_list:
 			num_box_list.append( self.nb[idx])
 			
-		self.fto.append( num_ineq(num_box_list, _len) )
+		self.grp.append( num_ineq(num_box_list, _len) )
 	
 	def del_odd(self, evn_list):
 		""" 奇数を削除 """
@@ -74,12 +68,6 @@ class num_solver:
 			# 各グループのsolverを起動
 			for g in self.grp:
 				g.solve()
-				
-			for j in self.jnt:
-				j.solve()
-				
-			for f in self.fto:
-				f.solve()
 			
 			# すべて確定でbreak
 			if self.is_ok():
