@@ -76,19 +76,25 @@ class num_ineq(num_group):
 					f = lambda x:x>=self.nb_list[1].num
 						
 				del_cand = [ j for j in range(1,self.max_num+1) if f(j) ]
-				nb.del_cand(del_cand)
+				self.nb_list[1-i].del_cand(del_cand)
 	
 	def solve4(self):
 		""" 候補が昇順になっているか """
 		for i, nb in enumerate(self.nb_list):
-			if nb.is_ok():
+			if not nb.is_ok():
 				if i==0:
-					f = lambda x:x<=min(self.nb_list[0].cand)
+					if self.nb_list[0].cand==[]:
+						f = lambda x:False
+					else:
+						f = lambda x:x<=min(self.nb_list[0].cand)
 				elif i==1:
-					f = lambda x:x>=max(self.nb_list[1].cand)
+					if self.nb_list[1].cand==[]:
+						f = lambda x:False
+					else:
+						f = lambda x:x>=max(self.nb_list[1].cand)
 						
 				del_cand = [ j for j in range(1,self.max_num+1) if f(j) ]
-				nb.del_cand(del_cand)
+				self.nb_list[1-i].del_cand(del_cand)
 
 class num_sum(num_group):
 	""" (特殊)合計 """

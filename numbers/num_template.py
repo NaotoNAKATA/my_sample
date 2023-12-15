@@ -75,6 +75,18 @@ class num_template:
 	def get_tml(self, name):
 		""" テンプレートの呼び出し """
 		return self.tml[name]
+	
+	def get_jnt(self, name):
+		""" テンプレートの呼び出し """
+		return self.jnt[name]
+	
+	def get_fto(self, name):
+		""" テンプレートの呼び出し """
+		return self.fto[name]
+	
+	def get_evn(self, name):
+		""" テンプレートの呼び出し """
+		return self.evn[name]
 		
 	def get_len(self, name):
 		""" テンプレートの呼び出し """

@@ -10,11 +10,11 @@ from num_template import num_template
 		
 class num_read_q:
 	""" 数独問題読み込みクラス """
-	def __init__(self, _path):
+	def __init__(self, _path, _temp):
 		""" 初期化 """
 		
 		# テンプレート
-		self.te = num_template('./template.xlsx')
+		self.te = num_template(_temp)
 		
 		# 問題の読み込み
 		book = openpyxl.load_workbook(_path)
@@ -26,7 +26,9 @@ class num_read_q:
 			# テンプレートの選択
 			te_tml = self.te.get_tml( sheet['A1'].value )
 			te_grp = self.te.get_grp( sheet['A1'].value )
-			
+			te_jnt = self.te.get_jnt( sheet['A1'].value )
+			te_fto = self.te.get_fto( sheet['A1'].value )
+			te_len = self.te.get_len( sheet['A1'].value )
 			te_evn = self.te.get_evn( sheet['A1'].value )
 			
 			# 問題クラスの初期化
@@ -43,6 +45,12 @@ class num_read_q:
 			# グループを作成
 			for group_list in te_grp:
 				nq.make_group(group_list)
+				
+			for joint_list in te_jnt:
+				nq.make_joint(joint_list, te_len)
+				
+			for ineq_list in te_fto:
+				nq.make_ineq(ineq_list, te_len)
 			
 			# 偶数をセット
 			for evn_list in te_evn:
@@ -73,8 +81,10 @@ class num_read_q:
 			
 if __name__ == "__main__":
 	q_book = [
-		'./sample.xlsx',
-		'./ナンプレ_20240306.xlsx',
+		['./sample.xlsx', './template.xlsx'],
+		['./ナンプレ_20240306.xlsx', './template.xlsx',],
+		#['./ナンプレ_20240306_2.xlsx', './template_20240306.xlsx',],
 	]
-	for qb in q_book:
-		num_read_q(qb)
+	for qb, te in q_book:
+		print(qb)
+		num_read_q(qb, te)

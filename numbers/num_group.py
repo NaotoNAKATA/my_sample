@@ -109,4 +109,4 @@ class num_group:
 		self.solve2()
 		self.solve3()
 		self.solve4()
-		self.solve5()
+		#self.solve5()
