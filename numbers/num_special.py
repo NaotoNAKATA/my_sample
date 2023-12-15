@@ -98,6 +98,7 @@ class num_ineq(num_group):
 						
 				del_cand = [ j for j in range(1,self.max_num+1) if f(j) ]
 				self.nb_list[1-i].del_cand(del_cand)
+		
 		# 候補を削除したので更新
 		self.solve2()
 	
