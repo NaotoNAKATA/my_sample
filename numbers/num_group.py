@@ -110,3 +110,4 @@ class num_group:
 		self.solve3()
 		self.solve4()
 		#self.solve5()
+		

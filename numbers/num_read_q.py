@@ -46,6 +46,8 @@ class num_read_q:
 			for group_list in te_grp:
 				nq.make_group(group_list)
 				
+			nq.make_overlap()
+				
 			for joint_list in te_jnt:
 				nq.make_joint(joint_list, te_len)
 				
@@ -72,9 +74,7 @@ class num_read_q:
 					val +=')'
 					sheet[idx].value= val
 					sheet[idx].fill = PatternFill(patternType='solid', fgColor='FFFF00')
-			
-			
-			
+		
 		# 別名で保存
 		path2 = os.path.splitext(_path)
 		book.save(path2[0] + '_solve' + path2[1])
@@ -83,7 +83,7 @@ if __name__ == "__main__":
 	q_book = [
 		['./sample.xlsx', './template.xlsx'],
 		['./ナンプレ_20240306.xlsx', './template.xlsx',],
-		#['./ナンプレ_20240306_2.xlsx', './template_20240306.xlsx',],
+		['./ナンプレ_20240306_2.xlsx', './template_20240306.xlsx',],
 	]
 	for qb, te in q_book:
 		print(qb)

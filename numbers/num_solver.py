@@ -10,6 +10,7 @@ from num_group import num_group
 from num_template import num_template
 from num_special import num_joint
 from num_special import num_ineq
+from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
@@ -37,6 +38,15 @@ class num_solver:
 			
 		self.grp.append( num_group(num_box_list) )
 	
+	def make_overlap(self):
+		""" 重なりをチェック """
+		l = len(self.grp)
+		for i in range( l-1 ):
+			for j in range(i, l):
+				no = num_overlap( self.grp[i], self.grp[j] )
+				if no.is_overlap():
+					self.grp.append( no )
+		
 	def make_joint(self, joint_list, _len):
 		""" (特殊)ジョイントクロス """
 		num_box_list = []
