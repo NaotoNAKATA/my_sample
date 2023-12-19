@@ -4,12 +4,7 @@ class num_template:
 	""" テンプレートクラス """
 	def __init__(self, _path):
 		""" 初期化 """
-		self.tml = {}
-		self.grp = {}
-		self.jnt = {}
-		self.fto = {}
-		self.evn = {}
-		self.len = {}
+		self.dat = {}
 		
 		# テンプレートファイルの読み込み
 		self.read_xlsx(_path)
@@ -26,7 +21,7 @@ class num_template:
 			tml = []
 			grp = []
 			jnt = []
-			fto = []
+			ineq = []
 			evn = []
 			len = 9
 			
@@ -34,7 +29,7 @@ class num_template:
 			for iter_row in sheet.rows:
 				head = iter_row[0].value
 				
-				# ヘッダがT(template),G(group)のみを処理
+				# ヘッダの処理
 				if head=='T':
 					# 数字が入る箱
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
@@ -50,7 +45,7 @@ class num_template:
 				elif head=='F':
 					# (特殊)不等号
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
-					fto.append(row)
+					ineq.append(row)
 				elif head=='V':
 					# (特殊)偶数
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
@@ -61,41 +56,19 @@ class num_template:
 					continue
 			
 			# テンプレートに追加
-			self.tml[name] = tml
-			self.grp[name] = grp
-			self.jnt[name] = jnt
-			self.fto[name] = fto
-			self.evn[name] = evn
-			self.len[name] = len
+			self.dat[name]={
+				'template' : tml,
+				'group' : grp,
+				'joint' : jnt,
+				'inequal' : ineq,
+				'even' : evn,
+				'length' : len,
+			}
 			
-	def get_grp(self, name):
+	def get(self, name):
 		""" テンプレートの呼び出し """
-		return self.grp[name]
-					
-	def get_tml(self, name):
-		""" テンプレートの呼び出し """
-		return self.tml[name]
-	
-	def get_jnt(self, name):
-		""" テンプレートの呼び出し """
-		return self.jnt[name]
-	
-	def get_fto(self, name):
-		""" テンプレートの呼び出し """
-		return self.fto[name]
-	
-	def get_evn(self, name):
-		""" テンプレートの呼び出し """
-		return self.evn[name]
+		return self.dat[name]
 		
-	def get_len(self, name):
-		""" テンプレートの呼び出し """
-		return self.len[name]
-	
-	def get_evn(self, name):
-		""" テンプレートの呼び出し """
-		return self.evn[name]		
-
 if __name__ == "__main__":
 	te = num_template('./template.xlsx')
 	

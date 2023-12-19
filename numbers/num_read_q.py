@@ -13,29 +13,25 @@ class num_read_q:
 	def __init__(self, _path, _temp):
 		""" 初期化 """
 		
-		# テンプレート
+		# テンプレートの読み込み
 		self.te = num_template(_temp)
 		
 		# 問題の読み込み
 		book = openpyxl.load_workbook(_path)
+		
 		for sheet in book.worksheets:
 			# シート名をキーにする
 			name = sheet.title
 			print(name)
 			
 			# テンプレートの選択
-			te_tml = self.te.get_tml( sheet['A1'].value )
-			te_grp = self.te.get_grp( sheet['A1'].value )
-			te_jnt = self.te.get_jnt( sheet['A1'].value )
-			te_fto = self.te.get_fto( sheet['A1'].value )
-			te_len = self.te.get_len( sheet['A1'].value )
-			te_evn = self.te.get_evn( sheet['A1'].value )
+			te = self.te.get( sheet['A1'].value )
 			
 			# 問題クラスの初期化
-			nq = num_solver(_len=self.te.get_len( sheet['A1'].value ))
+			nq = num_solver(_len=te['length'])
 			
 			# テンプレートに従って問題の読み込み
-			for idx in te_tml:
+			for idx in te['template']:
 				num = sheet[idx].value
 				# 空欄のとき
 				if num==None:
@@ -43,25 +39,28 @@ class num_read_q:
 				nq.set(idx, _num=num)
 			
 			# グループを作成
-			for group_list in te_grp:
+			for group_list in te['group']:
 				nq.make_group(group_list)
-				
-			nq.make_overlap()
-				
-			for joint_list in te_jnt:
-				nq.make_joint(joint_list, te_len)
-				
-			for ineq_list in te_fto:
-				nq.make_ineq(ineq_list, te_len)
 			
-			# 偶数をセット
-			for evn_list in te_evn:
+			# グループ間の重なり
+			nq.make_overlap()
+			
+			# (特殊)ジョイント
+			for joint_list in te['joint']:
+				nq.make_joint(joint_list, te['length'])
+			
+			# (特殊)不等号
+			for ineq_list in te['inequal']:
+				nq.make_ineq(ineq_list, te['length'])
+			
+			# (特殊)偶数
+			for evn_list in te['even']:
 				nq.del_odd( evn_list )
 			
 			# 問題を解く
 			nq.solve()
 			
-			# 書き出す
+			# 解答を書き出す
 			for idx, n in nq.nb.items():
 				if n.is_ok():
 					sheet[idx].value= n.num
