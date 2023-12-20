@@ -14,7 +14,7 @@ from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
-	def __init__(self, _len=9):
+	def __init__(self, te):
 		""" 初期化 """
 		# 全数字(num_box)
 		self.nb = {}
@@ -23,8 +23,29 @@ class num_solver:
 		self.grp = []
 		
 		# 最大数字
-		self.len = _len
+		self.len = te['length']
 		
+	def configure(self, te):
+		""" ソルバー作成 """
+		# グループを作成
+		for group_list in te['group']:
+			self.make_group(group_list)
+			
+		# グループ間の重なり
+		self.make_overlap()
+		
+		# (特殊)ジョイント
+		for joint_list in te['joint']:
+			self.make_joint(joint_list, te['length'])
+		
+		# (特殊)不等号
+		for ineq_list in te['inequal']:
+			self.make_ineq(ineq_list, te['length'])
+			
+		# (特殊)偶数
+		for evn_list in te['even']:
+			self.del_odd( evn_list )
+	
 	def set(self, _idx, _num=-1):
 		""" 数字クラスの登録 """
 		self.nb[_idx] = num_box(

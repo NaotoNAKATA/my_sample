@@ -28,7 +28,7 @@ class num_read_q:
 			te = self.te.get( sheet['A1'].value )
 			
 			# 問題クラスの初期化
-			nq = num_solver(_len=te['length'])
+			nq = num_solver(te)
 			
 			# テンプレートに従って問題の読み込み
 			for idx in te['template']:
@@ -38,24 +38,8 @@ class num_read_q:
 					num=-1
 				nq.set(idx, _num=num)
 			
-			# グループを作成
-			for group_list in te['group']:
-				nq.make_group(group_list)
-			
-			# グループ間の重なり
-			nq.make_overlap()
-			
-			# (特殊)ジョイント
-			for joint_list in te['joint']:
-				nq.make_joint(joint_list, te['length'])
-			
-			# (特殊)不等号
-			for ineq_list in te['inequal']:
-				nq.make_ineq(ineq_list, te['length'])
-			
-			# (特殊)偶数
-			for evn_list in te['even']:
-				nq.del_odd( evn_list )
+			# 問題クラスの構築
+			nq.configure(te)
 			
 			# 問題を解く
 			nq.solve()
