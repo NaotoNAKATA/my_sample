@@ -64,9 +64,10 @@ class num_read_q:
 			
 if __name__ == "__main__":
 	q_book = [
-		['./sample.xlsx', './template.xlsx'],
-		['./ナンプレ_20240306.xlsx', './template.xlsx',],
-		['./ナンプレ_20240306_2.xlsx', './template_20240306.xlsx',],
+		#['./sample.xlsx', './template.xlsx'],
+		#['./ナンプレ_20240306.xlsx', './template.xlsx',],
+		['./ナンプレ_20240306_1.xlsx', './template.xlsx',],
+		#['./ナンプレ_20240306_2.xlsx', './template_20240306.xlsx',],
 	]
 	for qb, te in q_book:
 		print(qb)
