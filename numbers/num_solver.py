@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-import openpyxl
-from openpyxl.styles import Font
-from openpyxl.styles import PatternFill
 
 from num_box import num_box
 from num_group import num_group
-from num_template import num_template
 from num_special import num_joint
 from num_special import num_ineq
 from num_overlap import num_overlap
