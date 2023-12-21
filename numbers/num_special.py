@@ -108,12 +108,9 @@ class num_ineq(num_group):
 	
 class num_sum(num_group):
 	""" (特殊)合計 """
-	def __init__(self, _num_box_list, _max_num=9):
+	def __init__(self, _num_box_list, _sum):
 		""" num_boxクラスの参照を受け取る """
-		super().__init__(_num_box_list, _sum, _max_num=9)
-		
-		# 最大数字は引数で受け取る
-		self.max_num = _max_num
+		super().__init__(_num_box_list)
 		
 		# 合計数字
 		self.sums = _sum

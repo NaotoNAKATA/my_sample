@@ -6,6 +6,7 @@ from num_box import num_box
 from num_group import num_group
 from num_special import num_joint
 from num_special import num_ineq
+from num_special import num_sum
 from num_overlap import num_overlap
 
 class num_solver:
@@ -37,6 +38,10 @@ class num_solver:
 		# (特殊)不等号
 		for ineq_list in te['inequal']:
 			self.make_ineq(ineq_list, te['length'])
+			
+		# (特殊)足し算
+		for s, sums_list in te['sums']:
+			self.make_sums(sums_list, s)
 			
 		# (特殊)偶数
 		for evn_list in te['even']:
@@ -79,6 +84,14 @@ class num_solver:
 			num_box_list.append( self.nb[idx])
 			
 		self.grp.append( num_ineq(num_box_list, _len) )
+	
+	def make_sums(self, sums_list, s):
+		""" (特殊)足し算 """
+		num_box_list = []
+		for idx in sums_list:
+			num_box_list.append( self.nb[idx])
+		
+		self.grp.append( num_sum(num_box_list, s) )
 	
 	def del_odd(self, evn_list):
 		""" 奇数を削除 """

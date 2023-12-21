@@ -23,6 +23,7 @@ class num_template:
 			jnt = []
 			ineq = []
 			evn = []
+			sums = []
 			len = 9
 			
 			# データの読み込み
@@ -50,6 +51,11 @@ class num_template:
 					# (特殊)偶数
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
 					evn.append(row)
+				elif head=='S':
+					# (特殊)足し算
+					s = int(iter_row[1].value)
+					row = [ c.value for c in iter_row[2:] if c.value!=None]
+					sums.append([s, row])
 				elif head=='E':
 					len = iter_row[1].value
 				else:
@@ -62,6 +68,7 @@ class num_template:
 				'joint' : jnt,
 				'inequal' : ineq,
 				'even' : evn,
+				'sums' : sums,
 				'length' : len,
 			}
 			
