@@ -87,7 +87,7 @@ class num_solver:
 	def del_odd(self, evn_list):
 		""" 奇数を削除 """
 		for idx in evn_list:
-			self.nb[_idx] .del_cand_odd()
+			self.nb[idx] .del_cand_odd()
 	
 	def is_ok(self):
 		""" クラス内の数字がすべて確定していれば True """
