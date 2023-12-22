@@ -12,9 +12,12 @@ class num_read_q:
 	""" 数独問題読み込みクラス """
 	def __init__(self, _path, _temp):
 		""" 初期化 """
-		
 		# テンプレートの読み込み
-		self.te = num_template(_temp)
+		for  t, te in enumerate(_temp):
+			if t==0:
+				self.te = num_template(te)
+			else:
+				self.te.read_xlsx(te)
 		
 		# 問題の読み込み
 		book = openpyxl.load_workbook(_path)
@@ -64,10 +67,8 @@ class num_read_q:
 			
 if __name__ == "__main__":
 	q_book = [
-		#['./sample.xlsx', './template.xlsx'],
-		#['./ナンプレ_20240306.xlsx', './template.xlsx',],
-		#['./ナンプレ_20240306_1.xlsx', './template.xlsx',],
-		['./ナンプレ_20240306_2.xlsx', './template_20240306.xlsx',],
+		#['./sample.xlsx', ['./template.xlsx']],
+		['./ナンプレ_20240306.xlsx', ['./template.xlsx', './template_ナンプレ_20240306.xlsx']],
 	]
 	for qb, te in q_book:
 		print(qb)
