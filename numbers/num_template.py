@@ -15,9 +15,14 @@ class num_template:
 		book = openpyxl.load_workbook(_path, data_only=True)
 		
 		# 1シートに1テンプレート
-		for sheet in book.worksheets:
+		for sheet in book.worksheets: 
 			# シート名をキーにする
 			name = sheet.title
+			
+			# バージョンシートは飛ばす
+			if name == 'version':
+				continue
+			
 			tml = []
 			grp = []
 			jnt = []

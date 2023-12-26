@@ -10,6 +10,7 @@ from num_template import num_template
 		
 class num_read_q:
 	""" 数独問題読み込みクラス """
+	version = '1.0,0'
 	def __init__(self, _path, _temp):
 		""" 初期化 """
 		# テンプレートの読み込み
@@ -21,6 +22,9 @@ class num_read_q:
 		
 		# 問題の読み込み
 		book = openpyxl.load_workbook(_path)
+		
+		# 結果を保持(書き出し用)
+		self.results = []
 		
 		for sheet in book.worksheets:
 			# シート名をキーにする
@@ -47,6 +51,9 @@ class num_read_q:
 			# 問題を解く
 			nq.solve()
 			
+			# 結果を保持
+			self.results.append([name, nq.result])
+			
 			# 解答を書き出す
 			for idx, n in nq.nb.items():
 				if n.is_ok():
@@ -61,6 +68,35 @@ class num_read_q:
 					sheet[idx].value= val
 					sheet[idx].fill = PatternFill(patternType='solid', fgColor='FFFF00')
 		
+		# 結果を保存
+		book.create_sheet(title='summary')
+		summary = book.worksheets[-1]
+		book.active = summary
+		
+		summary['B1'].value = 'version'
+		summary['A2'].value = '全体'
+		summary['B2'].value = num_read_q.version
+		summary['A3'].value = 'solver'
+		summary['B3'].value = num_solver.version
+		
+		for  t, te in enumerate(_temp):
+			tbk = openpyxl.load_workbook(te)
+			ws = tbk['version']
+			cell_A = 'A{}'.format(t+4)
+			cell_B = 'B{}'.format(t+4)
+			cell_C = 'C{}'.format(t+4)
+			
+			summary[cell_A].value = 'template'
+			summary[cell_B].value = ws['A2'].value
+			summary[cell_C].value = os.path.basename(te)
+		
+		for r, ret in enumerate(self.results):
+			cell_A = 'A{}'.format(r+5+len(_temp))
+			cell_B = 'B{}'.format(r+5+len(_temp))
+			
+			summary[cell_A].value = ret[0]
+			summary[cell_B].value = ret[1]
+			
 		# 別名で保存
 		path2 = os.path.splitext(_path)
 		book.save(path2[0] + '_solve' + path2[1])

@@ -11,6 +11,7 @@ from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
+	version = '1.0.0'
 	def __init__(self, te):
 		""" 初期化 """
 		# 全数字(num_box)
@@ -112,6 +113,8 @@ class num_solver:
 			# すべて確定でbreak
 			if self.is_ok():
 				print('solve...{}'.format(i))
+				self.result = '{}'.format(i)
 				break
 		else:
 			print('not solve')
+			self.result = 'N'
