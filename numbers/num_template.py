@@ -79,7 +79,10 @@ class num_template:
 			
 	def get(self, name):
 		""" テンプレートの呼び出し """
-		return self.dat[name]
+		if name in  self.dat:
+			return self.dat[name]
+		else:
+				return None
 		
 if __name__ == "__main__":
 	te = num_template('./template.xlsx')

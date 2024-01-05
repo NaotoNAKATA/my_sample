@@ -10,7 +10,7 @@ from num_template import num_template
 		
 class num_read_q:
 	""" 数独問題読み込みクラス """
-	version = '1.0,0'
+	version = '1.1.0'
 	def __init__(self, _path, _temp):
 		""" 初期化 """
 		# テンプレートの読み込み
@@ -33,6 +33,11 @@ class num_read_q:
 			
 			# テンプレートの選択
 			te = self.te.get( sheet['A1'].value )
+			
+			# テンプレートがないときは飛ばす
+			if te==None:
+				self.results.append([name, sheet['A1'].value])
+				continue
 			
 			# 問題クラスの初期化
 			nq = num_solver(te)
@@ -104,7 +109,8 @@ class num_read_q:
 if __name__ == "__main__":
 	q_book = [
 		#['./sample.xlsx', ['./template.xlsx']],
-		['./問題/ナンプレ_20240306.xlsx', ['./template.xlsx', './問題/template_ナンプレ_20240306.xlsx']],
+		#['./問題/ナンプレ_20240306.xlsx', ['./template.xlsx', './問題/template_ナンプレ_20240306.xlsx']],
+		['./問題/ナンプレランド_20240210.xlsx', ['./template.xlsx']],
 	]
 	for qb, te in q_book:
 		print(qb)
