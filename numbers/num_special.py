@@ -133,4 +133,74 @@ class num_sum(num_group):
 	def solve5(self):
 		pass
 		
+class num_mult(num_group):
+	""" (特殊)九九 """
+	def __init__(self, _num_box_list):
+		""" num_boxクラスの参照を受け取る """
+		super().__init__(_num_box_list)
+		
+		# 暗黙的に最大数字は9
+		self.max_num = 9
+		
+	def solve1(self):
+		# 最初の2マスに1は入らない
+		for nb in self.nb_list[:2]:
+			nb.del_cand([1])
+	
+	def solve3(self):
+		# 最初の2マスが確定したら、残りも確定
+		for nb in self.nb_list[:2]:
+			if not nb.is_ok():
+				break
+		else:
+			m = self.nb_list[0].num * self.nb_list[1].num
+			if self.len==3:
+				self.nb_list[2].set(m)
+			elif self.len==4:
+				self.nb_list[2].set(int(m/10))
+				self.nb_list[3].set(m%10)
+	
+	def solve4(self):
+		# 最初の2マスのうちどちらかが確定しているときは候補を絞る
+		if self.is_ok():
+			return
+		
+		if self.nb_list[0].is_ok() or self.nb_list[1].is_ok():
+			if self.nb_list[0].is_ok():
+				ok = self.nb_list[0]
+				ng = self.nb_list[1]
+			else:
+				ok = self.nb_list[1]
+				ng = self.nb_list[0]
+			
+			del_cand = []
+			cand2 = []
+			cand3 = []
+			for c in ng.cand:
+				m = c * ok.num
+				
+				# 左辺の候補を削除
+				if self.len==3 and m>9:
+					del_cand.append(c)
+				elif self.len==4 and m<12:
+					del_cand.append(c)
+				
+				# 右辺の候補を削除
+				if self.len==3 and m<=9:
+					cand2.append(m)
+				elif self.len==4 and m>=12:
+					cand2.append(int(m/10))
+					cand3.append(m%10)
+			
+			ng.del_cand( del_cand )
+			
+			del_cand2 = [ i for i in range(1,10) if i not in cand2 ]
+			del_cand3 = [ i for i in range(1,10) if i not in cand3 ]
+			
+			self.nb_list[2].del_cand( del_cand2 )
+			if self.len==4:
+				self.nb_list[3].del_cand( del_cand3 )
+	
+	def solve5(self):
+		pass
 	

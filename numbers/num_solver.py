@@ -7,11 +7,12 @@ from num_group import num_group
 from num_special import num_joint
 from num_special import num_ineq
 from num_special import num_sum
+from num_special import num_mult
 from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
-	version = '1.0.0'
+	version = '1.1.0'
 	def __init__(self, te):
 		""" 初期化 """
 		# 全数字(num_box)
@@ -47,6 +48,10 @@ class num_solver:
 		# (特殊)偶数
 		for evn_list in te['even']:
 			self.del_odd( evn_list )
+			
+		# (特殊)九九
+		for mm_list in te['mult']:
+			self.make_mult(mm_list)
 	
 	def set(self, _idx, _num=-1):
 		""" 数字クラスの登録 """
@@ -98,6 +103,14 @@ class num_solver:
 		""" 奇数を削除 """
 		for idx in evn_list:
 			self.nb[idx] .del_cand_odd()
+	
+	def make_mult(self, mm_list):
+		""" (特殊)九九 """
+		num_box_list = []
+		for idx in mm_list:
+			num_box_list.append( self.nb[idx])
+			
+		self.grp.append( num_mult(num_box_list) )
 	
 	def is_ok(self):
 		""" クラス内の数字がすべて確定していれば True """
