@@ -29,6 +29,7 @@ class num_template:
 			ineq = []
 			evn = []
 			sums = []
+			arr = []
 			mm = []
 			len = 9
 			
@@ -62,6 +63,10 @@ class num_template:
 					s = int(iter_row[1].value)
 					row = [ c.value for c in iter_row[2:] if c.value!=None]
 					sums.append([s, row])
+				elif head=='R':
+					# (特殊)合計アロー
+					row = [ c.value for c in iter_row[1:] if c.value!=None]
+					arr.append(row)
 				elif head=='M':
 					# (特殊)九九
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
@@ -79,6 +84,7 @@ class num_template:
 				'inequal' : ineq,
 				'even' : evn,
 				'sums' : sums,
+				'arrow' : arr,
 				'mult' : mm,
 				'length' : len,
 			}

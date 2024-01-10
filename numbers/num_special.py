@@ -133,6 +133,56 @@ class num_sum(num_group):
 	def solve5(self):
 		pass
 		
+class num_arrow(num_group):
+	""" (特殊)合計アロー """
+	def __init__(self, _num_box_list):
+		""" num_boxクラスの参照を受け取る """
+		super().__init__(_num_box_list)
+		
+		# 暗黙的に最大数字は9
+		self.max_num = 9
+		
+	def solve1(self):
+		# 合計に1は入らない
+		if not self.nb_list[0].is_ok():
+			self.nb_list[0].del_cand([1])
+		
+		# 足す側に9は入らない
+		for nb in self.nb_list[1:]:
+			if not nb.is_ok():
+				nb.del_cand([self.max_num])
+		
+	def solve3(self):
+		# 最後の一つを確定させる
+		self.update_det()
+		if self.len==len(self.det_num)+1:
+			if not self.nb_list[0].is_ok():
+				# 合計が未確定
+				self.nb_list[0].set( sum(self.det_num) )
+			else:
+				# 足す側が未確定
+				for nb in self.nb_list[1:]:
+					if not nb.is_ok():
+						nb.set( 2*self.nb_list[0].num - sum(self.det_num) )
+						break
+		
+	def solve4(self):
+		# 確定数字より小さい数字は合計にはならない
+		self.update_det()
+		if not self.nb_list[0].is_ok() and self.det_num!=[]:
+			del_cand = [ c for c in self.nb_list[0].cand if c <=max(self.det_num) ]
+			self.nb_list[0].del_cand( del_cand )
+			
+		# 合計の候補の最大数字以上の数字は、足す側に入らない
+		if not self.nb_list[0].is_ok():
+			m = max( self.nb_list[0].cand )
+			del_cand = [ c for c in range(1,self.max_num) if c>=m ]
+			for nb in self.nb_list[1:]:
+				nb.del_cand( del_cand )
+			
+	def solve5(self):
+		pass
+		
 class num_mult(num_group):
 	""" (特殊)九九 """
 	def __init__(self, _num_box_list):
