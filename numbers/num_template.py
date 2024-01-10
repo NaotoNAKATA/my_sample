@@ -26,6 +26,7 @@ class num_template:
 			tml = []
 			grp = []
 			jnt = []
+			njnt = []
 			ineq = []
 			evn = []
 			sums = []
@@ -50,6 +51,10 @@ class num_template:
 					# (特殊)ジョイント
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
 					jnt.append(row)
+				elif head=='nJ':
+					# (特殊)ジョイントの反転
+					row = [ c.value for c in iter_row[1:] if c.value!=None]
+					njnt.append(row)
 				elif head=='F':
 					# (特殊)不等号
 					row = [ c.value for c in iter_row[1:] if c.value!=None]
@@ -81,6 +86,7 @@ class num_template:
 				'template' : tml,
 				'group' : grp,
 				'joint' : jnt,
+				'njoint' : njnt,
 				'inequal' : ineq,
 				'even' : evn,
 				'sums' : sums,

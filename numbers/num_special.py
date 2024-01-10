@@ -54,6 +54,27 @@ class num_joint(num_group):
 	def solve5(self):
 		# 実装なし
 		pass
+
+class num_njoint(num_joint):
+	""" (特殊)ジョイントの反転 """
+	def __init__(self, _num_box_list, _max_num=9):
+		""" num_boxクラスの参照を受け取る """
+		super().__init__(_num_box_list, _max_num)
+	
+	def solve3(self):
+		""" 確定数字の隣の候補を削除する """
+		for i, nb in enumerate(self.nb_list):
+			if nb.is_ok():
+				del_cand = [ nb.num-1, nb.num+1]
+				
+				if i>0:
+					self.nb_list[i-1].del_cand(del_cand)
+				
+				if i<(self.len-1):
+					self.nb_list[i+1].del_cand(del_cand)
+	
+	def solve4(self):
+		pass
 		
 class num_ineq(num_group):
 	""" (特殊)不等号 """
