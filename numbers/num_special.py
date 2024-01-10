@@ -271,7 +271,23 @@ class num_mult(num_group):
 			self.nb_list[2].del_cand( del_cand2 )
 			if self.len==4:
 				self.nb_list[3].del_cand( del_cand3 )
-	
+				
+		# 最初の2マスのうちどちらかが確定して、積も確定しているときは確定する
+		if self.nb_list[0].is_ok() or self.nb_list[1].is_ok():
+			for nb in self.nb_list[2:]:
+				if not nb.is_ok():
+					break
+			else:
+				if self.len==3:
+					m = self.nb_list[2].num
+				else:
+					m = self.nb_list[2].num * 10 + self.nb_list[3].num
+			
+				if self.nb_list[0].is_ok():
+					self.nb_list[1].set( int(m / self.nb_list[0].num) )
+				else:
+					self.nb_list[0].set( int(m / self.nb_list[1].num) )
+			
 	def solve5(self):
 		pass
 	
