@@ -37,15 +37,15 @@ class num_solver:
 		
 		# (特殊)ジョイント
 		for joint_list in te['joint']:
-			self.make_joint(joint_list, te['length'])
+			self.make_joint(joint_list, self.len)
 		
 		# (特殊)ジョイントの反転
 		for joint_list in te['njoint']:
-			self.make_njoint(joint_list, te['length'])
+			self.make_njoint(joint_list, self.len)
 		
 		# (特殊)不等号
 		for ineq_list in te['inequal']:
-			self.make_ineq(ineq_list, te['length'])
+			self.make_ineq(ineq_list, self.len)
 			
 		# (特殊)足し算
 		for s, sums_list in te['sums']:
