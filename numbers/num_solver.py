@@ -29,9 +29,8 @@ class num_solver:
 	def configure(self, te):
 		""" ソルバー作成 """
 		# グループを作成
-		for group_list in te['group']:
-			self.make_group(group_list)
-			
+		self.make_group(te['group'], num_group)
+		
 		# グループ間の重なり
 		self.make_overlap()
 		
@@ -68,13 +67,14 @@ class num_solver:
 		self.nb[_idx] = num_box(
 				_len=self.len, _num=_num)
 	
-	def make_group(self, group_list):
+	def make_group(self, group_list, ng):
 		""" グループの作成 """
-		num_box_list = []
-		for idx in group_list:
-			num_box_list.append( self.nb[idx] )
+		for group in group_list:
+			num_box_list = []
+			for idx in group:
+				num_box_list.append( self.nb[idx] )
 			
-		self.grp.append( num_group(num_box_list) )
+			self.grp.append( ng(num_box_list) )
 	
 	def make_overlap(self):
 		""" 重なりをチェック """
