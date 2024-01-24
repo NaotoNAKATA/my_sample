@@ -14,7 +14,7 @@ from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
-	version = '1.2.2'
+	version = '1.2.3'
 	def __init__(self, te):
 		""" 初期化 """
 		# 全数字(num_box)
@@ -46,13 +46,11 @@ class num_solver:
 			self.make_group(te[key], ng, arg)
 			
 		# (特殊)足し算
-		for s, sums_list in te['sums']:
-			self.make_sums(sums_list, s)
+		self.make_sums(te['sums'])
 			
 		# (特殊)偶数
-		for evn_list in te['even']:
-			self.del_odd( evn_list )
-	
+		self.del_odd(te['even'])
+		
 	def set(self, _idx, _num=-1):
 		""" 数字クラスの登録 """
 		self.nb[_idx] = num_box(
@@ -79,18 +77,20 @@ class num_solver:
 				if no.is_overlap():
 					self.grp.append( no )
 	
-	def make_sums(self, sums_list, s):
+	def make_sums(self, sums_list):
 		""" (特殊)足し算 """
-		num_box_list = []
-		for idx in sums_list:
-			num_box_list.append( self.nb[idx])
+		for s, sums in sums_list:
+			num_box_list = []
+			for idx in sums:
+				num_box_list.append( self.nb[idx])
 		
-		self.grp.append( num_sum(num_box_list, s) )
+			self.grp.append( num_sum(num_box_list, s) )
 	
 	def del_odd(self, evn_list):
 		""" 奇数を削除 """
-		for idx in evn_list:
-			self.nb[idx].del_cand_odd()
+		for evn in evn_list:
+			for idx in evn:
+				self.nb[idx].del_cand_odd()
 		
 	def is_ok(self):
 		""" クラス内の数字がすべて確定していれば True """
