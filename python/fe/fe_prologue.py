@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+
+import os
+import glob
+import shutil
+
+from fe_pil import fe_pil
+from fe_compose import fe_compose
+	
+class fe_pil_prlg(fe_pil):
+	"""プロローグクラス(img) """
+	def __init__(self, path):
+		"""初期化"""
+		super().__init__(path, bsize=1)
+		
+		self.init_local()
+		
+	def init_local(self):
+		""" 各派生クラスの初期化 """
+		# オリジナルは256,224
+		
+		# 画像部分の切り出し
+		# 241,153
+		self.img_main = self.get([8,9,255-7,161])
+		
+		# テキスト部分の切り出し
+		# 241,46
+		self.img_text = self.get([8,169,255-7,214])
+	
+	def save_main(self, path):
+		""" 画像部分の保存 """
+		self.img_main.save(path)
+	
+	def save_text(self, path):
+		""" テキスト部分の保存 """
+		self.img_text.save(path)
+
+class fe_prologue(fe_compose):
+	""" プロローグクラス( 結合) """
+	def __init__(self):
+		"""初期化"""
+		super().__init__(fe_pil_prlg)
+		
+	def test_run_first(self):
+		""" テスト実行 """
+		super().test_run_first()
+		
+		self.save_main_temp()
+	
+	def save_main_temp(self):
+		""" メイン画像の保存 """
+		for i, fe in enumerate(self.fe):
+			filename = self.TEMP_DIR + '/{0:0>2}.png'.format(i)
+			fe.save_main(filename)
+	
+	def compose_list(self):
+		""" リストの画像を合成 """
+		for i, (n, (x,y)) in enumerate(self.comp):
+			f = self.fe[n].img_main
+			self.compose(f, (x,y))
+			
+			# 途中経過
+			if self.save_temp:
+				filename = self.TEMP_DIR + '/prlg_{0:0>2}.png'.format(i)
+				self.save(filename)
+		
+		
+if __name__ == '__main__':
+	
+	#fe = fe_pil_prlg('./e.png')
+	#fe.save_main('./e_main.png')
+	#fe.save_text('./e_text.png')
+	
+	import prologue00 as p
+	
+	fe = fe_prologue()
+	
+	if 'dirs' in dir(p):
+		for d in p.dirs:
+			fe.add_dir(d)
+	if 'files' in dir(p):
+		fe.add_files(p.files)
+	if 'out_file' in dir(p):
+		fe.set_out_file(p.out_file)
+		
+	fe.set_compose(p.comp)
+	
+	if p.TEST_RUN_FIRST:
+		fe.test_run_first()
+	if p.TEST_RUN:
+		fe.test_run()
+	if p.RUN:
+		fe.run()
+	
