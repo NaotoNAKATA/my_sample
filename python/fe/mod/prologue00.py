@@ -1,6 +1,6 @@
 base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
 sub_dir = '00-序章-聖戦士誕生/00-プロローグ'
-sub_dir_add = '00-序章-聖戦士誕生/00-add'
+sub_dir_add = '00-序章-聖戦士誕生/00-プロローグ追加画像'
 
 dirs = [
 	base_dir + sub_dir,

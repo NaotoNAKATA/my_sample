@@ -82,7 +82,29 @@ class fe_pil(object):
 			draw.text((3,y+1), '{0}'.format(int(y/self.bsize)), 'yellow')
 				
 		pil.save(path)
-	
+		
+	def save_gif(self, path, fe, fps=10):
+		""" アニメーションgifの保存 """
+		# アニメーションgifのフレームレート
+		# GIFアニメではフレーム間の時間間隔が「0.01秒単位」
+		# 0.01s = 100fps
+		# 0.02s = 50fps
+		# 0.04s = 25fps
+		# 0.05s = 20fps
+		# 0.08s = 12.5fps
+		#*0.10s = 10fps
+		d = 1000 / fps
+		
+		# リストの作成
+		pils = [f.pil for f in fe]
+			
+		# 保存する
+		self.pil.save(
+			path,
+			save_all=True,
+			append_images=pils,
+			duration=d, loop=0)
+			
 class fe_blank(fe_pil):
 	"""ブランクイメージ"""
 	PIX_VAL = (128, 0, 128)
@@ -93,19 +115,3 @@ class fe_blank(fe_pil):
 		size = self.block_to_pix(block)
 		self.pil = Image.new('RGB', size, self.PIX_VAL)
 		self.update_size()
-
-if __name__ == '__main__':
-	
-	#fe = fe_feild('./d.png')
-	
-	#print(fe.pil.size)
-	#print(fe.size)
-	
-	#fe.save_draw_line('./d_temp.png')
-	
-	#fe.crop((3,2,5,5))
-	#fe.save('./d2.png')
-	
-	
-	pass
-	

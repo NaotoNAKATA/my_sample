@@ -140,6 +140,10 @@ class fe_compose(object):
 		""" 画像の保存 """
 		self.base.save_draw_line(path)
 	
+	def save_gif(self, fps=10):
+		""" アニメーションgifの保存 """
+		self.fe[0].save_gif(self.out_file, self.fe[1:], fps=fps)
+	
 	def set_compose(self, comp):
 		""" 合成リストのセット """
 		self.comp = comp
@@ -151,12 +155,3 @@ class fe_compose(object):
 	def compose_list(self):
 		""" リストの画像を合成 """
 		pass
-
-if __name__ == '__main__':
-	
-	#fe = fe_pil_prlg('./e.png')
-	#fe.save_main('./e_main.png')
-	#fe.save_text('./e_text.png')
-	
-	pass
-	

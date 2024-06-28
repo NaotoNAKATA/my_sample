@@ -66,11 +66,7 @@ class fe_field(fe_compose):
 		
 if __name__ == '__main__':
 	
-	#fe = fe_pil_prlg('./e.png')
-	#fe.save_main('./e_main.png')
-	#fe.save_text('./e_text.png')
-	
-	import field00 as p
+	import field00_2 as p
 	
 	fe = fe_field()
 	
@@ -81,8 +77,8 @@ if __name__ == '__main__':
 		fe.add_files(p.files)
 	if 'out_file' in dir(p):
 		fe.set_out_file(p.out_file)
-		
-	fe.set_compose(p.comp)
+	if 'comp' in dir(p):
+		fe.set_compose(p.comp)
 	
 	if p.TEST_RUN_FIRST:
 		fe.test_run_first()

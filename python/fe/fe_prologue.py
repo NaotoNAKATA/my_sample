@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-import glob
-import shutil
-
 from fe_pil import fe_pil
 from fe_compose import fe_compose
 	
@@ -64,14 +60,9 @@ class fe_prologue(fe_compose):
 				filename = self.TEMP_DIR + '/prlg_{0:0>2}.png'.format(i)
 				self.save(filename)
 		
-		
 if __name__ == '__main__':
 	
-	#fe = fe_pil_prlg('./e.png')
-	#fe.save_main('./e_main.png')
-	#fe.save_text('./e_text.png')
-	
-	import prologue00 as p
+	import prologue00_gif as p
 	
 	fe = fe_prologue()
 	
@@ -82,8 +73,8 @@ if __name__ == '__main__':
 		fe.add_files(p.files)
 	if 'out_file' in dir(p):
 		fe.set_out_file(p.out_file)
-		
-	fe.set_compose(p.comp)
+	if 'comp' in dir(p):
+		fe.set_compose(p.comp)
 	
 	if p.TEST_RUN_FIRST:
 		fe.test_run_first()
@@ -91,4 +82,9 @@ if __name__ == '__main__':
 		fe.test_run()
 	if p.RUN:
 		fe.run()
+	
+	if 'GIF' in dir(p):
+		if p.GIF:
+			fe.read()
+			fe.save_gif(fps=0.5)
 	
