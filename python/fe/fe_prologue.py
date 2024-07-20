@@ -62,19 +62,10 @@ class fe_prologue(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import prologue00_gif as p
+	import fe_param_00.prologue_map as p
 	
 	fe = fe_prologue()
-	
-	if 'dirs' in dir(p):
-		for d in p.dirs:
-			fe.add_dir(d)
-	if 'files' in dir(p):
-		fe.add_files(p.files)
-	if 'out_file' in dir(p):
-		fe.set_out_file(p.out_file)
-	if 'comp' in dir(p):
-		fe.set_compose(p.comp)
+	fe.configure(p)
 	
 	if p.TEST_RUN_FIRST:
 		fe.test_run_first()

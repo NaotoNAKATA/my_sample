@@ -38,6 +38,11 @@ class fe_compose(object):
 		if os.path.exists(self.TEMP_DIR):
 			shutil.rmtree(self.TEMP_DIR)
 		os.mkdir(self.TEMP_DIR)
+	
+	def del_temp2(self):
+		""" tempの削除 """
+		if os.path.exists(self.TEMP_DIR):
+			shutil.rmtree(self.TEMP_DIR)
 		
 	def add_dir(self, dir):
 		"""画像ディレクトリの追加"""
@@ -155,3 +160,15 @@ class fe_compose(object):
 	def compose_list(self):
 		""" リストの画像を合成 """
 		pass
+
+	def configure(self, param):
+		""" 一括設定 """
+		if 'dirs' in dir(param):
+			for d in param.dirs:
+				self.add_dir(d)
+		if 'files' in dir(param):
+			self.add_files(param.files)
+		if 'out_file' in dir(param):
+			self.set_out_file(param.out_file)
+		if 'comp' in dir(param):
+			self.set_compose(param.comp)
