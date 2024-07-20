@@ -40,6 +40,8 @@ class ss_crop(object):
 		#pil = Image.new('RGB', size, pix_val)
 		if self.mask_sel==0:
 			pil = Image.open('./ss_sample.bmp')
+		elif self.mask_sel==2:
+			pil = Image.open('./ss_sample3.bmp')
 		else:
 			pil = Image.open('./ss_sample2.bmp')
 		pix= (641, 88)
