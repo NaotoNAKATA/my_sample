@@ -1,5 +1,5 @@
-#base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
-base_dir = './test/'
+base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
+#base_dir = './test/'
 chaper_dir = '00-序章-聖騎士誕生/'
 scene_dir = '00-プロローグ/'
 scene_dir_add = '00-プロローグ追加画像/'
@@ -14,8 +14,6 @@ dirs = [
 TEST_RUN_FIRST = False
 TEST_RUN = False
 RUN = True
-
-
 
 comp = [
 		[26, (0,0)],
@@ -38,3 +36,4 @@ comp = [
 		[51, (0, 26)],
 		[53, (0, 77)],
 	]
+
