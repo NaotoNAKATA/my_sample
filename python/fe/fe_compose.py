@@ -54,7 +54,7 @@ class fe_compose(object):
 		for f in sorted( glob.glob(dir + '/*.png') ):
 			self.file_paths.append(f)
 	
-	def add_file(self, paths):
+	def add_files(self, paths):
 		"""画像ファイルの追加"""
 		self.file_paths += paths
 	

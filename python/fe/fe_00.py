@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import fe_param_00.pptx as pptx
-import fe_param_00.prologue as prlg
-
+import fe_param_00.prologue_map as prlg
+import fe_param_00.prologue_scene as prlg_s
+import fe_param_00.prologue_gif as prlg_g
 
 from fe_pptx import fe_pptx
 from fe_compose import fe_compose
 from fe_prologue import fe_prologue
+from fe_prologue_scene import fe_prologue_scene
+from fe_gif import fe_gif
 
 if __name__ == "__main__":
 
@@ -29,27 +32,24 @@ if __name__ == "__main__":
 	fe_prlg.run()
 	
 	# プロローグ(シナリオ)
-	fe_prlg_senario = fe_prologue()
-	fe_prlg_senario.add_dir(prlg.slides)
-	fe_prlg_senario.read()
-	fe_prlg_senario.save_main_temp()
+	fe_prlg_s = fe_prologue_scene()
+	fe_prlg_s.configure(prlg_s)
+	fe_prlg_s.run()
 	
 	# プロローグスライドの作成
-	fe.make_prologue(
-		field_map=fe_prlg.out_file,
-		phrase=prlg.phrase,
-		titile_file=prlg.title_file,
-	)
+	#fe.make_prologue(
+		#field_map=fe_prlg.out_file,
+		#phrase=prlg.phrase,
+		#titile_file=prlg.title_file,
+	#)
 	
 	# プロローグのアニメーションgifの作成
-	fe_prlg_gif = fe_compose()
-	fe_prlg_gif.add_dir(prlg.dir_gif)
-	fe_prlg_gif.set_out_file(prlg.out_gif)
-	fe_prlg_gif.read()
-	fe_prlg_gif.save_gif(fps=0.5)
+	fe_prlg_gif = fe_gif()
+	fe_prlg_gif.configure(prlg_g)
+	fe_prlg_gif.run()
 	
 	# Tempの削除
-	fe_prlg_senario.del_temp2()
+	fe_prlg_s.del_temp2()
 	
 	#
 	# Phase1

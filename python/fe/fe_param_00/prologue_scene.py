@@ -7,6 +7,9 @@ dirs = [
 	base_dir + chaper_dir + scene_dir,
 ]
 
+files = [
+	base_dir + chaper_dir +  '01-シアルフィ出撃/2024-06-07 午後11.32.25.png'
+]
 
 phrase = [ 
 	[0,[
@@ -138,6 +141,4 @@ phrase = [
 		'知る由もなかったのである。',
 	]],
 ]
-
-title_file = base_dir + '00-序章-聖騎士誕生/01-シアルフィ出撃/2024-06-07 午後11.32.25.png'
 

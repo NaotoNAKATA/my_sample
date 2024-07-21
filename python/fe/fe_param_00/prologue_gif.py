@@ -10,3 +10,6 @@ dirs = [
 	base_dir + chaper_dir + scene_dir,
 ]
 
+files = [
+	base_dir + chaper_dir +  '01-シアルフィ出撃/2024-06-07 午後11.32.25.png'
+]

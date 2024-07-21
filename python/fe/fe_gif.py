@@ -5,18 +5,25 @@ from fe_compose import fe_compose
 	
 class fe_gif(fe_compose):
 	""" アニメーションGIF作成 """
-	def run(self, fps=0.5):
+	def configure(self, param):
+		""" 一括設定 """
+		super().configure(param)
+		
+		if 'fps' in dir(param):
+			self.fps = param.fps
+			
+	def run(self):
 		""" 実行 """
 		self.del_temp()
 		self.read()
-		self.save_gif(fps=fps)
+		self.save_gif(fps=self.fps)
 
 
 if __name__ == '__main__':
 	
-	import fe_param_00.prologue_scene as p
+	import fe_param_00.prologue_gif as p
 
 	fe = fe_gif()
 	fe.configure(p)
-	fe.run(fps=p.fps)
+	fe.run()
 	
