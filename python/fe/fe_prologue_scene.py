@@ -10,7 +10,23 @@ class fe_prologue_scene(fe_prologue):
 		for i, fe in enumerate(self.fe):
 			filename = self.TEMP_DIR + '/{0:0>2}.png'.format(i)
 			fe.save(filename)
+	
+	def configure(self, param):
+		""" 一括設定 """
+		super().configure(param)
 		
+		if 'org_im' in dir(param):
+			self.org_im = param.org_im
+	
+	def save_main_temp(self):
+		""" メイン画像の保存 """
+		for i, fe in enumerate(self.fe):
+			filename = self.TEMP_DIR + '/{0:0>2}.png'.format(i)
+			if i in self.org_im:
+				fe.save(filename)
+			else:
+				fe.save_main(filename)
+
 	def run(self):
 		""" 実行 """
 		self.del_temp()

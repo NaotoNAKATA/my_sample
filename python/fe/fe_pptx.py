@@ -15,6 +15,7 @@ from pptx.dml.color import RGBColor
 
 class fe_pptx(object):
 	""" プレゼンテーション作成 """
+	TEMP_DIR = 'temp'
 	def __init__(self, title):
 		""" 初期化 """
 		# プレゼンテーションの作成
@@ -107,6 +108,46 @@ class fe_pptx(object):
 				p.text = st
 				p.font.size = Pt(18)
 	
+	def make_ivent(self, **kw):
+		""" イベントシーンの作成 """
+		# スライド作成(中央にライン)
+		slide = self.add_slide_line(kw['title'])
+		
+		# 画像とテキストの貼り付け
+		l0 = Cm(0.5)
+		t0 = Cm(2.0)
+		l1, t1 = l0, t0
+		for i, (im, a, paragraphs) in enumerate(kw['scene']):
+			# 画像
+			filename = self.TEMP_DIR + '/{0}.png'.format(im)
+			pic = slide.shapes.add_picture(filename, l1, t1)
+			pic.width = int(pic.width * a)
+			pic.height = int(pic.height * a)
+			
+			if paragraphs==[]:
+				# テキストがない時は中央に
+				pic.left = (l1 - l0) + int(self.prs.slide_width/4 - pic.width/2)
+				w, h = 0, 0
+			else:
+				# テキストがある時は貼り付け
+				l1_ = l1 + pic.width + Cm(0.3)
+				w, h = self.add_text(slide, [l1_, t1], paragraphs)
+			
+			if pic.height > h:
+				t1 += pic.height +Cm(0.5)
+			else:
+				t1 +=  h + Cm(0.5)
+			
+			if t1 + pic.height >= self.prs.slide_height:
+				t1 = t0
+				if l1==l0:
+					l1 = l0 + int(self.prs.slide_width/2)
+				else:
+					l1 = l0
+					if i!=len(kw['scene'])-1:
+						# 終わりでなければスライド作成
+						slide = self.add_slide_line(kw['title'])
+	
 	def make_prologue(self, **kw):
 		""" プロローグスライドの作成 """
 		# 全体マップ
@@ -124,12 +165,16 @@ class fe_pptx(object):
 			pic.height = self.prs.slide_height - Cm(2.0)*2
 			pic.width = a * pic.height
 		
-		# プロローグスライドショー
-		slide = self.add_slide_line('プロローグ')
-		
+		# イベントシーン
+		self.make_ivent(**kw)
+				
 		# 本当はアニメを貼りたい
 		#slide.shapes.add_movie('./test.gif', Cm(1.0), Cm(1.0), Cm(10.0), Cm(15.0), mime_type='image/gif')
 		
+		"""
+		# プロローグスライドショー
+		slide = self.add_slide_line('プロローグ')
+
 		# 画像とテキストの貼り付け
 		l0 = Cm(0.5)
 		t0 = Cm(2.0)
@@ -164,6 +209,7 @@ class fe_pptx(object):
 		pic = slide.shapes.add_picture(kw['titile_file'], Cm(1.0), Cm(1.0))
 		pic.left = int((self.prs.slide_width - pic.width) /2)
 		pic.top = int((self.prs.slide_height - pic.height) /2)
+		"""
 		
 	def make_organization(self):
 		""" 編成 """
