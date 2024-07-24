@@ -59,28 +59,11 @@ class fe_profile(fe_compose):
 		self.read()
 		self.save_temp_file()
 		
-		
-		
 if __name__ == '__main__':
 	
-	
-	import profile00_1 as p
+	import fe_param_00.profile01 as p
 	
 	fe = fe_profile()
+	fe.configure(p)
+	fe.run()
 	
-	if 'dirs' in dir(p):
-		for d in p.dirs:
-			fe.add_dir(d)
-	if 'files' in dir(p):
-		fe.add_files(p.files)
-	if 'out_file' in dir(p):
-		fe.set_out_file(p.out_file)
-	if 'comp' in dir(p):
-		fe.set_compose(p.comp)
-	
-	if p.TEST_RUN_FIRST:
-		fe.test_run_first()
-	if p.TEST_RUN:
-		fe.test_run()
-	if p.RUN:
-		fe.run()

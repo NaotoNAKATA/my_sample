@@ -170,52 +170,98 @@ class fe_pptx(object):
 				
 		# 本当はアニメを貼りたい
 		#slide.shapes.add_movie('./test.gif', Cm(1.0), Cm(1.0), Cm(10.0), Cm(15.0), mime_type='image/gif')
-		
-		"""
-		# プロローグスライドショー
-		slide = self.add_slide_line('プロローグ')
-
-		# 画像とテキストの貼り付け
-		l0 = Cm(0.5)
-		t0 = Cm(2.0)
-		l1, t1 = l0, t0
-		for i, (im, paragraphs) in enumerate(kw['phrase']):
-			# 画像
-			filename = './temp/{0:0>2}.png'.format(im)
-			pic = slide.shapes.add_picture(filename, l1, t1)
-			pic.width = int(pic.width / 2)
-			pic.height = int(pic.height / 2)
-			
-			# テキスト
-			l1_ = l1 + pic.width + Cm(0.3)
-			w, h = self.add_text(slide, [l1_, t1], paragraphs)
-			
-			if pic.height > h:
-				t1 += pic.height +Cm(0.5)
-			else:
-				t1 +=  h + Cm(0.5)
-			
-			if t1 + pic.height >= self.prs.slide_height:
-				t1 = t0
-				if l1==l0:
-					l1 = l0 + int(self.prs.slide_width/2)
-				else:
-					l1 = l0
-					# スライド作成
-					slide = self.add_slide_line('プロローグ')
-					
-		# 章タイトル画像の貼り付け
-		slide = self.prs.slides.add_slide( self.prs.slide_layouts[6] )
-		pic = slide.shapes.add_picture(kw['titile_file'], Cm(1.0), Cm(1.0))
-		pic.left = int((self.prs.slide_width - pic.width) /2)
-		pic.top = int((self.prs.slide_height - pic.height) /2)
-		"""
-		
-	def make_organization(self):
+	
+	def make_organization(self, **kw):
 		""" 編成 """
-		pass
-
-
+		# スライドの挿入(ブランク)
+		slide = self.prs.slides.add_slide( self.prs.slide_layouts[6] )
+		self.add_text(slide, [Cm(1.0), Cm(1.0)], [kw['title']], pt=14, bold=True)
+		
+		# マップの貼り付け
+		pic = slide.shapes.add_picture(kw['field_map'], Cm(0.0), Cm(0.0))
+		pic.width = int(pic.width/3.5)
+		pic.height = int(pic.height/3.5)
+		pic.left =int( (self.prs.slide_width-pic.width)/2 )
+		#pic.top = int( (self.prs.slide_height-pic.height)/2 )
+		pic.top = Cm(2.3)
+		
+		# 軍(左)
+		l0 = Cm(0.5)
+		loc = [l0, Cm(2.0)]
+		phrase = [ kw['organization']['左']['名'] ]
+		self.add_text(slide, loc, phrase, pt=10.5, bold=True)
+		
+		# 軍(左)の指揮官画像
+		im = kw['organization']['左']['指揮官']
+		filename = self.TEMP_DIR + '/{0}.png'.format(im)
+		pic = slide.shapes.add_picture(filename, l0, Cm(2.6))
+		w, h = pic.width, pic.height # 元画像のサイズを保持しておく
+		pic.width = int(w*1.5)
+		pic.height = int(h*1.5)
+		
+		# 編成(左)
+		wi, hi = int(w*0.75), int(h*0.75)
+		for txt, imgs in kw['organization']['左']['編成']:
+			top =  pic.top + pic.height
+			loc = [l0, top]
+			
+			# 注釈
+			if txt!='':
+				phrase  =[txt]
+				self.add_text(slide, loc, phrase, pt=10.5, bold=False)
+				
+			# 画像
+			if txt=='':
+				top =  pic.top + pic.height + Cm(0.15)
+			else:
+				top =  pic.top + pic.height + Cm(0.6)
+				
+			for i, im in enumerate(imgs):
+				left = l0 + (wi+Cm(0.15)) * i 
+				filename = self.TEMP_DIR + '/{0:0>2}.png'.format(im)
+				pic = slide.shapes.add_picture(filename, left, top, wi, hi)
+				
+		# 軍(右)の指揮官画像
+		im = kw['organization']['右']['指揮官']
+		filename = self.TEMP_DIR + '/{0}.png'.format(im)
+		pic = slide.shapes.add_picture(filename, l0, Cm(2.6))
+		pic.width = int(w*1.5)
+		pic.height = int(h*1.5)
+		#l1 = self.prs.slide_width - l0 - pic.width
+		l1 = self.prs.slide_width - Cm(4.0) - pic.width
+		pic.left = l1
+		
+		# 軍(右)
+		loc=[l1, Cm(2.0)]
+		phrase = [ kw['organization']['右']['名'] ]
+		self.add_text(slide, loc, phrase, pt=10.5, bold=True)
+		
+		# 編成(右)
+		wi, hi = int(w*0.375), int(h*0.375)
+		for txt, imgs in kw['organization']['右']['編成']:
+			top =  pic.top + pic.height
+			loc = [l1, top]
+			
+			# 注釈
+			if txt!='':
+				phrase  =[txt]
+				self.add_text(slide, loc, phrase, pt=10.5, bold=False)
+				
+			# 画像
+			if txt=='':
+				top =  pic.top + pic.height + Cm(0.15)
+			else:
+				top =  pic.top + pic.height + Cm(0.6)
+				
+			for i, im in enumerate(imgs):
+				left = l1 + (wi+Cm(0.15)) * i 
+				filename = self.TEMP_DIR + '/{0:0>2}.png'.format(im)
+				pic = slide.shapes.add_picture(filename, left, top, wi, hi)
+				
+		
+	
+	
+	
 
 if __name__ == "__main__":
 
