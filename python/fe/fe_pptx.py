@@ -138,6 +138,7 @@ class fe_pptx(object):
 			else:
 				t1 +=  h + Cm(0.5)
 			
+			# はみ出す時の処理はTBD
 			if t1 + pic.height >= self.prs.slide_height:
 				t1 = t0
 				if l1==l0:
@@ -156,21 +157,59 @@ class fe_pptx(object):
 		self.add_text(slide, [Cm(1.0), Cm(1.0)], ['全体マップ'], pt=14, bold=True)
 		
 		# 全体マップは中央に配置
-		pic = slide.shapes.add_picture(kw['field_map'], Cm(1.0), Cm(2.0))
+		pic = slide.shapes.add_picture(kw['prologue_map'], Cm(1.0), Cm(2.0))
 		pic.left = int( (self.prs.slide_width - pic.width)/2 )
 		pic.top = int( (self.prs.slide_height - pic.height)/2 )
-		if pic.top<Cm(2.0):
-			pic.top = Cm(2.0)
-			a = pic.width / pic.height
-			pic.height = self.prs.slide_height - Cm(2.0)*2
-			pic.width = a * pic.height
+		
+		if pic.left<Cm(1.0) or pic.top<Cm(2.0):
+			l = pic.left - Cm(1.0)
+			t = pic.top - Cm(2.0)
+			
+			if l>t:
+				a = pic.width / pic.height
+				pic.height = self.prs.slide_height - Cm(2.0)*2
+				pic.width = int(a * pic.height)
+				pic.left = int( (self.prs.slide_width - pic.width)/2 )
+				pic.top = Cm(2.0)
+			else:
+				a = pic.height / pic.width
+				pic.width = self.prs.slide_width - Cm(1.0)*2
+				pic.height = int(a * pic.width)
+				pic.left = Cm(1.0)
+				pic.top = int( (self.prs.slide_height - pic.height)/2 )
 		
 		# イベントシーン
 		self.make_ivent(**kw)
 				
 		# 本当はアニメを貼りたい
 		#slide.shapes.add_movie('./test.gif', Cm(1.0), Cm(1.0), Cm(10.0), Cm(15.0), mime_type='image/gif')
+		
+		# フィールドマップ
+		slide = self.prs.slides.add_slide( self.prs.slide_layouts[6] )
+		self.add_text(slide, [Cm(1.0), Cm(1.0)], ['フィールドマップ'], pt=14, bold=True)
 	
+		# フィールドマップは中央に配置
+		pic = slide.shapes.add_picture(kw['field_map'], Cm(1.0), Cm(2.0))
+		pic.left = int( (self.prs.slide_width - pic.width)/2 )
+		pic.top = int( (self.prs.slide_height - pic.height)/2 )
+		
+		if pic.left<Cm(1.0) or pic.top<Cm(2.0):
+			l = pic.left - Cm(1.0)
+			t = pic.top - Cm(2.0)
+			
+			if l>t:
+				a = pic.width / pic.height
+				pic.height = self.prs.slide_height - Cm(2.0)*2
+				pic.width = int(a * pic.height)
+				pic.left = int( (self.prs.slide_width - pic.width)/2 )
+				pic.top = Cm(2.0)
+			else:
+				a = pic.height / pic.width
+				pic.width = self.prs.slide_width - Cm(1.0)*2
+				pic.height = int(a * pic.width)
+				pic.left = Cm(1.0)
+				pic.top = int( (self.prs.slide_height - pic.height)/2 )
+		
 	def make_organization(self, **kw):
 		""" 編成 """
 		# スライドの挿入(ブランク)

@@ -66,7 +66,7 @@ class fe_field(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import fe_param_00.field01 as p
+	import fe_param_00.field02 as p
 	
 	fe = fe_field()
 	fe.configure(p)

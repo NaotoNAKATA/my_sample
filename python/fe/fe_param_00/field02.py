@@ -2,12 +2,14 @@ base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエム�
 #base_dir = './test/'
 chaper_dir = '00-序章-聖騎士誕生/'
 scene_dir = '00-フィールドマップ/'
+scene_dir2 = '00-フィールドマップ追加画像/'
 
 dirs = [
 	base_dir + chaper_dir + scene_dir,
+	base_dir + chaper_dir + scene_dir2,
 ]
 
-out_file = '序章-聖戦士誕生-フィールド-Phase1(vsガンドルフ).png'
+out_file = '序章-聖戦士誕生-フィールド-Phase2(vsデマジオ).png'
 
 TEST_RUN_FIRST = False
 TEST_RUN = False
@@ -50,4 +52,5 @@ comp = [
 		[27, (48,18)],
 		[28, (53,23,5,5,13,12)],
 		
+		[59, (30,22,6,7,9,11)]
 	]
