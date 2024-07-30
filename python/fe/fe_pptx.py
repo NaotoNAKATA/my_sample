@@ -119,27 +119,34 @@ class fe_pptx(object):
 		l1, t1 = l0, t0
 		for i, (im, a, paragraphs) in enumerate(kw['scene']):
 			# 画像
-			filename = self.TEMP_DIR + '/{0}.png'.format(im)
-			pic = slide.shapes.add_picture(filename, l1, t1)
-			pic.width = int(pic.width * a)
-			pic.height = int(pic.height * a)
+			if im=='':
+				# 画像がない時はテキストのみ
+				pic_w = -Cm(0.3)
+				pic_h = 0
+			else:
+				filename = self.TEMP_DIR + '/{0}.png'.format(im)
+				pic = slide.shapes.add_picture(filename, l1, t1)
+				pic.width = int(pic.width * a)
+				pic.height = int(pic.height * a)
+				pic_w = pic.width
+				pic_h = pic.height
 			
 			if paragraphs==[]:
 				# テキストがない時は中央に
-				pic.left = (l1 - l0) + int(self.prs.slide_width/4 - pic.width/2)
+				pic.left = (l1 - l0) + int(self.prs.slide_width/4 - pic_w/2)
 				w, h = 0, 0
 			else:
 				# テキストがある時は貼り付け
-				l1_ = l1 + pic.width + Cm(0.3)
+				l1_ = l1 + pic_w + Cm(0.3)
 				w, h = self.add_text(slide, [l1_, t1], paragraphs)
 			
-			if pic.height > h:
-				t1 += pic.height +Cm(0.5)
+			if pic_h > h:
+				t1 += pic_h +Cm(0.5)
 			else:
 				t1 +=  h + Cm(0.5)
 			
 			# はみ出す時の処理はTBD
-			if t1 + pic.height >= self.prs.slide_height:
+			if t1 + pic_h >= self.prs.slide_height:
 				t1 = t0
 				if l1==l0:
 					l1 = l0 + int(self.prs.slide_width/2)
