@@ -11,6 +11,10 @@ import fe_param_00.field03 as fld03
 import fe_param_00.ivent01 as ivt01
 import fe_param_00.ivent02 as ivt02
 import fe_param_00.ivent03 as ivt03
+import fe_param_00.ivent04 as ivt04
+import fe_param_00.ivent05 as ivt05
+import fe_param_00.ivent06 as ivt06
+import fe_param_00.ivent07 as ivt07
 import fe_param_00.profile01 as prf01
 import fe_param_00.profile02 as prf02
 
@@ -132,12 +136,44 @@ if __name__ == "__main__":
 	)
 	
 	# 会話
+	fe_ivt04 = fe_ivent()
+	fe_ivt04.configure(ivt04)
+	fe_ivt04.run()
+	
+	fe.make_ivent(
+		scene=ivt04.scene,
+		title=ivt04.title,
+	)
 	
 	# 村解放
+	fe_ivt05 = fe_ivent()
+	fe_ivt05.configure(ivt05)
+	fe_ivt05.run()
+	
+	fe.make_ivent(
+		scene=ivt05.scene,
+		title=ivt05.title,
+	)
 	
 	# 戦闘
+	fe_ivt06 = fe_ivent()
+	fe_ivt06.configure(ivt06)
+	fe_ivt06.run()
 	
-	# 終幕
+	fe.make_ivent(
+		scene=ivt06.scene,
+		title=ivt06.title,
+	)
+	
+	# 制圧
+	fe_ivt07 = fe_ivent()
+	fe_ivt07.configure(ivt07)
+	fe_ivt07.run()
+	
+	fe.make_ivent(
+		scene=ivt07.scene,
+		title=ivt07.title,
+	)
 	
 	#
 	# Phase3

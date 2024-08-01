@@ -89,7 +89,7 @@ class fe_ivent(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import fe_param_00.ivent03 as p
+	import fe_param_00.ivent07 as p
 	
 	fe = fe_ivent()
 	fe.configure(p)

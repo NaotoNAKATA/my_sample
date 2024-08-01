@@ -118,6 +118,17 @@ class fe_pptx(object):
 		t0 = Cm(2.0)
 		l1, t1 = l0, t0
 		for i, (im, a, paragraphs) in enumerate(kw['scene']):
+			# 改ページ
+			if a==-1:
+				t1 = t0
+				if l1==l0:
+					l1 = l0 + int(self.prs.slide_width/2)
+				else:
+					l1 = l0
+					slide = self.add_slide_line(kw['title'])
+				
+				continue
+
 			# 画像
 			if im=='':
 				# 画像がない時はテキストのみ
@@ -131,6 +142,7 @@ class fe_pptx(object):
 				pic_w = pic.width
 				pic_h = pic.height
 			
+			# テキスト
 			if paragraphs==[]:
 				# テキストがない時は中央に
 				pic.left = (l1 - l0) + int(self.prs.slide_width/4 - pic_w/2)
@@ -145,7 +157,7 @@ class fe_pptx(object):
 			else:
 				t1 +=  h + Cm(0.5)
 			
-			# はみ出す時の処理はTBD
+			# はみ出す時の処理はTBD->改ページで対応
 			if t1 + pic_h >= self.prs.slide_height:
 				t1 = t0
 				if l1==l0:
