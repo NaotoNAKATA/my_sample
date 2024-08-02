@@ -61,7 +61,7 @@ class fe_profile(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import fe_param_00.profile02 as p
+	import fe_param_00.profile03 as p
 	
 	fe = fe_profile()
 	fe.configure(p)

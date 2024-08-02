@@ -22,6 +22,7 @@ class fe_gif(fe_compose):
 if __name__ == '__main__':
 	
 	import fe_param_00.prologue_gif as p
+	#import fe_param_00.battle03 as p
 
 	fe = fe_gif()
 	fe.configure(p)
