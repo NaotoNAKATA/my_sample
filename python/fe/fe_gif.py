@@ -21,8 +21,12 @@ class fe_gif(fe_compose):
 
 if __name__ == '__main__':
 	
-	import fe_param_00.prologue_gif as p
-	#import fe_param_00.battle03 as p
+	#import fe_param_00.prologue_gif as p
+	import fe_param_01.battle01 as p
+	
+	# バトルシーン
+	# フィールドからバトルシーンへは、黒20フレーム
+	# バトルからバトルへは黒10フレーム
 
 	fe = fe_gif()
 	fe.configure(p)

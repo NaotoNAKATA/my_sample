@@ -48,6 +48,10 @@ class fe_pil_talk(fe_pil):
 		pix = [8, 0, 256-8, 134-8-1]
 		self.battle = self.get(pix)
 		
+		# 戦闘(屋外)
+		pix = [8, 16, 256-8, 127-1]
+		self.battle7 = self.get(pix)
+		
 class fe_ivent(fe_compose):
 	""" 会話シーンクラス( 結合) """
 	TEMP_DIR='temp'
@@ -79,6 +83,9 @@ class fe_ivent(fe_compose):
 			filename = self.TEMP_DIR + '/{0:0>2}6.png'.format(i)
 			fe.battle.save(filename)
 			
+			filename = self.TEMP_DIR + '/{0:0>2}7.png'.format(i)
+			fe.battle7.save(filename)
+			
 			
 			
 	def run(self):
@@ -89,7 +96,7 @@ class fe_ivent(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import fe_param_00.ivent10 as p
+	import fe_param_01.ivent05 as p
 	
 	fe = fe_ivent()
 	fe.configure(p)

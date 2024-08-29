@@ -258,7 +258,11 @@ class fe_pptx(object):
 		pic.height = int(h*1.5)
 		
 		# 編成(左)
-		wi, hi = int(w*0.75), int(h*0.75)
+		if '倍率' in kw['organization']['左']:
+			alpha = kw['organization']['左']['倍率']
+		else:
+			alpha = 0.75
+		wi, hi = int(w*alpha), int(h*alpha)
 		for txt, imgs in kw['organization']['左']['編成']:
 			top =  pic.top + pic.height
 			loc = [l0, top]
