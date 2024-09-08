@@ -15,6 +15,8 @@ import fe_param_01.ivent03 as ivt03
 import fe_param_01.ivent04 as ivt04
 import fe_param_01.ivent05 as ivt05
 import fe_param_01.ivent06 as ivt06
+import fe_param_01.ivent07 as ivt07
+import fe_param_01.ivent08 as ivt08
 
 import fe_param_01.profile01 as prf01
 import fe_param_01.profile02 as prf02
@@ -138,8 +140,6 @@ if __name__ == "__main__":
 		title=ivt05.title,
 	)
 	
-	"""
-	
 	#
 	# Phase2
 	#
@@ -169,7 +169,7 @@ if __name__ == "__main__":
 		scene=ivt06.scene,
 		title=ivt06.title,
 	)
-	
+	"""
 	#
 	# Phase3
 	#
@@ -190,6 +190,25 @@ if __name__ == "__main__":
 		organization=prf03.organization,
 	)
 	
+	# 会話イベント
+	fe_ivt07 = fe_ivent()
+	fe_ivt07.configure(ivt07)
+	fe_ivt07.run()
+	
+	fe.make_ivent(
+		scene=ivt07.scene,
+		title=ivt07.title,
+	)
+	
+	# 戦闘
+	fe_ivt08 = fe_ivent()
+	fe_ivt08.configure(ivt08)
+	fe_ivt08.run()
+	
+	fe.make_ivent(
+		scene=ivt08.scene,
+		title=ivt08.title,
+	)
 	
 	
 	

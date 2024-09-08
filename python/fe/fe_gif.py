@@ -22,9 +22,11 @@ class fe_gif(fe_compose):
 if __name__ == '__main__':
 	
 	#import fe_param_00.prologue_gif as p
-	import fe_param_01.battle01 as p
+	import fe_param_01.battle02 as p
 	
 	# バトルシーン
+	# 最初のバトルコマンド入力待ちが60フレーム
+	# 会話入力待ちは三角が消えるまで
 	# フィールドからバトルシーンへは、黒20フレーム
 	# バトルからバトルへは黒10フレーム
 

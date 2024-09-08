@@ -2,11 +2,13 @@ base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエム�
 #base_dir = './test/'
 chaper_dir = '01-第一章-精霊の森の少女/'
 ivent_dir = '03-キュアン-フィン/'
+ivent_dir2 = '71-村解放/'
 
 title = 'Phase1 : 会話イベント'
 
 dirs = [
 	base_dir + chaper_dir + ivent_dir,
+	base_dir + chaper_dir + ivent_dir2,
 ]
 
 #files = [
@@ -50,6 +52,25 @@ scene = [
 	'(STR+1)',
 	'(SKL+1)',
 	'(DEF+1)',
+	]],
+	
+	['', a, [
+	'村1',
+	]],
+	['074', a, [
+	'ジェノアのご領主のキンボイス様は、',
+	'恐ろしい方です',
+	
+	'この村も、何度も襲われて',
+	'酷い目に遭いました',
+	
+	'バトゥ王が直接支配していた頃は',
+	'平和で住みやすかったのに・・・',
+	
+	'だから村人達はみんな、',
+	'あなた達が来てくれて喜んでいるのです',
+	
+	'(3500ゴールド)',
 	]],
 	
 	# 0 フィールド
