@@ -4,10 +4,12 @@ import fe_param_01.pptx as pptx
 import fe_param_01.prologue_map as prlg
 import fe_param_01.prologue_scene as prlg_s
 import fe_param_01.prologue_gif as prlg_g
-#import fe_param_01.field00 as fld00
+import fe_param_01.field00 as fld00
 import fe_param_01.field01 as fld01
 import fe_param_01.field02 as fld02
 import fe_param_01.field03 as fld03
+import fe_param_01.field04 as fld04
+import fe_param_01.field05 as fld05
 
 import fe_param_01.ivent01 as ivt01
 import fe_param_01.ivent02 as ivt02
@@ -17,10 +19,14 @@ import fe_param_01.ivent05 as ivt05
 import fe_param_01.ivent06 as ivt06
 import fe_param_01.ivent07 as ivt07
 import fe_param_01.ivent08 as ivt08
+import fe_param_01.ivent09 as ivt09
+import fe_param_01.ivent10 as ivt10
 
 import fe_param_01.profile01 as prf01
 import fe_param_01.profile02 as prf02
 import fe_param_01.profile03 as prf03
+import fe_param_01.profile04 as prf04
+import fe_param_01.profile05 as prf05
 
 from fe_pptx import fe_pptx
 from fe_compose import fe_compose
@@ -53,8 +59,7 @@ if __name__ == "__main__":
 	
 	# フィールドマップ作成
 	fe_fld00 = fe_field()
-	#fe_fld00.configure(fld00)
-	fe_fld00.configure(fld01)
+	fe_fld00.configure(fld00)
 	fe_fld00.run()
 	
 	# プロローグ(シナリオ)
@@ -169,7 +174,7 @@ if __name__ == "__main__":
 		scene=ivt06.scene,
 		title=ivt06.title,
 	)
-	"""
+	
 	#
 	# Phase3
 	#
@@ -210,9 +215,66 @@ if __name__ == "__main__":
 		title=ivt08.title,
 	)
 	
+	# 制圧後
+	fe_ivt09 = fe_ivent()
+	fe_ivt09.configure(ivt09)
+	fe_ivt09.run()
+	
+	fe.make_ivent(
+		scene=ivt09.scene,
+		title=ivt09.title,
+	)
+	"""
+	#
+	# Phase4,5
+	#
+	# 導入
+	fe_ivt10 = fe_ivent()
+	fe_ivt10.configure(ivt10)
+	fe_ivt10.run()
+	
+	fe.make_ivent(
+		scene=ivt10.scene,
+		title=ivt10.title,
+	)
+	
+	# フィールドマップ作成
+	fe_fld04 = fe_field()
+	fe_fld04.configure(fld04)
+	fe_fld04.run()
+	
+	fe_fld05 = fe_field()
+	fe_fld05.configure(fld05)
+	fe_fld05.run()
+	
+	# 登場人物
+	fe_prf04 = fe_profile()
+	fe_prf04.configure(prf04)
+	fe_prf04.run()
+	
+	fe_prf05 = fe_profile()
+	fe_prf05.configure(prf05)
+	fe_prf05.run()
+	
+	# 編成
+	fe.make_organization(
+		field_map=fe_fld04.out_file,
+		title=prf04.title,
+		organization=prf04.organization,
+	)
+	
+	fe.make_organization(
+		field_map=fe_fld05.out_file,
+		title=prf05.title,
+		organization=prf05.organization,
+	)
 	
 	
-
+	# 会話イベント
+	
+	# 戦闘
+	
+	# 制圧後
 	
 	
 	
