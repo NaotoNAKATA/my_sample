@@ -21,6 +21,9 @@ import fe_param_01.ivent07 as ivt07
 import fe_param_01.ivent08 as ivt08
 import fe_param_01.ivent09 as ivt09
 import fe_param_01.ivent10 as ivt10
+import fe_param_01.ivent11 as ivt11
+import fe_param_01.ivent12 as ivt12
+import fe_param_01.ivent13 as ivt13
 
 import fe_param_01.profile01 as prf01
 import fe_param_01.profile02 as prf02
@@ -48,7 +51,7 @@ if __name__ == "__main__":
 	# 表題スライド
 	#
 	fe.make_title(subtitle=pptx.subtitle)
-	"""
+	
 	#
 	# プロローグスライド
 	#
@@ -224,7 +227,7 @@ if __name__ == "__main__":
 		scene=ivt09.scene,
 		title=ivt09.title,
 	)
-	"""
+	
 	#
 	# Phase4,5
 	#
@@ -271,12 +274,34 @@ if __name__ == "__main__":
 	
 	
 	# 会話イベント
+	fe_ivt11 = fe_ivent()
+	fe_ivt11.configure(ivt11)
+	fe_ivt11.run()
+	
+	fe.make_ivent(
+		scene=ivt11.scene,
+		title=ivt11.title,
+	)
 	
 	# 戦闘
+	fe_ivt12 = fe_ivent()
+	fe_ivt12.configure(ivt12)
+	fe_ivt12.run()
+	
+	fe.make_ivent(
+		scene=ivt12.scene,
+		title=ivt12.title,
+	)
 	
 	# 制圧後
+	fe_ivt13 = fe_ivent()
+	fe_ivt13.configure(ivt13)
+	fe_ivt13.run()
 	
-	
+	fe.make_ivent(
+		scene=ivt13.scene,
+		title=ivt13.title,
+	)
 	
 	#
 	# プレゼンテーションの保存

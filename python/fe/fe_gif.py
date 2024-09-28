@@ -22,7 +22,7 @@ class fe_gif(fe_compose):
 if __name__ == '__main__':
 	
 	#import fe_param_00.prologue_gif as p
-	import fe_param_01.battle02 as p
+	import fe_param_01.battle03 as p
 	
 	# バトルシーン
 	# 最初のバトルコマンド入力待ちが60フレーム
