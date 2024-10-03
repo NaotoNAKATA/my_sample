@@ -1,5 +1,4 @@
-base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
-chaper_dir = '00-序章-聖騎士誕生/'
+from .params import *
 scene_dir1 = '11-vsデマジオ/01/'
 scene_dir2 = '11-vsデマジオ/02/'
 scene_dir3 = '11-vsデマジオ/03/'
