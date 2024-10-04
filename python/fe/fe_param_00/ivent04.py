@@ -1,28 +1,18 @@
 from .params import *
-#ivent_dir = '03-エーディン受難/'
-ivent_dir2 = '04-レックスとアゼル/'
-ivent_dir3 = '05-(アゼル-シグルド)/'
-ivent_dir4 = '06-(レックス-シグルド)/'
-ivent_dir5 = '07-レンスターの援軍/'
-ivent_dir6 = '08-(キュアン-シグルド)/'
-ivent_dir7 = '09-(エーディン-シグルド)/'
-ivent_dir8 = '10-帰城/'
+scene_dir = [
+	#'03-エーディン受難/',
+	 '04-レックスとアゼル/',
+	'05-(アゼル-シグルド)/',
+	'06-(レックス-シグルド)/',
+	'07-レンスターの援軍/',
+	'08-(キュアン-シグルド)/',
+	'09-(エーディン-シグルド)/',
+	'10-帰城/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase2 : 会話イベント'
-
-dirs = [
-	#base_dir + chaper_dir + ivent_dir,
-	base_dir + chaper_dir + ivent_dir2,
-	base_dir + chaper_dir + ivent_dir3,
-	base_dir + chaper_dir + ivent_dir4,
-	base_dir + chaper_dir + ivent_dir5,
-	base_dir + chaper_dir + ivent_dir6,
-	base_dir + chaper_dir + ivent_dir7,
-	base_dir + chaper_dir + ivent_dir8,
-]
-
-#files = [
-#]
 
 a = 1
 fld = 0.5

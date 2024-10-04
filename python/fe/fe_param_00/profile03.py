@@ -1,13 +1,12 @@
 from .params import *
-scene_dir1 = '81-シグルド軍'
-scene_dir2 = '93-エバンズ軍(ゲラルド)/'
+scene_dir = [
+	'81-シグルド軍',
+	'93-エバンズ軍(ゲラルド)/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase3 : vsゲラルド' 
-
-dirs = [
-	base_dir + chaper_dir + scene_dir1,
-	base_dir + chaper_dir + scene_dir2,
-]
 
 persons = {
 	'シグルド'  : '00',

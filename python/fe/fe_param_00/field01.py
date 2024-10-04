@@ -1,9 +1,9 @@
 from .params import *
-scene_dir = '00-フィールドマップ/'
-
-dirs = [
-	base_dir + chaper_dir + scene_dir,
+scene_dir = [
+	'00-フィールドマップ/',
+	#'00-フィールドマップ追加画像/',
 ]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
 out_file = '序章-聖戦士誕生-フィールド-Phase1(vsガンドルフ).png'
 

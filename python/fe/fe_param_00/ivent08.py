@@ -1,14 +1,11 @@
 from .params import *
-ivent_dir = '21-エバンズ出撃/'
+scene_dir = [
+	'21-エバンズ出撃/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase3 : エバンズ出撃'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
-]
-
-#files = [
-#]
 
 a = 1
 fld = 0.5

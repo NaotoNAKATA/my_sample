@@ -1,13 +1,12 @@
 from .params import *
-scene_dir = '00-プロローグ/'
-scene_dir_add = '00-プロローグ追加画像/'
+scene_dir = [
+	'00-プロローグ/',
+	'00-プロローグ追加画像/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 out_file = '序章-聖騎士誕生-プロローグ.png'
-
-dirs = [
-	base_dir + chaper_dir + scene_dir,
-	base_dir + chaper_dir + scene_dir_add,
-]
 
 TEST_RUN_FIRST = False
 TEST_RUN = False

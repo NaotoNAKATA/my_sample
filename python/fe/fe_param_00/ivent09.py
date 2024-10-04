@@ -1,18 +1,13 @@
 from .params import *
-ivent_dir = '22-アルヴィス登場/'
-ivent_dir2 = '23-(アルヴィス-シグルド)/'
-ivent_dir3 = '27-(アルヴィス-シグルド)/'
+scene_dir = [
+	'22-アルヴィス登場/',
+	'23-(アルヴィス-シグルド)/',
+	'27-(アルヴィス-シグルド)/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase3 : 会話イベント'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
-	base_dir + chaper_dir + ivent_dir2,
-	base_dir + chaper_dir + ivent_dir3,
-]
-
-#files = [
-#]
 
 a = 1
 fld = 0.5

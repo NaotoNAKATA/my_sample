@@ -1,14 +1,11 @@
 from .params import *
-ivent_dir = '11-vsデマジオ/'
+scene_dir = [
+	'11-vsデマジオ/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase2 : vsデマジオ'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
-]
-
-#files = [
-#]
 
 a = 1
 fld = 0.5

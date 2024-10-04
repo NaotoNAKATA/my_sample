@@ -1,23 +1,15 @@
 from .params import *
-
-ivent_dir = '71-村解放/'
-ivent_dir2 = '72-村解放/'
-ivent_dir3 = '73-村解放/'
-ivent_dir4 = '74-村解放/'
-ivent_dir5 = '75-村解放/'
+scene_dir = [
+	'71-村解放/',
+	'72-村解放/',
+	'73-村解放/',
+	'74-村解放/',
+	'75-村解放/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase2 : 村解放'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
-	base_dir + chaper_dir + ivent_dir2,
-	base_dir + chaper_dir + ivent_dir3,
-	base_dir + chaper_dir + ivent_dir4,
-	base_dir + chaper_dir + ivent_dir5,
-]
-
-#files = [
-#]
 
 a = 1
 fld = 0.5

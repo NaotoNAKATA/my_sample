@@ -1,15 +1,13 @@
 from .params import *
-scene_dir1 = '82-ユングヴィ軍/'
-scene_dir2 = '91-エバンズ軍(ガンドルフ)/'
-scene_dir3 = '92-エバンズ軍(デマジオ)'
+scene_dir = [
+	'82-ユングヴィ軍/',
+	'91-エバンズ軍(ガンドルフ)/',
+	'92-エバンズ軍(デマジオ)',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+#files = []
 
 title = 'Phase1 : ミデェールvsガンドルフ' 
-
-dirs = [
-	base_dir + chaper_dir + scene_dir1,
-	base_dir + chaper_dir + scene_dir2,
-	base_dir + chaper_dir + scene_dir3,
-]
 
 persons = {
 	'ミデェール' : '00',

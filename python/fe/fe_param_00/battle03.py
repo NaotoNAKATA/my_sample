@@ -1,23 +1,16 @@
 from .params import *
-scene_dir1 = '24-vsゲラルド/01/'
-scene_dir2 = '24-vsゲラルド/02/'
-scene_dir3 = '24-vsゲラルド/03/'
-scene_dir4 = '24-vsゲラルド/04/'
-scene_dir5 = '24-vsゲラルド/05/'
-scene_dir6 = '24-vsゲラルド/06/'
-scene_dir7 = '24-vsゲラルド/07/'
-scene_dir8 = '24-vsゲラルド/08/'
-
-dirs = [
-	base_dir + chaper_dir + scene_dir1,
-	base_dir + chaper_dir + scene_dir2,
-	base_dir + chaper_dir + scene_dir3,
-	base_dir + chaper_dir + scene_dir4,
-	base_dir + chaper_dir + scene_dir5,
-	base_dir + chaper_dir + scene_dir6,
-	base_dir + chaper_dir + scene_dir7,
-	base_dir + chaper_dir + scene_dir8,
+scene_dir = [
+	'24-vsゲラルド/01/',
+	'24-vsゲラルド/02/',
+	'24-vsゲラルド/03/',
+	'24-vsゲラルド/04/',
+	'24-vsゲラルド/05/',
+	'24-vsゲラルド/06/',
+	'24-vsゲラルド/07/',
+	'24-vsゲラルド/08/',
 ]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
+
 
 out_file = '序章-聖戦士誕生-戦闘-Phase3(vsゲラルド).gif'
 fps = 50
