@@ -7,5 +7,5 @@ scene_dir = [
 ]
 dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
-out_file = '序章-聖戦士誕生-戦闘-Phase2(vsデマジオ).gif'
+out_file = '序章-聖戦士誕生-戦闘-Phase1(vsデマジオ).gif'
 fps = 50

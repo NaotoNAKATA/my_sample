@@ -5,7 +5,7 @@ scene_dir = [
 ]
 dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
-out_file = '序章-聖戦士誕生-フィールド-Phase3(vsゲラルド).png'
+out_file = '序章-聖戦士誕生-フィールド-Phase2(vsゲラルド).png'
 
 TEST_RUN_FIRST = False
 TEST_RUN = False

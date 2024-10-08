@@ -8,7 +8,7 @@ scene_dir = [
 dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 #files = []
 
-title = 'Phase2 : vsデマジオ' 
+title = 'Phase1 : vsデマジオ' 
 
 persons = {
 	'ミデェール' : '00',

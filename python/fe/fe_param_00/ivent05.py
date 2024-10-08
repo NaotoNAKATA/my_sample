@@ -9,7 +9,7 @@ scene_dir = [
 dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 #files = []
 
-title = 'Phase2 : 村解放'
+title = 'Phase1 : 村解放'
 
 a = 1
 fld = 0.5

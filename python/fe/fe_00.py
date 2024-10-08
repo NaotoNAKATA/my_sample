@@ -29,7 +29,7 @@ from fe_pptx import fe_pptx
 from fe_compose import fe_compose
 from fe_prologue import fe_prologue
 from fe_prologue_scene import fe_prologue_scene
-from fe_gif import fe_gif
+#from fe_gif import fe_gif
 from fe_ivent import fe_ivent
 from fe_field import fe_field
 from fe_profile import fe_profile
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 	#
 	# Phase1
 	#
-	# 導入
+	# イベント
 	fe_ivt01 = fe_ivent()
 	fe_ivt01.configure(ivt01)
 	fe_ivt01.run()
@@ -112,7 +112,7 @@ if __name__ == "__main__":
 		title=ivt02.title,
 	)
 	
-	# 終幕
+	# イベント
 	fe_ivt03 = fe_ivent()
 	fe_ivt03.configure(ivt03)
 	fe_ivt03.run()
@@ -122,9 +122,6 @@ if __name__ == "__main__":
 		title=ivt03.title,
 	)
 	
-	#
-	# Phase2
-	#
 	# フィールドマップ作成
 	fe_fld02 = fe_field()
 	fe_fld02.configure(fld02)
@@ -183,9 +180,9 @@ if __name__ == "__main__":
 	)
 	
 	#
-	# Phase3
+	# Phase2
 	#
-	# 導入
+	# イベント
 	fe_ivt08 = fe_ivent()
 	fe_ivt08.configure(ivt08)
 	fe_ivt08.run()
