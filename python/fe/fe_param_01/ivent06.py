@@ -1,24 +1,17 @@
-base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
-#base_dir = './test/'
-chaper_dir = '01-第一章-精霊の森の少女/'
-ivent_dir = '11-ハイライン軍侵攻/01/'
-ivent_dir2 = '11-ハイライン軍侵攻/02/'
-ivent_dir3 = '11-ハイライン軍侵攻/03/'
-ivent_dir4 = '11-ハイライン軍侵攻/04/'
-ivent_dir5 = '11-ハイライン軍侵攻/05/'
+from .params import *
+scene_dir = [
+	'11-ハイライン軍侵攻/01/',
+	'11-ハイライン軍侵攻/02/',
+	'11-ハイライン軍侵攻/03/',
+	'11-ハイライン軍侵攻/04/',
+	'11-ハイライン軍侵攻/05/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
-title = 'Phase2 : ハイライン軍侵攻'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
-	base_dir + chaper_dir + ivent_dir2,
-	base_dir + chaper_dir + ivent_dir3,
-	base_dir + chaper_dir + ivent_dir4,
-	base_dir + chaper_dir + ivent_dir5,
+files = [
 ]
 
-#files = [
-#]
+title = 'Phase2 : ハイライン軍侵攻'
 
 a = 1
 fld = 0.5

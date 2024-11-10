@@ -1,30 +1,20 @@
-base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
-#base_dir = './test/'
-chaper_dir = '01-第一章-精霊の森の少女/'
-ivent_dir = '18-マーファ援軍/'
-ivent_dir2 = '12-デュー-エーディン/'
-ivent_dir3 = '13-シグルド-エーディン/'
-ivent_dir4 = '14-ミデェール-エーディン/'
-ivent_dir5 = '15-アゼル-エーディン/'
-ivent_dir6 = '16-アイラ-キュアン/'
-ivent_dir7 = '17-エーディン-エスリン/'
-ivent_dir8 = '72-村解放/'
+from .params import *
+scene_dir = [
+	'18-マーファ援軍/',
+	'12-デュー-エーディン/',
+	'13-シグルド-エーディン/',
+	'14-ミデェール-エーディン/',
+	'15-アゼル-エーディン/',
+	'16-アイラ-キュアン/',
+	'17-エーディン-エスリン/',
+	'72-村解放/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
-title = 'Phase3 : 会話イベント'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
-	base_dir + chaper_dir + ivent_dir2,
-	base_dir + chaper_dir + ivent_dir3,
-	base_dir + chaper_dir + ivent_dir4,
-	base_dir + chaper_dir + ivent_dir5,
-	base_dir + chaper_dir + ivent_dir6,
-	base_dir + chaper_dir + ivent_dir7,
-	base_dir + chaper_dir + ivent_dir8,
+files = [
 ]
 
-#files = [
-#]
+title = 'Phase3 : 会話イベント'
 
 a = 1
 fld = 0.5

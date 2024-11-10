@@ -1,16 +1,13 @@
-base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
-#base_dir = './test/'
-chaper_dir = '01-第一章-精霊の森の少女/'
-ivent_dir = '04-vsキンボイス/'
+from .params import *
+scene_dir = [
+	'04-vsキンボイス/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
-title = 'Phase1 : vsキンボイス'
-
-dirs = [
-	base_dir + chaper_dir + ivent_dir,
+files = [
 ]
 
-#files = [
-#]
+title = 'Phase1 : vsキンボイス'
 
 a = 1
 fld = 0.5

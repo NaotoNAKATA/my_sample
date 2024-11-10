@@ -1,10 +1,10 @@
-base_dir = '/storage/43E3-332A/others/test/work/ROM/SNES/ファイアーエムブレム 聖戦の系譜 (J)/'
-#base_dir = './test/'
-chaper_dir = '01-第一章-精霊の森の少女/'
-scene_dir = '00-フィールドマップ/'
+from .params import *
+scene_dir = [
+	'00-フィールドマップ/',
+]
+dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 
-dirs = [
-	base_dir + chaper_dir + scene_dir,
+files = [
 ]
 
 out_file = '第一章-精霊の森の少女-フィールド-Phase3(vsガンドルフ).png'
