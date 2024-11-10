@@ -77,7 +77,7 @@ if __name__ == "__main__":
 		scene=prlg_s.scene,
 		title=prlg_s.title,
 	)
-	
+	"""
 	#
 	# Phase1
 	#
@@ -302,7 +302,7 @@ if __name__ == "__main__":
 		scene=ivt13.scene,
 		title=ivt13.title,
 	)
-	
+	"""
 	#
 	# プレゼンテーションの保存
 	#
