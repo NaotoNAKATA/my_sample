@@ -7,7 +7,7 @@ dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 files = [
 ]
 
-title = 'Phase5 : ヴェルダン城制圧'
+title = 'Phase3 : ヴェルダン城制圧'
 
 a = 1
 fld = 0.5

@@ -14,6 +14,7 @@ files = [
 
 title = 'Phase1 : 女剣士アイラ'
 
+a = 1
 fld = 0.5
 bat = 0.75
 

@@ -77,7 +77,7 @@ if __name__ == "__main__":
 		scene=prlg_s.scene,
 		title=prlg_s.title,
 	)
-	"""
+	
 	#
 	# Phase1
 	#
@@ -116,6 +116,23 @@ if __name__ == "__main__":
 	fe.make_ivent(
 		scene=ivt02.scene,
 		title=ivt02.title,
+	)
+	
+	# フィールドマップ作成
+	fe_fld03 = fe_field()
+	fe_fld03.configure(fld03)
+	fe_fld03.run()
+	
+	# 登場人物
+	fe_prf03 = fe_profile()
+	fe_prf03.configure(prf03)
+	fe_prf03.run()
+	
+	# 編成
+	fe.make_organization(
+		field_map=fe_fld03.out_file,
+		title=prf03.title,
+		organization=prf03.organization,
 	)
 	
 	# 会話
@@ -178,26 +195,6 @@ if __name__ == "__main__":
 		title=ivt06.title,
 	)
 	
-	#
-	# Phase3
-	#
-	# フィールドマップ作成
-	fe_fld03 = fe_field()
-	fe_fld03.configure(fld03)
-	fe_fld03.run()
-	
-	# 登場人物
-	fe_prf03 = fe_profile()
-	fe_prf03.configure(prf03)
-	fe_prf03.run()
-	
-	# 編成
-	fe.make_organization(
-		field_map=fe_fld03.out_file,
-		title=prf03.title,
-		organization=prf03.organization,
-	)
-	
 	# 会話イベント
 	fe_ivt07 = fe_ivent()
 	fe_ivt07.configure(ivt07)
@@ -229,7 +226,7 @@ if __name__ == "__main__":
 	)
 	
 	#
-	# Phase4,5
+	# Phase3
 	#
 	# 導入
 	fe_ivt10 = fe_ivent()
@@ -302,7 +299,7 @@ if __name__ == "__main__":
 		scene=ivt13.scene,
 		title=ivt13.title,
 	)
-	"""
+	
 	#
 	# プレゼンテーションの保存
 	#

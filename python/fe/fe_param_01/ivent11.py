@@ -10,7 +10,7 @@ dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 files = [
 ]
 
-title = 'Phase4,5 : 会話イベント'
+title = 'Phase3 : 会話イベント'
 
 a = 1
 fld = 0.5
@@ -144,7 +144,7 @@ scene = [
 	'私は・・・君を愛している・・・',
 	]],
 	
-	['改ページ', -1, ['']],
+	#['改ページ', -1, ['']],
 	
 	['', a, [
 	'レックスと勇者の斧',

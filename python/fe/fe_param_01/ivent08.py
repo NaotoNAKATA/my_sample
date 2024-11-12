@@ -7,7 +7,7 @@ dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 files = [
 ]
 
-title = 'Phase3 : vsガンドルフ'
+title = 'Phase2 : vsガンドルフ'
 
 
 
@@ -43,6 +43,8 @@ scene = [
 	'お前がガンドルフか',
 	'エーディンをよくも・・・',
 	]],
+	
+	['改ページ', -1, ['']],
 	
 	['', a, [
 	'ミデェールvsガンドルフ',

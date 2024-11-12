@@ -7,7 +7,7 @@ dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 files = [
 ]
 
-title = 'Phase3 : マーファ制圧後'
+title = 'Phase2 : マーファ制圧後'
 
 a = 1
 fld = 0.5
@@ -126,6 +126,9 @@ scene = [
 	'しかし、本当に美しい人だった',
 	'できればもう一度会いたい',
 	]],
+	
+	['改ページ', -1, ['']],
+	
 	['181', a, [
 	'それはちと難しいのう',
 	'元々精霊の村の者は',
