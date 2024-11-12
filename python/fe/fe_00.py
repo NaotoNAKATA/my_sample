@@ -29,7 +29,6 @@ from fe_pptx import fe_pptx
 from fe_compose import fe_compose
 from fe_prologue import fe_prologue
 from fe_prologue_scene import fe_prologue_scene
-#from fe_gif import fe_gif
 from fe_ivent import fe_ivent
 from fe_field import fe_field
 from fe_profile import fe_profile
@@ -247,18 +246,19 @@ if __name__ == "__main__":
 	#
 	# アニメーションgifの作成
 	#
+	if False:
+		from fe_gif import fe_gif
+		# プロローグ
+		fe_prlg_gif = fe_gif()
+		fe_prlg_gif.configure(prlg_g)
+		fe_prlg_gif.run()
 	
-	# プロローグ
-	#fe_prlg_gif = fe_gif()
-	#fe_prlg_gif.configure(prlg_g)
-	#fe_prlg_gif.run()
+		# 戦闘シーン
+		fe_btl02 = fe_gif()
+		fe_btl02.configure(btl02)
+		fe_btl02.run()
 	
-	# 戦闘シーン
-	#fe_btl02 = fe_gif()
-	#fe_btl02.configure(btl02)
-	#fe_btl02.run()
-	
-	#fe_btl03 = fe_gif()
-	#fe_btl03.configure(btl03)
-	#fe_btl03.run()
+		fe_btl03 = fe_gif()
+		fe_btl03.configure(btl03)
+		fe_btl03.run()
 	

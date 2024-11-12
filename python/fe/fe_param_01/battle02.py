@@ -20,5 +20,5 @@ scene_dir = [
 dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 #files = []
 
-out_file = '第一章-精霊の森の少女-戦闘-Phase3(vsガンドルフ).gif'
+out_file = '第一章-精霊の森の少女-戦闘-Phase2(vsガンドルフ).gif'
 fps = 50
