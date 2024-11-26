@@ -31,7 +31,6 @@ class fe_field(fe_compose):
 	def __init__(self):
 		"""初期化"""
 		super().__init__(fe_pil_fld)
-		#super().__init__(fe_pil)
 	
 	def test_run_first(self):
 		""" テスト実行 """
@@ -72,10 +71,12 @@ class fe_field_a(fe_field):
 
 if __name__ == '__main__':
 	
-	import fe_param_00.field00 as p
-	#import fe_param_a.field00 as p
-	
+	import fe_param_02.field01 as p
 	fe = fe_field()
+	
+	#import fe_param_a.field00 as p
+	#fe = fe_field_a()
+	
 	fe.configure(p)
 	
 	if p.TEST_RUN_FIRST:
