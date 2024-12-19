@@ -8,6 +8,8 @@ import fe_param_02.prologue_scene as prlg_s
 import fe_param_02.field00 as fld00
 import fe_param_02.field01 as fld01
 import fe_param_02.field02 as fld02
+import fe_param_02.field03 as fld03
+import fe_param_02.field04 as fld04
 
 import fe_param_02.ivent01 as ivt01
 import fe_param_02.ivent02 as ivt02
@@ -21,6 +23,12 @@ import fe_param_02.ivent09 as ivt09
 import fe_param_02.ivent10 as ivt10
 import fe_param_02.ivent11 as ivt11
 import fe_param_02.ivent12 as ivt12
+import fe_param_02.ivent13 as ivt13
+import fe_param_02.ivent14 as ivt14
+import fe_param_02.ivent15 as ivt15
+import fe_param_02.ivent16 as ivt16
+import fe_param_02.ivent17 as ivt17
+import fe_param_02.ivent18 as ivt18
 
 import fe_param_02.profile01 as prf01
 import fe_param_02.profile02 as prf02
@@ -28,6 +36,9 @@ import fe_param_02.profile03 as prf03
 import fe_param_02.profile04 as prf04
 import fe_param_02.profile05 as prf05
 import fe_param_02.profile06 as prf06
+import fe_param_02.profile07 as prf07
+import fe_param_02.profile08 as prf08
+import fe_param_02.profile09 as prf09
 
 #import fe_param_01.battle01 as btl01
 
@@ -224,7 +235,6 @@ if __name__ == "__main__":
 		scene=ivt09.scene,
 		title=ivt09.title,
 	)
-	"""
 	
 	# フィールドマップ作成
 	fe_fld02 = fe_field()
@@ -283,6 +293,118 @@ if __name__ == "__main__":
 		scene=ivt12.scene,
 		title=ivt12.title,
 	)
+	
+	# 制圧
+	fe_ivt13 = fe_ivent()
+	fe_ivt13.configure(ivt13)
+	fe_ivt13.run()
+	
+	fe.make_ivent(
+		scene=ivt13.scene,
+		title=ivt13.title,
+	)
+	
+	#
+	# Phase3
+	#
+	# 導入
+	fe_ivt14 = fe_ivent()
+	fe_ivt14.configure(ivt14)
+	fe_ivt14.run()
+	
+	fe.make_ivent(
+		scene=ivt14.scene,
+		title=ivt14.title,
+	)
+	
+	# フィールドマップ作成
+	fe_fld03 = fe_field()
+	fe_fld03.configure(fld03)
+	fe_fld03.run()
+	
+	# 登場人物
+	fe_prf07 = fe_profile()
+	fe_prf07.configure(prf07)
+	fe_prf07.run()
+	
+	# 編成
+	fe.make_organization(
+		field_map=fe_fld03.out_file,
+		title=prf07.title,
+		organization=prf07.organization,
+	)
+	
+	fe_prf08 = fe_profile()
+	fe_prf08.configure(prf08)
+	fe_prf08.run()
+	
+	# 編成
+	fe.make_organization(
+		field_map=fe_fld03.out_file,
+		title=prf08.title,
+		organization=prf08.organization,
+	)
+	"""
+	# 会話イベント
+	fe_ivt15 = fe_ivent()
+	fe_ivt15.configure(ivt15)
+	fe_ivt15.run()
+	
+	fe.make_ivent(
+		scene=ivt15.scene,
+		title=ivt15.title,
+	)
+	"""
+	# 戦闘
+	fe_ivt16 = fe_ivent()
+	fe_ivt16.configure(ivt16)
+	fe_ivt16.run()
+	
+	fe.make_ivent(
+		scene=ivt16.scene,
+		title=ivt16.title,
+	)
+	
+	# 制圧
+	fe_ivt17 = fe_ivent()
+	fe_ivt17.configure(ivt17)
+	fe_ivt17.run()
+	
+	fe.make_ivent(
+		scene=ivt17.scene,
+		title=ivt17.title,
+	)
+	"""
+	#
+	# Phase4
+	#
+	# 導入
+	fe_ivt18 = fe_ivent()
+	fe_ivt18.configure(ivt18)
+	fe_ivt18.run()
+	
+	fe.make_ivent(
+		scene=ivt18.scene,
+		title=ivt18.title,
+	)
+	
+	# フィールドマップ作成
+	fe_fld04 = fe_field()
+	fe_fld04.configure(fld04)
+	fe_fld04.run()
+	
+	fe_prf09 = fe_profile()
+	fe_prf09.configure(prf09)
+	fe_prf09.run()
+	
+	# 編成
+	fe.make_organization(
+		field_map=fe_fld04.out_file,
+		title=prf09.title,
+		organization=prf09.organization,
+	)
+	
+	
 	
 	#
 	# プレゼンテーションの保存
