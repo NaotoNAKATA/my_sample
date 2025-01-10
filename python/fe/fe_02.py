@@ -29,6 +29,9 @@ import fe_param_02.ivent15 as ivt15
 import fe_param_02.ivent16 as ivt16
 import fe_param_02.ivent17 as ivt17
 import fe_param_02.ivent18 as ivt18
+import fe_param_02.ivent19 as ivt19
+import fe_param_02.ivent20 as ivt20
+import fe_param_02.ivent21 as ivt21
 
 import fe_param_02.profile01 as prf01
 import fe_param_02.profile02 as prf02
@@ -61,7 +64,7 @@ if __name__ == "__main__":
 	# 表題スライド
 	#
 	fe.make_title(subtitle=pptx.subtitle)
-	"""
+	
 	#
 	# プロローグスライド
 	#
@@ -344,7 +347,7 @@ if __name__ == "__main__":
 		title=prf08.title,
 		organization=prf08.organization,
 	)
-	"""
+	
 	# 会話イベント
 	fe_ivt15 = fe_ivent()
 	fe_ivt15.configure(ivt15)
@@ -354,7 +357,7 @@ if __name__ == "__main__":
 		scene=ivt15.scene,
 		title=ivt15.title,
 	)
-	"""
+	
 	# 戦闘
 	fe_ivt16 = fe_ivent()
 	fe_ivt16.configure(ivt16)
@@ -374,7 +377,7 @@ if __name__ == "__main__":
 		scene=ivt17.scene,
 		title=ivt17.title,
 	)
-	"""
+	
 	#
 	# Phase4
 	#
@@ -393,6 +396,7 @@ if __name__ == "__main__":
 	fe_fld04.configure(fld04)
 	fe_fld04.run()
 	
+	# 登場人物
 	fe_prf09 = fe_profile()
 	fe_prf09.configure(prf09)
 	fe_prf09.run()
@@ -404,7 +408,34 @@ if __name__ == "__main__":
 		organization=prf09.organization,
 	)
 	
+	# 戦闘
+	fe_ivt19 = fe_ivent()
+	fe_ivt19.configure(ivt19)
+	fe_ivt19.run()
 	
+	fe.make_ivent(
+		scene=ivt19.scene,
+		title=ivt19.title,
+	)
+	
+	fe_ivt20 = fe_ivent()
+	fe_ivt20.configure(ivt20)
+	fe_ivt20.run()
+	
+	fe.make_ivent(
+		scene=ivt20.scene,
+		title=ivt20.title,
+	)
+	
+	# 制圧
+	fe_ivt21 = fe_ivent()
+	fe_ivt21.configure(ivt21)
+	fe_ivt21.run()
+	
+	fe.make_ivent(
+		scene=ivt21.scene,
+		title=ivt21.title,
+	)
 	
 	#
 	# プレゼンテーションの保存
