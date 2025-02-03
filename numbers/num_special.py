@@ -149,7 +149,12 @@ class num_sum(num_group):
 					break
 		
 	def solve4(self):
-		pass
+		# 合計数字以上の候補は削除する
+		self.update_det()
+		for nb in self.nb_list:
+			if not nb.is_ok():
+				del_cand = [ i for i in nb.cand if i>=self.sums ]
+				nb.del_cand(del_cand)
 	
 	def solve5(self):
 		pass
