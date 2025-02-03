@@ -14,7 +14,7 @@ from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
-	version = '1.2.3'
+	version = '1.2.4'
 	def __init__(self, te):
 		""" 初期化 """
 		# 全数字(num_box)
