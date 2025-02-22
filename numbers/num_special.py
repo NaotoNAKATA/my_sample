@@ -211,6 +211,55 @@ class num_arrow(num_group):
 		
 class num_mult(num_group):
 	""" (特殊)九九 """
+	# 右辺 key:十の位、value:一の位の候補
+	cand_r1 = {
+					1 : [2,4,6,8],
+					2 : [1,4,7,8],
+					3 : [2,6],
+					4 : [2],
+					5 : [4,6],
+					6 : [3],
+					7 : [2],
+					8 : [],
+					9 : [],
+				}
+	# 左辺 key:右辺十の位、value:左辺の候補
+	cand_l1 = {
+					1 : [2,3,4,6,7,8,9],
+					2 : [3,4,7,8,9],
+					3 : [4,8,9],
+					4 : [6,7],
+					5 : [6,7,8,9],
+					6 : [7,9],
+					7 : [8,9],
+					8 : [],
+					9 : [],
+				}
+	# 右辺 key:一の位、value:十の位の候補
+	cand_r0 = {
+					1 : [2],
+					2 : [1,3,4,7],
+					3 : [6],
+					4 : [1,2,5],
+					5 : [],
+					6 : [1,3,5],
+					7 : [2],
+					8 : [1,2],
+					9 : [],
+				}
+	# 左辺 key:右辺一の位、value:左辺の候補
+	cand_l0 = {
+					1 : [3,7],
+					2 : [3,4,6,7,8,9],
+					3 : [7,9],
+					4 : [2,3,6,7,8,9],
+					5 : [],
+					6 : [2,4,7,8,9],
+					7 : [3,9],
+					8 : [2,3,4,6,7,9],
+					9 : [],
+				}
+				
 	def __init__(self, _num_box_list):
 		""" num_boxクラスの参照を受け取る """
 		super().__init__(_num_box_list)
@@ -218,13 +267,31 @@ class num_mult(num_group):
 		# 暗黙的に最大数字は9
 		self.max_num = 9
 		
-	def solve1(self):
-		# 最初の2マスに1は入らない
+		# 以下は、同じグループである前提
+		# 左辺に1,5は入らない
 		for nb in self.nb_list[:2]:
-			nb.del_cand([1])
-	
-	def solve3(self):
-		# 最初の2マスが確定したら、残りも確定
+			nb.del_cand([1,5])
+		
+		# 長さ3(積が一桁)は、2通りのみ
+		# 2x3=6, 2x4=8,
+		if self.len==3:
+			del_cand1 = [1,          5,6,7,8,9]
+			del_cand2 = [1,2,3,4,5,   7,    9]
+			
+			self.nb_list[0].del_cand( del_cand1 )
+			self.nb_list[1].del_cand( del_cand1 )
+			self.nb_list[2].del_cand( del_cand2 )
+		
+		# 長さ4(積が二桁)は、十の位に8,9はない(8x9=72)、一の位に5はない
+		if self.len==4:
+			self.nb_list[2].del_cand( [8,9] )
+			self.nb_list[3].del_cand( [5] )
+		
+	def solve1(self):
+		if self.is_ok():
+			return
+			
+		# 左辺が確定したら、右辺も確定
 		for nb in self.nb_list[:2]:
 			if not nb.is_ok():
 				break
@@ -236,11 +303,88 @@ class num_mult(num_group):
 				self.nb_list[2].set(int(m/10))
 				self.nb_list[3].set(m%10)
 	
-	def solve4(self):
-		# 最初の2マスのうちどちらかが確定しているときは候補を絞る
+	def solve3(self):
 		if self.is_ok():
 			return
 		
+		# 長さ3(積が一桁)で右辺が確定しているとき
+		if self.len==3 and self.nb_list[2].is_ok():
+			# 2x3=6, 2x4=8の2通りのみ
+			if self.nb_list[2].num == 6:
+				del_cand = [4]
+			else:
+				del_cand = [3]
+			
+			for nb in self.nb_list[:2]:
+					nb.del_cand( del_cand )
+		
+		# 長さ4(積が二桁)のとき、右辺から左辺を推定する
+		if self.len==4:
+			if self.nb_list[2].is_ok() and self.nb_list[3].is_ok():
+				# 右辺が確定しているとき
+				m = self.nb_list[2].num*10 +  self.nb_list[3].num
+				
+				if self.nb_list[0].is_ok():
+					del_cand = []
+					for c in self.nb_list[1].cand:
+						n = c * self.nb_list[0].num
+						if n != m:
+							del_cand.append( c )
+					self.nb_list[1].del_cand( del_cand )
+				elif self.nb_list[1].is_ok():
+					del_cand = []
+					for c in self.nb_list[0].cand:
+						n = c * self.nb_list[1].num
+						if n != m:
+							del_cand.append( c )
+					self.nb_list[0].del_cand( del_cand )
+				else:
+					del_cand1 = []
+					for c0 in self.nb_list[0].cand:
+						for c1 in self.nb_list[1].cand:
+							n = c0 * c1
+							if n == m:
+								break
+						else:
+							del_cand1.append( c0 )
+					
+					del_cand2 = []
+					for c1 in self.nb_list[1].cand:
+						for c0 in self.nb_list[0].cand:
+							n = c0 * c1
+							if n == m:
+								break
+						else:
+							del_cand2.append( c1 )
+							
+					self.nb_list[0].del_cand( del_cand1 )
+					self.nb_list[1].del_cand( del_cand2 )
+				
+			elif self.nb_list[2].is_ok():
+				# 十の位が確定しているとき
+				c = self.nb_list[2].num
+				
+				del_cand = [ i for i in range(1,10) if i not in self.cand_r1[c] ]
+				self.nb_list[3].del_cand( del_cand )
+				
+				del_cand = [ i for i in range(1,10) if i not in self.cand_l1[c] ]
+				for nb in self.nb_list[:2]:
+					nb.del_cand( del_cand )
+			elif self.nb_list[3].is_ok():
+				# 一の位が確定しているとき
+				c = self.nb_list[3].num
+				
+				del_cand = [ i for i in range(1,10) if i not in self.cand_r0[c] ]
+				self.nb_list[2].del_cand( del_cand )
+				
+				del_cand = [ i for i in range(1,10) if i not in self.cand_l0[c] ]
+				for nb in self.nb_list[:2]:
+					nb.del_cand( del_cand )
+	def solve4(self):
+		if self.is_ok():
+			return
+		
+		# 左辺2項のうちどちらかが確定しているときは、候補を絞る
 		if self.nb_list[0].is_ok() or self.nb_list[1].is_ok():
 			if self.nb_list[0].is_ok():
 				ok = self.nb_list[0]
@@ -277,7 +421,7 @@ class num_mult(num_group):
 			if self.len==4:
 				self.nb_list[3].del_cand( del_cand3 )
 				
-		# 最初の2マスのうちどちらかが確定して、積も確定しているときは確定する
+		# 左辺2項のうちどちらかが確定して、右辺も確定しているときは、残りの左辺1項は確定する
 		if self.nb_list[0].is_ok() or self.nb_list[1].is_ok():
 			for nb in self.nb_list[2:]:
 				if not nb.is_ok():

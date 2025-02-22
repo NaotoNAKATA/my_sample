@@ -14,7 +14,7 @@ from num_overlap import num_overlap
 
 class num_solver:
 	""" 数独問題クラス """
-	version = '1.2.5'
+	version = '1.2.6'
 	def __init__(self, te):
 		""" 初期化 """
 		# 全数字(num_box)
@@ -22,6 +22,9 @@ class num_solver:
 		
 		# 全グループ(num_group)
 		self.grp = []
+		
+		# 重なりのグループ
+		self.grp_olp = []
 		
 		# 最大数字
 		self.len = te['length']
@@ -75,7 +78,8 @@ class num_solver:
 			for j in range(i, l):
 				no = num_overlap( self.grp[i], self.grp[j] )
 				if no.is_overlap():
-					self.grp.append( no )
+					#self.grp.append( no )
+					self.grp_olp.append( no )
 	
 	def make_sums(self, sums_list):
 		""" (特殊)足し算 """
@@ -102,6 +106,11 @@ class num_solver:
 			# 各グループのsolverを起動
 			for g in self.grp:
 				g.solve()
+				
+			# 10回して解けないならグループ間の重なりもみる
+			if i>=10:
+				for g in self.grp_olp:
+					g.solve()
 			
 			# すべて確定でbreak
 			if self.is_ok():
