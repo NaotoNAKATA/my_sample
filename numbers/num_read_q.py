@@ -10,7 +10,7 @@ from num_template import num_template
 		
 class num_read_q:
 	""" 数独問題読み込みクラス """
-	version = '1.1.0'
+	version = '1.2.0'
 	def __init__(self, _path, _temp):
 		""" 初期化 """
 		# テンプレートの読み込み
@@ -25,6 +25,9 @@ class num_read_q:
 		
 		# 結果を保持(書き出し用)
 		self.results = []
+		
+		# リレー保持用
+		self.relay = {}
 		
 		for sheet in book.worksheets:
 			# シート名をキーにする
@@ -50,6 +53,12 @@ class num_read_q:
 					num=-1
 				nq.set(idx, _num=num)
 			
+			# リレーがある時
+			if name in self.relay.keys():
+				idx = self.relay[name]['idx']
+				num = self.relay[name]['num']
+				nq.nb[idx].set(num)
+			
 			# 問題クラスの構築
 			nq.configure(te)
 			
@@ -72,7 +81,18 @@ class num_read_q:
 					val +=')'
 					sheet[idx].value= val
 					sheet[idx].fill = PatternFill(patternType='solid', fgColor='FFFF00')
-		
+			
+			# リレー用に保持しておく
+			if self.te.has_relay(name):
+				relay = self.te.get_relay(name)
+				idx = relay['idx']
+				dest = relay['dest']
+				
+				self.relay[dest] = {
+					'idx' : relay['dest_idx'],
+					'num' : nq.nb[idx].num,
+				}
+			
 		# 結果を保存
 		book.create_sheet(title='summary')
 		summary = book.worksheets[-1]
@@ -109,7 +129,7 @@ class num_read_q:
 if __name__ == "__main__":
 	q_book = [
 		#['./sample.xlsx', ['./template.xlsx']],
-		['./sample2.xlsx', ['./template2.xlsx']],
+		['./sample2.xlsx', ['./template.xlsx','./template2.xlsx']],
 		#['./問題/ナンプレ_20240306.xlsx', ['./template.xlsx', './問題/template_ナンプレ_20240306.xlsx']],
 		#['./問題/ナンプレランド_20240210.xlsx', ['./template.xlsx', './問題/template_ナンプレランド_20240210.xlsx']],
 		#['./問題/懸賞ナンプレ54_20250305.xlsx', ['./template.xlsx', './問題/template_懸賞ナンプレ54_20250305.xlsx']],

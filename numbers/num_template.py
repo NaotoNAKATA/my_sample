@@ -5,6 +5,7 @@ class num_template:
 	def __init__(self, _path):
 		""" 初期化 """
 		self.dat = {}
+		self.dat['relay'] = {}
 		
 		# テンプレートファイルの読み込み
 		self.read_xlsx(_path)
@@ -21,6 +22,21 @@ class num_template:
 			
 			# バージョンシートは飛ばす
 			if name == 'version':
+				continue
+				
+			# リレーシートの処理
+			if name == 'relay':
+				for iter_row in sheet.rows:
+					sorce_sheet = iter_row[0].value
+					sorce_idx = iter_row[1].value
+					dest_sheet = iter_row[2].value
+					dest_idx = iter_row[3].value
+				
+					self.dat['relay'][sorce_sheet] = {
+						'idx' : sorce_idx,
+						'dest' : dest_sheet,
+						'dest_idx' : dest_idx,
+					}
 				continue
 			
 			tml = []
@@ -101,6 +117,16 @@ class num_template:
 			return self.dat[name]
 		else:
 				return None
+				
+	def has_relay(self, name):
+		""" リレーがあるかどうか """
+		if name in self.dat['relay'].keys():
+			return True
+		else:
+			return False
+			
+	def get_relay(self, name):
+		return self.dat['relay'][name]
 		
 if __name__ == "__main__":
 	te = num_template('./template.xlsx')
