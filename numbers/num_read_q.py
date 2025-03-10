@@ -129,12 +129,12 @@ class num_read_q:
 if __name__ == "__main__":
 	q_book = [
 		#['./sample.xlsx', ['./template.xlsx']],
-		['./sample2.xlsx', ['./template.xlsx','./template2.xlsx']],
+		#['./sample2.xlsx', ['./template.xlsx','./template2.xlsx']],
 		#['./問題/ナンプレ_20240306.xlsx', ['./template.xlsx', './問題/template_ナンプレ_20240306.xlsx']],
 		#['./問題/ナンプレランド_20240210.xlsx', ['./template.xlsx', './問題/template_ナンプレランド_20240210.xlsx']],
 		#['./問題/懸賞ナンプレ54_20250305.xlsx', ['./template.xlsx', './問題/template_懸賞ナンプレ54_20250305.xlsx']],
 		#['./問題/ナンプレパークファミリー_20250307.xlsx', ['./template.xlsx', './問題/template_ナンプレパークファミリー_20250307.xlsx']],
-		#['./問題/ナンプレランド_20250410.xlsx', ['./template.xlsx', './問題/template_ナンプレランド_20250410.xlsx']],
+		['./問題/ナンプレランド_20250410.xlsx', ['./template.xlsx', './問題/template_ナンプレランド_20250410.xlsx']],
 		
 	]
 	for qb, te in q_book:

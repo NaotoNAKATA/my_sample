@@ -147,6 +147,20 @@ class num_sum(num_group):
 				if not nb.is_ok():
 					nb.set( self.sums - sum(self.det_num) )
 					break
+					
+		# 残り2項の時は候補を絞る
+		elif self.len==len(self.det_num)+2:
+			sums = self.sums - sum(self.det_num)
+			nb_not_det = list( filter( lambda x:x.is_ok()==False, self.nb_list) )
+			
+			for i in range(2):
+				del_cand = []
+				for c in nb_not_det[i].cand:
+					s = sums - c
+					if not s in nb_not_det[1-i].cand:
+						del_cand.append(c)
+					
+					nb_not_det[i].del_cand( del_cand )
 		
 	def solve4(self):
 		# 合計数字以上の候補は削除する
