@@ -28,9 +28,9 @@ class fe_pil_fld(fe_pil):
 
 class fe_field(fe_compose):
 	""" フィールドマップクラス(結合) """
-	def __init__(self):
+	def __init__(self, img_class=fe_pil_fld):
 		"""初期化"""
-		super().__init__(fe_pil_fld)
+		super().__init__(img_class)
 	
 	def test_run_first(self):
 		""" テスト実行 """
@@ -71,7 +71,7 @@ class fe_field_a(fe_field):
 
 if __name__ == '__main__':
 	
-	import fe_param_02.field00 as p
+	import fe_param_03.field03 as p
 	fe = fe_field()
 	
 	#import fe_param_a.field00 as p
