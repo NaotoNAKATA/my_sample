@@ -71,11 +71,11 @@ class fe_field_a(fe_field):
 
 if __name__ == '__main__':
 	
-	#import fe_param_03.field00 as p
-	#fe = fe_field()
+	import fe_param_05.field03 as p
+	fe = fe_field()
 	
-	import fe_param_a.field00 as p
-	fe = fe_field_a()
+	#import fe_param_a.field00 as p
+	#fe = fe_field_a()
 	
 	fe.configure(p)
 	
