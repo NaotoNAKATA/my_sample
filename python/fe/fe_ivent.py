@@ -45,7 +45,8 @@ class fe_pil_talk(fe_pil):
 		self.person5 = self.get(pix)
 		
 		# 戦闘
-		pix = [8, 0, 256-8, 134-8-1]
+		#pix = [8, 0, 256-8, 134-8-1]
+		pix = [8, 16, 256-8, 127-1]
 		self.battle = self.get(pix)
 		
 		# 戦闘(屋外)
@@ -96,7 +97,7 @@ class fe_ivent(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import fe_param_01.ivent05 as p
+	import fe_param_00.ivent06 as p
 	
 	fe = fe_ivent()
 	fe.configure(p)
