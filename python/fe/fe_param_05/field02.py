@@ -11,7 +11,7 @@ dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 files = [
 ]
 
-out_file = '第五章-運命の扉-フィールド.png'
+out_file = '第五章-運命の扉-phase2.png'
 
 TEST_RUN_FIRST = False
 TEST_RUN = True
