@@ -62,7 +62,7 @@ class fe_prologue(fe_compose):
 		
 if __name__ == '__main__':
 	
-	import fe_param_04.prologue_map as p
+	import fe_param_06.prologue_map as p
 	
 	fe = fe_prologue()
 	fe.configure(p)
