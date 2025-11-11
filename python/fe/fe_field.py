@@ -71,7 +71,7 @@ class fe_field_a(fe_field):
 
 if __name__ == '__main__':
 	
-	import fe_param_07.field00 as p
+	import fe_param_08.field00 as p
 	fe = fe_field()
 	
 	#import fe_param_a.field00 as p
