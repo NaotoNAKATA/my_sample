@@ -6,7 +6,7 @@ scene_dir = [
 dirs = [ base_dir + chaper_dir + s for s in scene_dir]
 #files = []
 
-out_file = '09-第九章-誰がために-プロローグ.png'
+out_file = '第九章-誰がために-プロローグ.png'
 
 TEST_RUN_FIRST = False
 TEST_RUN = True
